@@ -9,16 +9,16 @@ Experimental yet :D
     package you
 
     import (
-    	"testing"
+        "testing"
 
-    	"github.com/bayashi/actually"
+        "github.com/bayashi/actually"
     )
 
     func Test(t *testing.T) {
         love, err := getLove()
 
-    	actually.Got(love).True(t)
-    	actually.Got(err).Nil(t)
+        actually.Got(love).True(t)
+        actually.Got(err).Nil(t)
     }
 
     func getLove() (bool, error) {
