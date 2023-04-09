@@ -8,8 +8,8 @@ import (
 
 func TestTrue(t *testing.T) {
 	// pass
-	actually.Got(1==1).True(t)
-	actually.Got("foo"=="foo").True(t)
+	actually.Got(1==1).True(t) //lint:ignore SA4000 this is test
+	actually.Got("foo"=="foo").True(t) //lint:ignore SA4000 this is test
 	actually.Got(1==2).False(t)
 	actually.Got("foo"=="hoo").False(t)
 
