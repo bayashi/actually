@@ -39,13 +39,6 @@ func (a *testingA) Expect(e any) *testingA {
 	return a
 }
 
-func Want(e any) *testingA {
-	return Expect(e)
-}
-func (a *testingA) Want(e any) *testingA {
-	return a.Expect(e)
-}
-
 func (a *testingA) FailNotNow() *testingA {
 	a.failNow = false
 

@@ -31,15 +31,6 @@ func TestExpect(t *testing.T) {
 	}
 }
 
-func TestWant(t *testing.T) {
-	i := 14
-	a := Want(i).Got(i)
-
-	if a.expect != i {
-		t.Errorf("`Want()` was broken. Wanted:%#v, but Actual:%#v", i, a.expect)
-	}
-}
-
 func TestFail(t *testing.T) {
 	a := Got(nil)
 	if a.failNow != false {
