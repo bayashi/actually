@@ -3,14 +3,18 @@ package actually
 import (
 	"bytes"
 	"reflect"
+
+	"github.com/bayashi/actually/report"
 )
 
-func isFuncType(v any) bool {
-	return reflect.TypeOf(v).Kind() == reflect.Func
+func reportForSame(a *testingA) *report.Report {
+	return report.New().
+		Expectf("Type:%T ,%#v", a.expect, a.expect).
+		Gotf("Type:%T ,%#v", a.got, a.got)
 }
 
-func isStringType(v any) bool {
-	return reflect.TypeOf(v).Kind() == reflect.String
+func isFuncType(v any) bool {
+	return v != nil && reflect.TypeOf(v).Kind() == reflect.Func
 }
 
 func objectsAreSame(expect any, got any) bool {

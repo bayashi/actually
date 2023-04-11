@@ -1,62 +1,31 @@
 package actually
 
 import (
+	"reflect"
 	"testing"
-
-	"github.com/bayashi/actually/report"
 )
 
-func (a *testingA) SameString(t *testing.T) *testingA {
+// `Same` verifies that two objects are same in value and type.
+func (a *testingA) Same(t *testing.T) *testingA {
 	a.t = t
 
-	// validate
+	if reflect.TypeOf(a.got) != reflect.TypeOf(a.expect) {
+		a.t.Helper()
+		return a.fail(reportForSame(a).Reason(FailReason_WrongType))
+	}
+
 	if isFuncType(a.got) {
 		a.t.Helper()
-		r := report.New().
-			Reason("`Got` value is type of function. It cannot be used in Same*() method").
-			Expectf("Type:%T ,%#v", a.expect, a.expect).
-			Gotf("Type:%T ,%#v", a.got, a.got).
-			Message("`Got` value should be string")
-		return a.fail(r)
+		return a.fail(reportForSame(a).Reason(FailReason_GotIsFunc))
 	}
 	if isFuncType(a.expect) {
 		a.t.Helper()
-		r := report.New().
-			Reason("`Expect` value is type of function. It cannot be used in Same*() method").
-			Expectf("Type:%T ,%#v", a.expect, a.expect).
-			Gotf("Type:%T ,%#v", a.got, a.got).
-			Message("`Expect` value should be string")
-		return a.fail(r)
+		return a.fail(reportForSame(a).Reason(FailReason_ExpectIsFunc))
 	}
 
-	// Got and Expect should be string
-	if !isStringType(a.got) {
-		a.t.Helper()
-		r := report.New().
-			Reason("`Got` value is Not string").
-			Expectf("Type:%T ,%#v", a.expect, a.expect).
-			Gotf("Type:%T ,%#v", a.got, a.got).
-			Message("`Got` value should be string")
-		return a.fail(r)
-	}
-	if !isStringType(a.expect) {
-		a.t.Helper()
-		r := report.New().
-			Reason("`Expect` value is Not string").
-			Expectf("Type:%T ,%#v", a.expect, a.expect).
-			Gotf("Type:%T ,%#v", a.got, a.got).
-			Message("`Expect` value should be string")
-		return a.fail(r)
-	}
-
-	// compare
 	if !objectsAreSame(a.expect, a.got) {
 		a.t.Helper()
-		r := report.New().
-			Reason("Not same string").
-			Expectf("Type:%T ,%#v", a.expect, a.expect).
-			Gotf("Type:%T ,%#v", a.got, a.got)
-		return a.fail(r)
+		return a.fail(reportForSame(a).Reason(FailReason_NotSame))
 	}
 
 	return a
