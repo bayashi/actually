@@ -1,7 +1,11 @@
 package actually
 
 import (
+	"strings"
 	"testing"
+
+	"github.com/bayashi/actually/report"
+	"github.com/bayashi/actually/trace"
 )
 
 type testingA struct {
@@ -54,12 +58,24 @@ func (a *testingA) FailNow() *testingA {
 	return a
 }
 
-func (a *testingA) fail(message string) {
+func (a *testingA) fail(r *report.Report) *testingA {
 	a.t.Helper()
-	a.t.Error(message)
+	r.Trace(traceinfo()).Name(a.t.Name() + "()")
+	a.t.Errorf("\n%s", r.Put())
 	if a.failNow {
 		a.t.FailNow()
 	} else {
 		a.t.Fail()
 	}
+
+	return a
+}
+
+var SkipTraceRule = func(file string) bool {
+	// Skip myself
+	return strings.Contains(file, "actually.go")
+}
+
+func traceinfo() string {
+	return strings.Join(trace.Info(SkipTraceRule), TraceSeparator)
 }

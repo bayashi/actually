@@ -1,9 +1,10 @@
 package actually
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
+
+	"github.com/bayashi/actually/report"
 )
 
 func (a *testingA) Nil(t *testing.T) *testingA {
@@ -11,7 +12,10 @@ func (a *testingA) Nil(t *testing.T) *testingA {
 
 	if !a.isNil() {
 		a.t.Helper()
-		a.fail(fmt.Sprintf("Expect `nil`. But, got %#+v.", a.got))
+		r := report.New().
+			Expect("nil").
+			Gotf("Type:%T, %#v", a.got, a.got)
+		return a.fail(r)
 	}
 
 	return a
@@ -22,7 +26,10 @@ func (a *testingA) NotNil(t *testing.T) *testingA {
 
 	if a.isNil() {
 		a.t.Helper()
-		a.fail("Expect not `nil`. But, got `nil`.")
+		r := report.New().
+			Expect("Not nil").
+			Got("nil")
+		return a.fail(r)
 	}
 
 	return a

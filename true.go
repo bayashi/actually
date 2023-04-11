@@ -1,9 +1,10 @@
 package actually
 
 import (
-	"fmt"
 	"reflect"
 	"testing"
+
+	"github.com/bayashi/actually/report"
 )
 
 func (a *testingA) True(t *testing.T) *testingA {
@@ -11,12 +12,19 @@ func (a *testingA) True(t *testing.T) *testingA {
 
 	if !a.isBool() {
 		a.t.Helper()
-		a.fail(fmt.Sprintf("Expect boolean for `True()`, but got %T `%#+v`.", a.got, a.got))
+		r := report.New().
+			Reason(FailReason_WrongType).
+			Expect("Boolean type true").
+			Gotf("Type:%T, %#v", a.got, a.got)
+		return a.fail(r)
 	}
 
 	if a.got != true {
 		a.t.Helper()
-		a.fail(fmt.Sprintf("Expect true, but got %#+v.", a.got))
+		r := report.New().
+			Expect("true").
+			Gotf("%#v", a.got)
+		return a.fail(r)
 	}
 
 	return a
@@ -27,12 +35,19 @@ func (a *testingA) False(t *testing.T) *testingA {
 
 	if !a.isBool() {
 		a.t.Helper()
-		a.fail(fmt.Sprintf("Expect boolean for `False()`, but got %T `%#+v`.", a.got, a.got))
+		r := report.New().
+			Reason(FailReason_WrongType).
+			Expect("Boolean type false").
+			Gotf("Type:%T ,%#v", a.got, a.got)
+		return a.fail(r)
 	}
 
 	if a.got != false {
 		a.t.Helper()
-		a.fail(fmt.Sprintf("Expect false, but got %#+v.", a.got))
+		r := report.New().
+			Expect("false").
+			Gotf("%#v", a.got)
+		return a.fail(r)
 	}
 
 	return a
