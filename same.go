@@ -58,3 +58,43 @@ func (a *testingA) SamePointer(t *testing.T) *testingA {
 
 	return a
 }
+
+// `SameNumber` verifies that each pair of numbers are same or
+// convertible to the same types and converted objects are equal. (i.e. int* and float*)
+func (a *testingA) SameNumber(t *testing.T) *testingA {
+	a.t = t
+
+	if !isFuncType(a.got) && !isFuncType(a.expect) && objectsAreSame(a.expect, a.got) {
+		return a // Pass
+	}
+
+	gotType := reflect.TypeOf(a.got)
+	if gotType == nil {
+		a.t.Helper()
+		return a.fail(reportForSame(a).Reason(FailReason_GotIsNilType))
+	}
+	expectType := reflect.TypeOf(a.expect)
+	if expectType == nil {
+		a.t.Helper()
+		return a.fail(reportForSame(a).Reason(FailReason_ExpectIsNilType))
+	}
+
+	expectValue := reflect.ValueOf(a.expect)
+	if !expectValue.IsValid() {
+		a.t.Helper()
+		return a.fail(reportForSame(a).Reason(FailReason_ExpectIsNotValidValue))
+	}
+
+	if !reflect.ValueOf(a.got).Type().ConvertibleTo(expectType) ||
+		!expectValue.Type().ConvertibleTo(gotType) {
+		a.t.Helper()
+		return a.fail(reportForSame(a).Reason(FailReason_NotConvertibleTypes))
+	}
+
+	if !reflect.DeepEqual(expectValue.Convert(gotType).Interface(), a.got) {
+		a.t.Helper()
+		return a.fail(reportForSame(a).Reason(FailReason_NotSame))
+	}
+
+	return a
+}

@@ -60,3 +60,13 @@ func TestSamePointer(t *testing.T) {
 	// j := 7
 	// actually.Got(ptr).Expect(&j).SamePointer(t)
 }
+
+func TestSameNumber(t *testing.T) {
+	actually.Got(int8(1)).Expect(int32(1)).SameNumber(t)
+	actually.Got(float32(1.0)).Expect(int64(1)).SameNumber(t)
+
+	// fail
+	// actually.Got("1").Expect(1).SameNumber(t)
+	// actually.Got(1).Expect("1").SameNumber(t)
+	// actually.Got(nil).Expect(1).SameNumber(t)
+}
