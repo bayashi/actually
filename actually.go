@@ -70,5 +70,5 @@ var SkipTraceRule = func(file string) bool {
 }
 
 func traceinfo() string {
-	return strings.Join(trace.Info(SkipTraceRule), TraceSeparator)
+	return strings.Join(trace.Info(SkipTraceRule), traceSeparator)
 }
