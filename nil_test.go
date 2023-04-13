@@ -2,6 +2,7 @@ package actually_test
 
 import (
 	"testing"
+	"unsafe"
 
 	"github.com/bayashi/actually"
 )
@@ -12,6 +13,9 @@ func TestNil(t *testing.T) {
 	actually.Got("").NotNil(t)
 
 	actually.Got(nil).Nil(t).Got("").NotNil(t)
+
+	var n unsafe.Pointer = nil
+	actually.Got(n).Nil(t)
 
 	// fail now
 	//actually.Got("").FailNow().Nil(t)

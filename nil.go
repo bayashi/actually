@@ -51,7 +51,7 @@ func isSpecialNil(got any) bool {
 }
 
 func isSpecialKind(k reflect.Kind) bool {
-	// Special Kind is either one: Chan || Func || Interface || Map || Pointer || Slice
+	// Special Kind is either one: Chan || Func || Interface || Map || Pointer || Slice || UnsafePointer
 	// See https://github.com/golang/go/blob/8d68b388d4d1debec8d349adac58dd9f1cb03d25/src/reflect/type.go#L262-L267
-	return k >= reflect.Chan && k <= reflect.Slice
+	return (k >= reflect.Chan && k <= reflect.Slice) || k == reflect.UnsafePointer
 }
