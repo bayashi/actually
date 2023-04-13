@@ -13,7 +13,7 @@ func (a *testingA) True(t *testing.T) *testingA {
 	if !a.isBool() {
 		a.t.Helper()
 		r := report.New().
-			Reason(FailReason_WrongType).
+			Reason(failReason_WrongType).
 			Expect("Boolean type true").
 			Gotf("Type:%T, %#v", a.got, a.got)
 		return a.fail(r)
@@ -36,7 +36,7 @@ func (a *testingA) False(t *testing.T) *testingA {
 	if !a.isBool() {
 		a.t.Helper()
 		r := report.New().
-			Reason(FailReason_WrongType).
+			Reason(failReason_WrongType).
 			Expect("Boolean type false").
 			Gotf("Type:%T ,%#v", a.got, a.got)
 		return a.fail(r)
