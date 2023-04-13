@@ -6,6 +6,7 @@ import (
 )
 
 // `Same` verifies that two objects are same in value and type.
+// Function is not acceptable. Not verify pointer address.
 func (a *testingA) Same(t *testing.T) *testingA {
 	a.t = t
 
