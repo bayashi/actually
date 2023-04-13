@@ -46,3 +46,17 @@ func TestSame(t *testing.T) {
 	// f := func()(){}
 	// actually.Got(f).Expect(f).Same(t)
 }
+
+func TestSamePointer(t *testing.T) {
+	i := 7
+	ptr := &i
+	ptr2 := ptr
+	actually.Got(ptr).Expect(ptr2).SamePointer(t)
+	actually.Got(ptr).Expect(&i).SamePointer(t)
+
+	// fail
+	// actually.Got("").Expect(ptr).SamePointer(t)
+	// actually.Got(ptr).Expect("").SamePointer(t)
+	// j := 7
+	// actually.Got(ptr).Expect(&j).SamePointer(t)
+}
