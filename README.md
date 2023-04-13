@@ -19,6 +19,13 @@ Experimental yet :D
 
         actually.Got(love).True(t)
         actually.Got(err).Nil(t)
+
+        actually.Got(love).Expect(true).Same(t)
+        actually.Got(int32(1)).Expect(float64(1.0)).SameNumber(t)
+
+        heart := &love
+        body  := heart
+        actually.Got(heart).Expect(body).SamePointer(t)
     }
 
     func getLove() (bool, error) {
