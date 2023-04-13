@@ -9,8 +9,8 @@ import (
 
 func reportForSame(a *testingA) *report.Report {
 	return report.New().
-		Expectf("Type:%T ,%#v", a.expect, a.expect).
-		Gotf("Type:%T ,%#v", a.got, a.got)
+		Expectf("Type:%T, %#v", a.expect, a.expect).
+		Gotf("Type:%T, %#v", a.got, a.got)
 }
 
 func isFuncType(v any) bool {

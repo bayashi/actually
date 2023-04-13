@@ -48,8 +48,8 @@ Another example:
                                         /go/src/github.com/bayashi/actually/same_test.go:69
                 Test func:      TestSameNumber()
                 Fail reason:    The types of `Got` and `Expect` are NOT convertible
-                Expected:       Type:int ,1
-                Actually got:   Type:string ,"1"
+                Expected:       Type:int, 1
+                Actually got:   Type:string, "1"
 
 ## Installation
 
