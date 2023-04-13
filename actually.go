@@ -15,6 +15,7 @@ type testingA struct {
 	failNow bool
 }
 
+// `Got` sets the value you actually got.
 func Got(g any) *testingA {
 	return &testingA{
 		got: g,
@@ -27,6 +28,7 @@ func (a *testingA) Got(g any) *testingA {
 	return a
 }
 
+// `Expect` sets the value you expect to be the same as the one you got.
 func Expect(e any) *testingA {
 	return &testingA{
 		expect: e,
@@ -39,12 +41,16 @@ func (a *testingA) Expect(e any) *testingA {
 	return a
 }
 
+// `FailNotNow` turns a flag so that even if the test fails, execution does not stop immediately.
+//
+// It behaves this way by default. If you want the opposite behavior, call `FailNow` method.
 func (a *testingA) FailNotNow() *testingA {
 	a.failNow = false
 
 	return a
 }
 
+// `FailNow` turns on a flag to stop further test execution immediately if one test fails
 func (a *testingA) FailNow() *testingA {
 	a.failNow = true
 
