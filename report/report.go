@@ -20,7 +20,7 @@ type Report struct {
 	message string `label:"Message"`
 }
 
-type ReportContent struct {
+type reportContent struct {
 	label   string
 	content string
 }
@@ -50,29 +50,29 @@ func (r *Report) Put() string {
 	return output
 }
 
-func (r *Report) buildReportContets() *[]*ReportContent {
-	var rContents []*ReportContent
+func (r *Report) buildReportContets() *[]*reportContent {
+	var rContents []*reportContent
 
 	if r.trace != "" {
-		rContents = append(rContents, &ReportContent{label: r.label("trace"), content: r.trace})
+		rContents = append(rContents, &reportContent{label: r.label("trace"), content: r.trace})
 	}
 	if r.name != "" {
-		rContents = append(rContents, &ReportContent{label: r.label("name"), content: r.name})
+		rContents = append(rContents, &reportContent{label: r.label("name"), content: r.name})
 	}
 	if r.reason != "" {
-		rContents = append(rContents, &ReportContent{label: r.label("reason"), content: r.reason})
+		rContents = append(rContents, &reportContent{label: r.label("reason"), content: r.reason})
 	}
 	if r.expect != "" {
-		rContents = append(rContents, &ReportContent{label: r.label("expect"), content: r.expect})
+		rContents = append(rContents, &reportContent{label: r.label("expect"), content: r.expect})
 	}
 	if r.got != "" {
-		rContents = append(rContents, &ReportContent{label: r.label("got"), content: r.got})
+		rContents = append(rContents, &reportContent{label: r.label("got"), content: r.got})
 	}
 	if r.diff != "" {
-		rContents = append(rContents, &ReportContent{label: r.label("diff"), content: r.diff})
+		rContents = append(rContents, &reportContent{label: r.label("diff"), content: r.diff})
 	}
 	if r.message != "" {
-		rContents = append(rContents, &ReportContent{label: r.label("message"), content: r.message})
+		rContents = append(rContents, &reportContent{label: r.label("message"), content: r.message})
 	}
 
 	return &rContents
