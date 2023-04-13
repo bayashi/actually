@@ -42,4 +42,7 @@ func TestSame(t *testing.T) {
 
 	// fail
 	//actually.Got("a").Expect("b").Same(t)
+	//actually.Got(int16(12)).Expect(int32(12)).Same(t)
+	// f := func()(){}
+	// actually.Got(f).Expect(f).Same(t)
 }
