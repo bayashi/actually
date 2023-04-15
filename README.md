@@ -53,7 +53,7 @@ same_test.go:69:
             Actually got:   Type:string, "1"
 ```
 
-Actually, you can write multiple assertions in one chain as below:
+Actually, you can write multiple assertions in one chain like below:
 
 ```go
 package main
