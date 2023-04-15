@@ -47,3 +47,8 @@ func TestFail(t *testing.T) {
 		t.Errorf("`FailNotNow()` was broken. Expected:%#v, but Actual:%#v", false, a.failNow)
 	}
 }
+
+func TestDuplicateCall(t *testing.T) {
+	//Got(1).Got(1).NotNil(t)
+	//Expect(1).Expect(1).NotNil(t)
+}

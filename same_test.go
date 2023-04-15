@@ -70,3 +70,8 @@ func TestSameNumber(t *testing.T) {
 	// actually.Got(1).Expect("1").SameNumber(t)
 	// actually.Got(nil).Expect(1).SameNumber(t)
 }
+
+func TestChain(t *testing.T) {
+    actually.Got(7).NotNil(t).
+        Expect(7).SameNumber(t).Same(t)
+}

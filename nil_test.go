@@ -12,8 +12,6 @@ func TestNil(t *testing.T) {
 	actually.Got(nil).Nil(t)
 	actually.Got("").NotNil(t)
 
-	actually.Got(nil).Nil(t).Got("").NotNil(t)
-
 	var n unsafe.Pointer = nil
 	actually.Got(n).Nil(t)
 

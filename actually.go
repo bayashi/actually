@@ -9,21 +9,29 @@ import (
 )
 
 type testingA struct {
-	got any
-	expect any
-	t *testing.T
-	failNow bool
+	got       any
+	setGot    bool
+	expect    any
+	setExpect bool
+	t         *testing.T
+	failNow   bool
 }
 
 // `Got` sets the value you actually got.
 func Got(g any) *testingA {
 	return &testingA{
 		got: g,
+		setGot: true,
 	}
 }
 
 func (a *testingA) Got(g any) *testingA {
+	if a.setGot {
+		panic(panicReason_CalledGotTwice)
+	}
+
 	a.got = g
+	a.setGot = true
 
 	return a
 }
@@ -32,11 +40,17 @@ func (a *testingA) Got(g any) *testingA {
 func Expect(e any) *testingA {
 	return &testingA{
 		expect: e,
+		setExpect: true,
 	}
 }
 
 func (a *testingA) Expect(e any) *testingA {
+	if a.setExpect {
+		panic(panicReason_CalledExpectTwice)
+	}
+
 	a.expect = e
+	a.setExpect = true
 
 	return a
 }
