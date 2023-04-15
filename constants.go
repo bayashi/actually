@@ -3,6 +3,9 @@ package actually
 const (
 	traceSeparator = "\n\t"
 
+	panicReason_CalledGotTwice    = "Don't call `Got` method twice. It has been called already"
+	panicReason_CalledExpectTwice = "Don't call `Expect` method twice. It has been called already"
+
 	failReason_WrongType             = "Wrong Type"
 	failReason_NotSame               = "Not same"
 	failReason_WrongPointerAddress   = "Wrong Type"
