@@ -92,3 +92,18 @@ var SkipTraceRule = func(file string) bool {
 func traceinfo() string {
 	return strings.Join(trace.Info(SkipTraceRule), traceSeparator)
 }
+
+// `Skip` provides shorthand to skip further tests within the same function for `-short` option.
+/*
+	func Test(t *testing.T) {
+		Got(1).NotNil(t) // Run
+		Skip(t)
+		Got(2).NotNil(t) // Skip
+		Got(3).NotNil(t) // Skip Also
+	}
+*/
+func Skip(t *testing.T) {
+	if testing.Short() {
+		t.SkipNow()
+	}
+}
