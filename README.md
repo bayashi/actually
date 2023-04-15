@@ -53,6 +53,29 @@ same_test.go:69:
             Actually got:   Type:string, "1"
 ```
 
+Actually, you can write as below:
+
+```go
+package main
+
+import (
+	"testing"
+
+	. "github.com/bayashi/actually"
+)
+
+func Test(t *testing.T) {
+    love, err := getLove()
+        Got(err).Nil(t).
+            Got(love).True(t).
+            Expect(true).Same(t)
+}
+
+func getLove() (bool, error) {
+	return true, nil
+}
+```
+
 ## Installation
 
     go get github.com/bayashi/actually
