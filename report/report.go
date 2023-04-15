@@ -141,3 +141,8 @@ func (r *Report) Message(message string) *Report {
 	r.message = message
 	return r
 }
+
+func (r *Report) Messagef(format string, vars ...any) *Report {
+	r.message = fmt.Sprintf(format, vars...)
+	return r
+}
