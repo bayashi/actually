@@ -66,9 +66,9 @@ import (
 
 func Test(t *testing.T) {
     love, err := getLove()
-        Got(err).Nil(t).
-            Got(love).True(t).
-            Expect(true).Same(t)
+    Got(err).Nil(t).
+        Got(love).True(t).
+        Expect(true).Same(t)
 }
 
 func getLove() (bool, error) {
