@@ -36,15 +36,15 @@ func (a *testingA) NotNil(t *testing.T) *testingA {
 }
 
 func (a *testingA) isNil() bool {
-	if a.got == nil {
+	if a.got.RawValue() == nil {
 		return true
 	}
 
-	return isSpecialNil(a.got)
+	return isSpecialNil(a.got.RawValue())
 }
 
-func isSpecialNil(got any) bool {
-	v := reflect.ValueOf(got)
+func isSpecialNil(gotv any) bool {
+	v := reflect.ValueOf(gotv)
 	k := v.Kind()
 
 	return isSpecialKind(k) && v.IsNil()

@@ -19,7 +19,7 @@ func (a *testingA) True(t *testing.T) *testingA {
 		return a.fail(r)
 	}
 
-	if a.got != true {
+	if a.got.RawValue() != true {
 		a.t.Helper()
 		r := report.New().
 			Expect("true").
@@ -42,7 +42,7 @@ func (a *testingA) False(t *testing.T) *testingA {
 		return a.fail(r)
 	}
 
-	if a.got != false {
+	if a.got.RawValue() != false {
 		a.t.Helper()
 		r := report.New().
 			Expect("false").
@@ -54,7 +54,7 @@ func (a *testingA) False(t *testing.T) *testingA {
 }
 
 func (a *testingA) isBool() bool {
-	v := reflect.ValueOf(a.got)
+	v := reflect.ValueOf(a.got.RawValue())
 	k := v.Kind()
 
 	return k == reflect.Bool
