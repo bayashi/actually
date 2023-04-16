@@ -15,21 +15,24 @@ import (
 func (a *testingA) Same(t *testing.T) *testingA {
 	a.t = t
 
-	if reflect.TypeOf(a.got.RawValue()) != reflect.TypeOf(a.expect.RawValue()) {
+	got := a.got.RawValue()
+	expect := a.expect.RawValue()
+
+	if reflect.TypeOf(got) != reflect.TypeOf(expect) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_WrongType))
 	}
 
-	if isFuncType(a.got.RawValue()) {
+	if isFuncType(got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_GotIsFunc))
 	}
-	if isFuncType(a.expect.RawValue()) {
+	if isFuncType(expect) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_ExpectIsFunc))
 	}
 
-	if !objectsAreSame(a.expect.RawValue(), a.got.RawValue()) {
+	if !objectsAreSame(expect, got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_NotSame))
 	}
@@ -41,21 +44,24 @@ func (a *testingA) Same(t *testing.T) *testingA {
 func (a *testingA) SamePointer(t *testing.T) *testingA {
 	a.t = t
 
-	if !isPointerType(a.got.RawValue()) {
+	got := a.got.RawValue()
+	expect := a.expect.RawValue()
+
+	if !isPointerType(got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_GotIsNotPointer))
 	}
-	if !isPointerType(a.expect.RawValue()) {
+	if !isPointerType(expect) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNotPointer))
 	}
 
-	if reflect.TypeOf(a.got.RawValue()) != reflect.TypeOf(a.expect.RawValue()) {
+	if reflect.TypeOf(got) != reflect.TypeOf(expect) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_WrongType))
 	}
 
-	if a.got.RawValue() != a.expect.RawValue() {
+	if got != expect {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_WrongPointerAddress))
 	}
@@ -72,34 +78,37 @@ func (a *testingA) SamePointer(t *testing.T) *testingA {
 func (a *testingA) SameNumber(t *testing.T) *testingA {
 	a.t = t
 
-	if !isFuncType(a.got.RawValue()) && !isFuncType(a.expect.RawValue()) && objectsAreSame(a.expect.RawValue(), a.got.RawValue()) {
+	got := a.got.RawValue()
+	expect := a.expect.RawValue()
+
+	if !isFuncType(got) && !isFuncType(expect) && objectsAreSame(expect, got) {
 		return a // Pass
 	}
 
-	gotType := reflect.TypeOf(a.got.RawValue())
+	gotType := reflect.TypeOf(got)
 	if gotType == nil {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_GotIsNilType))
 	}
-	expectType := reflect.TypeOf(a.expect.RawValue())
+	expectType := reflect.TypeOf(expect)
 	if expectType == nil {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNilType))
 	}
 
-	expectValue := reflect.ValueOf(a.expect.RawValue())
+	expectValue := reflect.ValueOf(expect)
 	if !expectValue.IsValid() {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNotValidValue))
 	}
 
-	if !reflect.ValueOf(a.got.RawValue()).Type().ConvertibleTo(expectType) ||
+	if !reflect.ValueOf(got).Type().ConvertibleTo(expectType) ||
 		!expectValue.Type().ConvertibleTo(gotType) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_NotConvertibleTypes))
 	}
 
-	if !reflect.DeepEqual(expectValue.Convert(gotType).Interface(), a.got.RawValue()) {
+	if !reflect.DeepEqual(expectValue.Convert(gotType).Interface(), got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_NotSame))
 	}
