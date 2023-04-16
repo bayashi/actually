@@ -9,8 +9,8 @@ import (
 
 func reportForSame(a *testingA) *report.Report {
 	return report.New().
-		Expectf("Type:%T, %#v", a.expect, a.expect).
-		Gotf("Type:%T, %#v", a.got, a.got)
+		Expectf("Type:%Y, %#v", a.expect, a.expect).
+		Gotf("Type:%Y, %#v", a.got, a.got)
 }
 
 func isFuncType(v any) bool {
@@ -21,17 +21,17 @@ func isPointerType(v any) bool {
 	return v != nil && reflect.TypeOf(v).Kind() == reflect.Pointer
 }
 
-func objectsAreSame(expect any, got any) bool {
-	if expect == nil || got == nil {
-		return expect == got
+func objectsAreSame(expectv any, gotv any) bool {
+	if expectv == nil || gotv == nil {
+		return expectv == gotv
 	}
 
-	exp, ok := expect.([]byte)
+	exp, ok := expectv.([]byte)
 	if !ok {
-		return reflect.DeepEqual(expect, got)
+		return reflect.DeepEqual(expectv, gotv)
 	}
 
-	act, ok := got.([]byte)
+	act, ok := gotv.([]byte)
 	if !ok {
 		return false
 	}

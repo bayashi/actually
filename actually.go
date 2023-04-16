@@ -5,13 +5,14 @@ import (
 	"testing"
 
 	"github.com/bayashi/actually/report"
+	"github.com/bayashi/actually/testdata"
 	"github.com/bayashi/actually/trace"
 )
 
 type testingA struct {
-	got       any
+	got       *testdata.TestData
 	setGot    bool
-	expect    any
+	expect    *testdata.TestData
 	setExpect bool
 	t         *testing.T
 	failNow   bool
@@ -20,7 +21,7 @@ type testingA struct {
 // `Got` sets the value you actually got.
 func Got(g any) *testingA {
 	return &testingA{
-		got: g,
+		got: testdata.NewTestData(g, 0),
 		setGot: true,
 	}
 }
@@ -30,7 +31,7 @@ func (a *testingA) Got(g any) *testingA {
 		panic(panicReason_CalledGotTwice)
 	}
 
-	a.got = g
+	a.got = testdata.NewTestData(g, 0)
 	a.setGot = true
 
 	return a
@@ -39,7 +40,7 @@ func (a *testingA) Got(g any) *testingA {
 // `Expect` sets the value you expect to be the same as the one you got.
 func Expect(e any) *testingA {
 	return &testingA{
-		expect: e,
+		expect: testdata.NewTestData(e, 0),
 		setExpect: true,
 	}
 }
@@ -49,7 +50,7 @@ func (a *testingA) Expect(e any) *testingA {
 		panic(panicReason_CalledExpectTwice)
 	}
 
-	a.expect = e
+	a.expect = testdata.NewTestData(e, 0)
 	a.setExpect = true
 
 	return a
