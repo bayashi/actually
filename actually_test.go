@@ -9,10 +9,10 @@ func TestGot(t *testing.T) {
 	a := Got(i).Expect(i)
 
 	if a.got.RawValue() != i {
-		t.Errorf("`Got()` was broken. Expected:%#v, but Actual:%#v", i, a.got.RawValue())
+		t.Errorf("`Got()` was broken. Expected:%#v, but Actual:%#v", i, a.got)
 	}
 	if a.expect.RawValue() != i {
-		t.Errorf("`Expect()` was broken. Expected:%#v, but Actual:%#v", i, a.expect.RawValue())
+		t.Errorf("`Expect()` was broken. Expected:%#v, but Actual:%#v", i, a.expect)
 	}
 }
 
@@ -21,10 +21,10 @@ func TestExpect(t *testing.T) {
 	a := Expect(i).Got(i)
 
 	if a.got.RawValue() != i {
-		t.Errorf("`Got()` was broken. Expected:%#v, but Actual:%#v", i, a.got.RawValue())
+		t.Errorf("`Got()` was broken. Expected:%#v, but Actual:%#v", i, a.got)
 	}
 	if a.expect.RawValue() != i {
-		t.Errorf("`Expect()` was broken. Expected:%#v, but Actual:%#v", i, a.expect.RawValue())
+		t.Errorf("`Expect()` was broken. Expected:%#v, but Actual:%#v", i, a.expect)
 	}
 	if a.failNow != false {
 		t.Errorf("`FailNotNow()` was broken. Expected:%#v, but Actual:%#v", false, a.failNow)
