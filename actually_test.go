@@ -52,3 +52,10 @@ func TestDuplicateCall(t *testing.T) {
 	//Got(1).Got(1).NotNil(t)
 	//Expect(1).Expect(1).NotNil(t)
 }
+
+func TestSkip(t *testing.T) {
+	Got(1).NotNil(t)
+	Skip(t)
+	Got(2).NotNil(t)
+	Got(3).NotNil(t)
+}
