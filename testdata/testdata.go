@@ -14,7 +14,7 @@ func NewTestData(v any, maxLen int) *TestData {
 	max := bufio.MaxScanTokenSize
 	if maxLen < 0 {
 		maxLen = max + maxLen
-	} else if maxLen > bufio.MaxScanTokenSize {
+	} else if maxLen == 0 || maxLen > bufio.MaxScanTokenSize {
 		maxLen = bufio.MaxScanTokenSize
 	}
 
@@ -40,6 +40,9 @@ func (td *TestData) Format(s fmt.State, verb rune) {
 			flag += "#"
 		}
 		d := truncate(td.RawValue(), fmt.Sprintf("%%%sv", flag), td.maxLen)
+		fmt.Fprint(s, d)
+	case 'Y':
+		d := fmt.Sprintf("%T", td.RawValue())
 		fmt.Fprint(s, d)
 	case 's':
 		d := truncate(td.RawValue(), "%s", td.maxLen)

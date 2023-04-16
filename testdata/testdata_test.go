@@ -22,7 +22,7 @@ func TestTruncate(t *testing.T) {
 		{ format: "%+v", expect: "&{id:12 na<... truncated>"},
 		{ format: "%#v", expect: "&testdata.<... truncated>"},
 		{ format: "%s",  expect: "&{%!s(int=<... truncated>"},
-		{ format: "%T",  expect: "*testdata.TestData"},
+		{ format: "%Y",  expect: "*testdata.Example"}, // The type of RawValue()
 	}
 	for _, tt := range tts {
 		if got := fmt.Sprintf(tt.format, td); got != tt.expect {
