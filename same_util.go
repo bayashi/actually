@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"reflect"
 
+	"github.com/bayashi/actually/diff"
 	"github.com/bayashi/actually/report"
 )
 
@@ -11,6 +12,11 @@ func reportForSame(a *testingA) *report.Report {
 	return report.New().
 		Expectf("Type:%Y, %#v", a.expect, a.expect).
 		Gotf("Type:%Y, %#v", a.got, a.got)
+}
+
+func reportForSameWithDiff(a *testingA) *report.Report {
+	d := diff.Diff(a.expect.RawValue(), a.got.RawValue())
+	return reportForSame(a).Diff(d)
 }
 
 func isFuncType(v any) bool {

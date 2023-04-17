@@ -33,7 +33,7 @@ func (a *testingA) Same(t *testing.T) *testingA {
 
 	if !objectsAreSame(expect, got) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_NotSame))
+		return a.fail(reportForSameWithDiff(a).Reason(failReason_NotSame))
 	}
 
 	return a
@@ -62,7 +62,7 @@ func (a *testingA) SamePointer(t *testing.T) *testingA {
 
 	if got != expect {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_WrongPointerAddress))
+		return a.fail(reportForSameWithDiff(a).Reason(failReason_WrongPointerAddress))
 	}
 
 	return a
@@ -106,7 +106,7 @@ func (a *testingA) SameNumber(t *testing.T) *testingA {
 
 	if !isSameConvertedValueAsOther(expect, got) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_NotSame))
+		return a.fail(reportForSameWithDiff(a).Reason(failReason_NotSame))
 	}
 
 	return a
