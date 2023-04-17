@@ -1,3 +1,4 @@
+// trace package provides a function to get caller info for a testing tool
 package trace
 
 // The functions in this file were copied from github.com/stretchr/testify

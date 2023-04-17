@@ -1,3 +1,4 @@
+// report package provides methods to handle a test report for a testing tool
 package report
 
 // Most of the logic was copied from https://github.com/stretchr/testify
