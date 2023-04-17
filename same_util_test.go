@@ -40,6 +40,41 @@ func TestIsPointerType(t *testing.T) {
 	}
 }
 
+func TestIsTypeNil(t *testing.T) {
+	if !isTypeNil(nil) {
+		t.Errorf("<nil> should be nil type")
+	}
+	// more cases?
+}
+
+func TestIsValidValue(t *testing.T) {
+	// more cases!
+}
+
+func TestObjectsAreConvertible(t *testing.T) {
+	if !objectsAreConvertible(int(2), float32(2.0)) {
+		t.Errorf("Int and float32 should be Convertible")
+	}
+	if !objectsAreConvertible("foo", `foo`) {
+		t.Errorf("String and rune should be Convertible")
+	}
+	if objectsAreConvertible(int(2), complex128(2)) {
+		t.Errorf("Int and complex128 are NOT Convertible")
+	}
+}
+
+func TestIsSameConvertedValueAsOther(t *testing.T) {
+	if !isSameConvertedValueAsOther(int(2), float32(2.0)) {
+		t.Errorf("Int(2) and float32(2.0) should be Convertible and same")
+	}
+	if isSameConvertedValueAsOther(int(2), float32(2.1)) {
+		t.Errorf("Int(2) and float32(2.1) are Convertible, but not same")
+	}
+	if !isSameConvertedValueAsOther("foo", `foo`) {
+		t.Errorf("String:\"foo\" and rune:`foo` should be Convertible and same")
+	}
+}
+
 func TestObjectsAreSameType(t *testing.T) {
 	tts := []struct {
 		name string

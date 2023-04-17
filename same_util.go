@@ -21,6 +21,24 @@ func isPointerType(v any) bool {
 	return v != nil && reflect.TypeOf(v).Kind() == reflect.Pointer
 }
 
+func isTypeNil(v any) bool {
+	return reflect.TypeOf(v) == nil
+}
+
+func isValidValue(v any) bool {
+	return reflect.ValueOf(v).IsValid()
+}
+
+// Just confirming only types are convertible or not
+func objectsAreConvertible(expectv any, gotv any) bool {
+	return reflect.ValueOf(expectv).Type().ConvertibleTo(reflect.TypeOf(gotv)) &&
+		reflect.ValueOf(gotv).Type().ConvertibleTo(reflect.TypeOf(expectv))
+}
+
+func isSameConvertedValueAsOther(expectv any, gotv any) bool {
+	return reflect.DeepEqual(reflect.ValueOf(expectv).Convert(reflect.TypeOf(gotv)).Interface(), gotv)
+}
+
 func objectsAreSameType(expectv any, gotv any) bool {
 	return reflect.TypeOf(gotv) == reflect.TypeOf(expectv)
 }

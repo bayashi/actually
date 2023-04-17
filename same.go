@@ -1,7 +1,6 @@
 package actually
 
 import (
-	"reflect"
 	"testing"
 )
 
@@ -86,30 +85,26 @@ func (a *testingA) SameNumber(t *testing.T) *testingA {
 		return a // Pass
 	}
 
-	gotType := reflect.TypeOf(got)
-	if gotType == nil {
+	if isTypeNil(got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_GotIsNilType))
 	}
-	expectType := reflect.TypeOf(expect)
-	if expectType == nil {
+	if isTypeNil(expect) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNilType))
 	}
 
-	expectValue := reflect.ValueOf(expect)
-	if !expectValue.IsValid() {
+	if !isValidValue(expect) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNotValidValue))
 	}
 
-	if !reflect.ValueOf(got).Type().ConvertibleTo(expectType) ||
-		!expectValue.Type().ConvertibleTo(gotType) {
+	if !objectsAreConvertible(expect, got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_NotConvertibleTypes))
 	}
 
-	if !reflect.DeepEqual(expectValue.Convert(gotType).Interface(), got) {
+	if !isSameConvertedValueAsOther(expect, got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_NotSame))
 	}
