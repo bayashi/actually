@@ -2,8 +2,6 @@
 
 Yet another pithy testing framework `actually`.
 
-Experimental yet :D
-
 ## Usage
 
 ```go
@@ -67,7 +65,7 @@ import (
 func Test(t *testing.T) {
     love := true
     Got(love).NotNil(t).True(t).
-        Expect(true).Same(t)
+        Expect(true).Same(t) // Obviously pass
 }
 ```
 
