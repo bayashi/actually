@@ -44,10 +44,16 @@ func TestIsTypeNil(t *testing.T) {
 	if !isTypeNil(nil) {
 		t.Errorf("<nil> should be nil type")
 	}
+	if isTypeNil(int(3)) {
+		t.Errorf("int(3) should NOT be nil type")
+	}
 	// more cases?
 }
 
 func TestIsValidValue(t *testing.T) {
+	if !isValidValue(1) {
+		t.Errorf("1 should be valid value")
+	}
 	// more cases!
 }
 
