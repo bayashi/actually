@@ -32,7 +32,7 @@ func New() *Report {
 }
 
 func (r *Report) Put() string {
-	reportContents := r.buildReportContets()
+	reportContents := r.buildReportContents()
 
 	longestLen := 0
 	for _, rc := range *reportContents {
@@ -50,7 +50,7 @@ func (r *Report) Put() string {
 	return output
 }
 
-func (r *Report) buildReportContets() *[]*reportContent {
+func (r *Report) buildReportContents() *[]*reportContent {
 	var rContents []*reportContent
 
 	if r.trace != "" {
