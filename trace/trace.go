@@ -10,7 +10,7 @@ import (
 	"unicode/utf8"
 )
 
-func Info(skipTraceRule func(file string) bool) []string {
+func Info(skipTraceRule func(filepath string) bool) []string {
 	var pc uintptr
 	var file string
 	var line int

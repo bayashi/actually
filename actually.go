@@ -85,9 +85,9 @@ func (a *testingA) fail(r *report.Report) *testingA {
 	return a
 }
 
-var SkipTraceRule = func(file string) bool {
+var SkipTraceRule = func(filepath string) bool {
 	// Skip myself
-	return strings.Contains(file, "actually.go")
+	return strings.Contains(filepath, "actually.go")
 }
 
 func traceinfo() string {
