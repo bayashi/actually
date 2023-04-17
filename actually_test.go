@@ -1,6 +1,7 @@
 package actually
 
 import (
+	"strings"
 	"testing"
 )
 
@@ -16,6 +17,19 @@ func TestGot(t *testing.T) {
 	}
 }
 
+func TestActuallyGot(t *testing.T) {
+	i := 12
+	a := &testingA{}
+	a.Got(i).Expect(i)
+
+	if a.got.RawValue() != i {
+		t.Errorf("`actually.Got()` was broken. Expected:%#v, but Actual:%#v", i, a.got)
+	}
+	if a.expect.RawValue() != i {
+		t.Errorf("`actually.Expect()` was broken. Expected:%#v, but Actual:%#v", i, a.expect)
+	}
+}
+
 func TestExpect(t *testing.T) {
 	i := 13
 	a := Expect(i).Got(i)
@@ -28,6 +42,19 @@ func TestExpect(t *testing.T) {
 	}
 	if a.failNow != false {
 		t.Errorf("`FailNotNow()` was broken. Expected:%#v, but Actual:%#v", false, a.failNow)
+	}
+}
+
+func TestActuallyExpect(t *testing.T) {
+	i := 13
+	a := &testingA{}
+	a.Expect(i).Got(i)
+
+	if a.got.RawValue() != i {
+		t.Errorf("`actually.Got()` was broken. Expected:%#v, but Actual:%#v", i, a.got)
+	}
+	if a.expect.RawValue() != i {
+		t.Errorf("`actually.Expect()` was broken. Expected:%#v, but Actual:%#v", i, a.expect)
 	}
 }
 
@@ -58,4 +85,11 @@ func TestSkip(t *testing.T) {
 	Skip(t)
 	Got(2).NotNil(t)
 	Got(3).NotNil(t)
+}
+
+func TestTraceinfo(t *testing.T) {
+	trace := traceinfo()
+	if !strings.Contains(trace, "actually_test.go:91") {
+		t.Errorf("trace is wrong. Actual trace:%s", trace)
+	}
 }
