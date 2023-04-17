@@ -86,13 +86,13 @@ func (a *testingA) fail(r *report.Report) *testingA {
 	return a
 }
 
-var SkipTraceRule = func(filepath string) bool {
+var skipTraceRule = func(filepath string) bool {
 	// Skip myself
 	return strings.Contains(filepath, "actually.go")
 }
 
 func traceinfo() string {
-	return strings.Join(trace.Info(SkipTraceRule), traceSeparator)
+	return strings.Join(trace.Info(skipTraceRule), traceSeparator)
 }
 
 // `Skip` provides shorthand to skip further tests within the same function for `-short` option.
