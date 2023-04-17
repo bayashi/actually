@@ -18,7 +18,7 @@ func (a *testingA) Same(t *testing.T) *testingA {
 	got := a.got.RawValue()
 	expect := a.expect.RawValue()
 
-	if reflect.TypeOf(got) != reflect.TypeOf(expect) {
+	if !objectsAreSameType(expect, got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_WrongType))
 	}
