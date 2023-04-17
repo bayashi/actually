@@ -68,7 +68,7 @@ func TestSameNumber(t *testing.T) {
 	// fail
 	// actually.Got("1").Expect(1).SameNumber(t)
 	// actually.Got(1).Expect("1").SameNumber(t)
-	// actually.Got(nil).Expect(1).SameNumber(t)
+	// actually.Got(nil).Expect(0).SameNumber(t)
 }
 
 func TestChain(t *testing.T) {

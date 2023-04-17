@@ -21,6 +21,10 @@ func isPointerType(v any) bool {
 	return v != nil && reflect.TypeOf(v).Kind() == reflect.Pointer
 }
 
+func objectsAreSameType(expectv any, gotv any) bool {
+	return reflect.TypeOf(gotv) == reflect.TypeOf(expectv)
+}
+
 func objectsAreSame(expectv any, gotv any) bool {
 	if expectv == nil || gotv == nil {
 		return expectv == gotv

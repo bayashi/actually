@@ -18,7 +18,7 @@ func (a *testingA) Same(t *testing.T) *testingA {
 	got := a.got.RawValue()
 	expect := a.expect.RawValue()
 
-	if reflect.TypeOf(got) != reflect.TypeOf(expect) {
+	if !objectsAreSameType(expect, got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_WrongType))
 	}
@@ -56,7 +56,7 @@ func (a *testingA) SamePointer(t *testing.T) *testingA {
 		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNotPointer))
 	}
 
-	if reflect.TypeOf(got) != reflect.TypeOf(expect) {
+	if !objectsAreSameType(expect, got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_WrongType))
 	}
@@ -74,6 +74,7 @@ func (a *testingA) SamePointer(t *testing.T) *testingA {
 /*
 	Pass: actually.Got(float32(1.0)).Expect(int64(1)).SameNumber(t)
 	Fail: actually.Got("1").Expect(1).SameNumber(t) // string cannot convert to int
+	      actually.Got(nil).Expect(0).SameNumber(t) // <nil> is not acceptable
 */
 func (a *testingA) SameNumber(t *testing.T) *testingA {
 	a.t = t
