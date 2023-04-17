@@ -1,7 +1,6 @@
 package actually
 
 import (
-	"reflect"
 	"testing"
 )
 
@@ -18,7 +17,7 @@ func (a *testingA) Same(t *testing.T) *testingA {
 	got := a.got.RawValue()
 	expect := a.expect.RawValue()
 
-	if reflect.TypeOf(got) != reflect.TypeOf(expect) {
+	if !objectsAreSameType(expect, got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_WrongType))
 	}
@@ -34,7 +33,7 @@ func (a *testingA) Same(t *testing.T) *testingA {
 
 	if !objectsAreSame(expect, got) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_NotSame))
+		return a.fail(reportForSameWithDiff(a).Reason(failReason_NotSame))
 	}
 
 	return a
@@ -56,14 +55,14 @@ func (a *testingA) SamePointer(t *testing.T) *testingA {
 		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNotPointer))
 	}
 
-	if reflect.TypeOf(got) != reflect.TypeOf(expect) {
+	if !objectsAreSameType(expect, got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_WrongType))
 	}
 
 	if got != expect {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_WrongPointerAddress))
+		return a.fail(reportForSameWithDiff(a).Reason(failReason_WrongPointerAddress))
 	}
 
 	return a
@@ -74,6 +73,7 @@ func (a *testingA) SamePointer(t *testing.T) *testingA {
 /*
 	Pass: actually.Got(float32(1.0)).Expect(int64(1)).SameNumber(t)
 	Fail: actually.Got("1").Expect(1).SameNumber(t) // string cannot convert to int
+	      actually.Got(nil).Expect(0).SameNumber(t) // <nil> is not acceptable
 */
 func (a *testingA) SameNumber(t *testing.T) *testingA {
 	a.t = t
@@ -85,32 +85,28 @@ func (a *testingA) SameNumber(t *testing.T) *testingA {
 		return a // Pass
 	}
 
-	gotType := reflect.TypeOf(got)
-	if gotType == nil {
+	if isTypeNil(got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_GotIsNilType))
 	}
-	expectType := reflect.TypeOf(expect)
-	if expectType == nil {
+	if isTypeNil(expect) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNilType))
 	}
 
-	expectValue := reflect.ValueOf(expect)
-	if !expectValue.IsValid() {
+	if !isValidValue(expect) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNotValidValue))
 	}
 
-	if !reflect.ValueOf(got).Type().ConvertibleTo(expectType) ||
-		!expectValue.Type().ConvertibleTo(gotType) {
+	if !objectsAreConvertible(expect, got) {
 		a.t.Helper()
 		return a.fail(reportForSame(a).Reason(failReason_NotConvertibleTypes))
 	}
 
-	if !reflect.DeepEqual(expectValue.Convert(gotType).Interface(), got) {
+	if !isSameConvertedValueAsOther(expect, got) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_NotSame))
+		return a.fail(reportForSameWithDiff(a).Reason(failReason_NotSame))
 	}
 
 	return a
