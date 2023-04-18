@@ -16,7 +16,7 @@ type Report struct {
 	reason  string `label:"Fail reason"`
 	expect  string `label:"Expected"`
 	got     string `label:"Actually got"`
-	diff    string `label:"Diff"`
+	diff    string `label:"Diff Details"`
 	message string `label:"Message"`
 }
 
