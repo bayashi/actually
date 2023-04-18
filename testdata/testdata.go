@@ -8,7 +8,7 @@ import (
 )
 
 type TestData struct {
-	value any
+	value  any
 	maxLen int
 }
 
@@ -21,7 +21,7 @@ func NewTestData(v any, maxLen int) *TestData {
 	}
 
 	return &TestData{
-		value: v,
+		value:  v,
 		maxLen: maxLen,
 	}
 }
