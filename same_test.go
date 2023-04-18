@@ -16,7 +16,7 @@ func TestSame(t *testing.T) {
 	actually.Got([2]int{1, 2}).Expect([2]int{1, 2}).Same(t)
 	actually.Got([]string{}).Expect([]string{}).Same(t)
 	actually.Got([]string{"a"}).Expect([]string{"a"}).Same(t)
-	actually.Got(map[string]int{"foo":12}).Expect(map[string]int{"foo":12}).Same(t)
+	actually.Got(map[string]int{"foo": 12}).Expect(map[string]int{"foo": 12}).Same(t)
 
 	foo := struct {
 		bar string
@@ -72,6 +72,6 @@ func TestSameNumber(t *testing.T) {
 }
 
 func TestChain(t *testing.T) {
-    actually.Got(7).NotNil(t).
-        Expect(7).SameNumber(t).Same(t)
+	actually.Got(7).NotNil(t).
+		Expect(7).SameNumber(t).Same(t)
 }

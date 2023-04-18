@@ -22,7 +22,7 @@ type testingA struct {
 // `Got` sets the value you actually got.
 func Got(g any) *testingA {
 	return &testingA{
-		got: testdata.NewTestData(g, 0),
+		got:    testdata.NewTestData(g, 0),
 		setGot: true,
 	}
 }
@@ -41,7 +41,7 @@ func (a *testingA) Got(g any) *testingA {
 // `Expect` sets the value you expect to be the same as the one you got.
 func Expect(e any) *testingA {
 	return &testingA{
-		expect: testdata.NewTestData(e, 0),
+		expect:    testdata.NewTestData(e, 0),
 		setExpect: true,
 	}
 }

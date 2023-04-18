@@ -6,16 +6,16 @@ import (
 
 func TestDiff(t *testing.T) {
 	type S struct {
-		id int
+		id   int
 		name string
 	}
 
 	a := &S{
-		id: 123,
+		id:   123,
 		name: "aiko",
 	}
 	b := &S{
-		id: 124,
+		id:   124,
 		name: "eiko",
 	}
 

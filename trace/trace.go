@@ -50,7 +50,7 @@ func Info(skipTraceRule func(filepath string) bool) []string {
 		}
 
 		segments := strings.Split(funcName, ".")
-		name := segments[len(segments) - 1]
+		name := segments[len(segments)-1]
 		if isGolangTestFunc(name) {
 			break
 		}
