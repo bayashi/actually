@@ -89,7 +89,7 @@ func (a *testingA) fail(r *report.Report) *testingA {
 
 // `ShowRawData` turns on a flag to show test values as raw text in a fail report.
 func (a *testingA) ShowRawData() *testingA {
-	a.ShowRawData = true
+	a.showRawData = true
 
 	return a
 }
