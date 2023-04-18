@@ -44,7 +44,7 @@ func (r *Report) Put() string {
 
 	output := ""
 	for _, rc := range *reportContents {
-		label := fmt.Sprintf("%s:%s", rc.label, strings.Repeat(" ", longestLen - len(rc.label)))
+		label := fmt.Sprintf("%s:%s", rc.label, strings.Repeat(" ", longestLen-len(rc.label)))
 		output += fmt.Sprintf("\t%s\t%s\n", label, indentMessage(rc.content, longestLen))
 	}
 
@@ -90,7 +90,7 @@ func indentMessage(message string, longestLen int) string {
 	outBuf := new(bytes.Buffer)
 	for i, scanner := 0, bufio.NewScanner(strings.NewReader(message)); scanner.Scan(); i++ {
 		if i != 0 {
-			outBuf.WriteString("\n\t" + strings.Repeat(" ", longestLen + 1) + "\t")
+			outBuf.WriteString("\n\t" + strings.Repeat(" ", longestLen+1) + "\t")
 		}
 		outBuf.WriteString(scanner.Text())
 	}
