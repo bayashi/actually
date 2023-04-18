@@ -11,13 +11,13 @@ import (
 )
 
 type testingA struct {
-	got           *testdata.TestData
-	setGot        bool
-	expect        *testdata.TestData
-	setExpect     bool
-	t             *testing.T
-	failNow       bool
-	rawTextReport bool
+	got         *testdata.TestData
+	setGot      bool
+	expect      *testdata.TestData
+	setExpect   bool
+	t           *testing.T
+	failNow     bool
+	showRawData bool
 }
 
 // `Got` sets the value you actually got.
@@ -87,9 +87,9 @@ func (a *testingA) fail(r *report.Report) *testingA {
 	return a
 }
 
-// `RawTextReport` turns on a flag to show test values as raw text in a fail report.
-func (a *testingA) RawTextReport() *testingA {
-	a.rawTextReport = true
+// `ShowRawData` turns on a flag to show test values as raw text in a fail report.
+func (a *testingA) ShowRawData() *testingA {
+	a.ShowRawData = true
 
 	return a
 }

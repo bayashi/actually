@@ -14,7 +14,7 @@ func reportForSame(a *testingA) *report.Report {
 		Expectf(template_DumpStringType, a.expect).
 		Gotf(template_DumpStringType, a.got)
 
-	if a.rawTextReport && a.expect.IsStringType() && a.got.IsStringType() {
+	if a.showRawData && a.expect.IsStringType() && a.got.IsStringType() {
 		r = r.ExpectAsString(fmt.Sprintf(template_DumpAsRawString, a.expect)).
 			GotAsString(fmt.Sprintf(template_DumpAsRawString, a.got))
 	}
