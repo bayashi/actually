@@ -1,3 +1,4 @@
+// testdata package provides utilities to handle data of testing
 package testdata
 
 import (

@@ -1,3 +1,4 @@
+// diff package provides a utility to handle diff data for a testing tool
 package diff
 
 // Most of the logic was copied from https://github.com/stretchr/testify

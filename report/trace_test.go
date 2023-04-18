@@ -8,7 +8,7 @@ import (
 )
 
 func TestInfo(t *testing.T) {
-	skipRule := func(file string) bool { return false }
+	skipRule := func(filepath string) bool { return false }
 	trace := trace.Info(skipRule)
 	if len(trace) != 1 {
 		t.Error("trace length should be 1.")
