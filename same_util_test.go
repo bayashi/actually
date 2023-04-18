@@ -5,15 +5,6 @@ import (
 	"time"
 )
 
-func TestFTemplate(t *testing.T) {
-	if fTemplate(true) != "Type:%Y, \n%s" {
-		t.Error("fTemplate() for string is wrong")
-	}
-	if fTemplate(false) != "Type:%Y, %#v" {
-		t.Error("fTemplate() is wrong")
-	}
-}
-
 func TestIsFuncType(t *testing.T) {
 	tts := []struct {
 		name   string
