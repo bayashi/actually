@@ -10,8 +10,19 @@ import (
 
 func reportForSame(a *testingA) *report.Report {
 	return report.New().
-		Expectf("Type:%Y, %#v", a.expect, a.expect).
-		Gotf("Type:%Y, %#v", a.got, a.got)
+		Expectf(fTemplate(a.expect.IsStringType()), a.expect, a.expect).
+		Gotf(fTemplate(a.got.IsStringType()), a.got, a.got)
+}
+
+func fTemplate(isString bool) string {
+	format := "Type:%Y, "
+	if isString {
+		format += "\n%s"
+	} else {
+		format += "%#v"
+	}
+
+	return format
 }
 
 func reportForSameWithDiff(a *testingA) *report.Report {
