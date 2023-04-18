@@ -5,6 +5,14 @@ import (
 	"time"
 )
 
+// func TestReportForSame(t *testing.T) {
+// 	a := Got("Hello.\nThanks!").Expect("Hello.\nThank you!")
+// 	out := reportForSame(a).Put()
+// 	if out != "" {
+// 		t.Errorf("%s", "\n"+out)
+// 	}
+// }
+
 func TestIsFuncType(t *testing.T) {
 	tts := []struct {
 		name   string

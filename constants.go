@@ -17,4 +17,7 @@ const (
 	failReason_ExpectIsNilType       = "Type of `Expect` is a nil value"
 	failReason_ExpectIsNotValidValue = "`Expect` value is NOT a valid value"
 	failReason_NotConvertibleTypes   = "The types of `Got` and `Expect` are NOT convertible"
+
+	template_Dump           = "Type: %Y\nDump: %#v"
+	template_DumpStringType = "Type: %Y\nDump: %#v\nAs String:\n---\n%s\n---"
 )
