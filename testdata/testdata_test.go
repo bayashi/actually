@@ -6,7 +6,7 @@ import (
 )
 
 type Example struct {
-	id int
+	id   int
 	name string
 }
 
@@ -18,11 +18,11 @@ func TestTruncate(t *testing.T) {
 		format string
 		expect string
 	}{
-		{ format: "%v",  expect: "&{12 John <... truncated>"},
-		{ format: "%+v", expect: "&{id:12 na<... truncated>"},
-		{ format: "%#v", expect: "&testdata.<... truncated>"},
-		{ format: "%s",  expect: "&{%!s(int=<... truncated>"},
-		{ format: "%Y",  expect: "*testdata.Example"}, // The type of RawValue()
+		{format: "%v", expect: "&{12 John <... truncated>"},
+		{format: "%+v", expect: "&{id:12 na<... truncated>"},
+		{format: "%#v", expect: "&testdata.<... truncated>"},
+		{format: "%s", expect: "&{%!s(int=<... truncated>"},
+		{format: "%Y", expect: "*testdata.Example"}, // The type of RawValue()
 	}
 	for _, tt := range tts {
 		if got := fmt.Sprintf(tt.format, td); got != tt.expect {
