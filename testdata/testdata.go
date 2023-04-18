@@ -4,6 +4,7 @@ package testdata
 import (
 	"bufio"
 	"fmt"
+	"reflect"
 )
 
 type TestData struct {
@@ -27,6 +28,17 @@ func NewTestData(v any, maxLen int) *TestData {
 
 func (td *TestData) RawValue() any {
 	return td.value
+}
+
+func (td *TestData) IsStringType() bool {
+	if v := td.RawValue(); v != nil {
+		k := reflect.ValueOf(v).Kind()
+		if k == reflect.String {
+			return true
+		}
+	}
+
+	return false
 }
 
 // For `fmt/print.go` Formatter interface
