@@ -6,7 +6,7 @@ import (
 )
 
 // func TestReportForSame(t *testing.T) {
-// 	a := Got("Hello.\nThanks!").Expect("Hello.\nThank you!")
+// 	a := Got("Hello.\nThanks!").Expect("Hello.\nThank you!").RawTextReport()
 // 	out := reportForSame(a).Put()
 // 	if out != "" {
 // 		t.Errorf("%s", "\n"+out)
