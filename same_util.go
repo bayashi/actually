@@ -11,14 +11,14 @@ import (
 func reportForSame(a *testingA) *report.Report {
 	r := report.New()
 	if a.expect.IsStringType() {
-		r.Expectf("Type:%Y\nDump:%#v\nAs String:\n%s", a.expect, a.expect, a.expect)
+		r.Expectf(template_DumpStringType, a.expect, a.expect, a.expect)
 	} else {
-		r.Expectf("Type:%Y\nDump:%#v", a.expect, a.expect)
+		r.Expectf(template_Dump, a.expect, a.expect)
 	}
 	if a.got.IsStringType() {
-		r.Gotf("Type:%Y\nDump:%#v\nAs String:\n%s", a.got, a.got, a.got)
+		r.Gotf(template_DumpStringType, a.got, a.got, a.got)
 	} else {
-		r.Gotf("Type:%Y\nDump:%#v", a.got, a.got)
+		r.Gotf(template_Dump, a.got, a.got)
 	}
 
 	return r
