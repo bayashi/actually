@@ -2,6 +2,7 @@ package actually
 
 import (
 	"bytes"
+	"fmt"
 	"reflect"
 
 	"github.com/bayashi/actually/diff"
@@ -9,18 +10,13 @@ import (
 )
 
 func reportForSame(a *testingA) *report.Report {
-	r := report.New()
-	if a.expect.IsStringType() && a.got.IsStringType() {
-		if a.rawTextReport {
-			r.Expectf(template_DumpStringType + "\n" + template_DumpAsStringAlso, a.expect, a.expect)
-			r.Gotf(template_DumpStringType + "\n" + template_DumpAsStringAlso, a.got, a.got)
-		} else {
-			r.Expectf(template_DumpStringType, a.expect)
-			r.Gotf(template_DumpStringType, a.got)
-		}
-	} else {
-		r.Expectf(template_Dump, a.expect, a.expect)
-		r.Gotf(template_Dump, a.got, a.got)
+	r := report.New().
+		Expectf(template_DumpStringType, a.expect).
+		Gotf(template_DumpStringType, a.got)
+
+	if a.showRawData && a.expect.IsStringType() && a.got.IsStringType() {
+		r = r.ExpectAsString(fmt.Sprintf(template_DumpAsRawString, a.expect)).
+			GotAsString(fmt.Sprintf(template_DumpAsRawString, a.got))
 	}
 
 	return r

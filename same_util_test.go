@@ -6,11 +6,9 @@ import (
 )
 
 // func TestReportForSame(t *testing.T) {
-// 	a := Got("Hello.\nThanks!").Expect("Hello.\nThank you!").RawTextReport()
+// 	a := Got("Hello.\nThanks!").Expect("Hello.\nThank you!").ShowRawData()
 // 	out := reportForSame(a).Put()
-// 	if out != "" {
-// 		t.Errorf("%s", "\n"+out)
-// 	}
+// 	fmt.Print(out)
 // }
 
 func TestIsFuncType(t *testing.T) {

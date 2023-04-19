@@ -12,13 +12,15 @@ import (
 )
 
 type Report struct {
-	trace   string `label:"Trace"`
-	name    string `label:"Test func"`
-	reason  string `label:"Fail reason"`
-	expect  string `label:"Expected"`
-	got     string `label:"Actually got"`
-	diff    string `label:"Diff Details"`
-	message string `label:"Message"`
+	trace          string `label:"Trace"`
+	name           string `label:"Test func"`
+	reason         string `label:"Fail reason"`
+	expect         string `label:"Expected"`
+	expectAsString string `label:"Expected Raw"`
+	got            string `label:"Actually got"`
+	gotAsString    string `label:"Got Raw"`
+	diff           string `label:"Diff Details"`
+	message        string `label:"Message"`
 }
 
 type reportContent struct {
@@ -72,6 +74,12 @@ func (r *Report) buildReportContents() *[]*reportContent {
 	if r.diff != "" {
 		rContents = append(rContents, &reportContent{label: r.label("diff"), content: r.diff})
 	}
+	if r.expectAsString != "" {
+		rContents = append(rContents, &reportContent{label: r.label("expectAsString"), content: r.expectAsString})
+	}
+	if r.gotAsString != "" {
+		rContents = append(rContents, &reportContent{label: r.label("gotAsString"), content: r.gotAsString})
+	}
 	if r.message != "" {
 		rContents = append(rContents, &reportContent{label: r.label("message"), content: r.message})
 	}
@@ -123,6 +131,11 @@ func (r *Report) Gotf(format string, vars ...any) *Report {
 	return r
 }
 
+func (r *Report) GotAsString(stringGot string) *Report {
+	r.gotAsString = stringGot
+	return r
+}
+
 func (r *Report) Expect(expect string) *Report {
 	r.expect = expect
 	return r
@@ -130,6 +143,11 @@ func (r *Report) Expect(expect string) *Report {
 
 func (r *Report) Expectf(format string, vars ...any) *Report {
 	r.expect = fmt.Sprintf(format, vars...)
+	return r
+}
+
+func (r *Report) ExpectAsString(stringExpect string) *Report {
+	r.expectAsString = stringExpect
 	return r
 }
 
