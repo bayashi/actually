@@ -1,5 +1,9 @@
 # Test Actually
 
+<a href="https://github.com/bayashi/actually/blob/main/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-GREEN.png"></a>
+<a href="https://github.com/bayashi/actually/actions"><img src="https://github.com/bayashi/actually/workflows/main/badge.svg?_t=1681289447"/></a>
+<a href="https://pkg.go.dev/github.com/bayashi/actually"><img src="https://pkg.go.dev/badge/github.com/bayashi/actually.svg" alt="Go Reference"></a>
+
 Yet another pithy testing framework `actually`.
 
 ## Usage
