@@ -9,9 +9,9 @@ const (
 	message_ExpectTrue  = "Boolean type <true>"
 	message_ExpectFalse = "Boolean type <false>"
 
-	failReason_WrongType             = "Each value you set `Got` and `Expect` has a different type"
+	failReason_WrongType             = "Different type"
 	failReason_NotSame               = "Not same value"
-	failReason_WrongPointerAddress   = "Wrong Pointer"
+	failReason_WrongPointerAddress   = "Wrong pointer address"
 	failReason_GotIsFunc             = "`Got` value is type of function"
 	failReason_ExpectIsFunc          = "`Expect` value is type of function"
 	failReason_GotIsNotPointer       = "`Got` is NOT type of Pointer"
