@@ -11,7 +11,8 @@ import (
 	Pass: actually.Got(12).Expect(12).Same(t)
 	Fail: actually.Got(int16(12)).Expect(int32(12)).Same(t)
 */
-func (a *testingA) Same(t *testing.T) *testingA {
+func (a *testingA) Same(t *testing.T, testNames ...string) *testingA {
+	a.name = a.naming(testNames...)
 	a.t = t
 
 	got := a.got.RawValue()
@@ -40,7 +41,8 @@ func (a *testingA) Same(t *testing.T) *testingA {
 }
 
 // `SamePointer` verifies that two objects point to the same object.
-func (a *testingA) SamePointer(t *testing.T) *testingA {
+func (a *testingA) SamePointer(t *testing.T, testNames ...string) *testingA {
+	a.name = a.naming(testNames...)
 	a.t = t
 
 	got := a.got.RawValue()
@@ -75,7 +77,8 @@ func (a *testingA) SamePointer(t *testing.T) *testingA {
 	Fail: actually.Got("1").Expect(1).SameNumber(t) // string cannot convert to int
 	      actually.Got(nil).Expect(0).SameNumber(t) // <nil> is not acceptable
 */
-func (a *testingA) SameNumber(t *testing.T) *testingA {
+func (a *testingA) SameNumber(t *testing.T, testNames ...string) *testingA {
+	a.name = a.naming(testNames...)
 	a.t = t
 
 	got := a.got.RawValue()

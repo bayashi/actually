@@ -13,6 +13,10 @@ func TestTrue(t *testing.T) {
 	actually.Got(1 == 2).False(t)
 	actually.Got("foo" == "hoo").False(t)
 
+	// test name
+	actually.Got(2 == 2).True(t, "True test") //lint:ignore SA4000 this is test
+	actually.Got(2 == 3).False(t, "False test")
+
 	// fail now
 	//actually.Got(1==2).FailNow().True(t)
 

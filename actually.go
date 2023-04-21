@@ -18,6 +18,7 @@ type testingA struct {
 	t           *testing.T
 	failNow     bool
 	showRawData bool
+	name        string
 }
 
 // `Got` sets the value you actually got.
@@ -76,7 +77,7 @@ func (a *testingA) FailNow() *testingA {
 
 func (a *testingA) fail(r *report.Report) *testingA {
 	a.t.Helper()
-	r.Trace(traceinfo()).Name(a.t.Name() + "()")
+	r.Trace(traceinfo()).Function(a.t.Name() + "()").Name(a.name)
 	a.t.Errorf("\n%s", r.Put())
 	if a.failNow {
 		a.t.FailNow()
@@ -115,5 +116,26 @@ func traceinfo() string {
 func Skip(t *testing.T) {
 	if testing.Short() {
 		t.SkipNow()
+	}
+}
+
+// Set test name.
+func (a *testingA) Name(n string) *testingA {
+	a.name = n
+
+	return a
+}
+
+func (a *testingA) naming(testNames ...string) string {
+	if a.name != "" {
+		if  len(testNames) > 0 {
+			n := []string{a.name}
+			n = append(n, testNames...)
+			return strings.Join(n, ", ")
+		} else {
+			return a.name
+		}
+	} else {
+		return strings.Join(testNames, ", ")
 	}
 }

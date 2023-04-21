@@ -33,6 +33,9 @@ func TestSame(t *testing.T) {
 	// Just data are same. So, below test will fail
 	//actually.Got(fmt.Sprintf("%p", &foo)).Expect(fmt.Sprintf("%p", &bar)).Same(t)
 
+	// test name
+	actually.Got(0).Expect(0).Same(t, "zero")
+
 	// NOT SUPPORT chan YET
 	// ch1 := make(chan string, 1)
 	// ch1 <- "foo"
@@ -54,6 +57,9 @@ func TestSamePointer(t *testing.T) {
 	actually.Got(ptr).Expect(ptr2).SamePointer(t)
 	actually.Got(ptr).Expect(&i).SamePointer(t)
 
+	// test name
+	actually.Got(ptr).Expect(ptr2).SamePointer(t, "Same Pointer")
+
 	// fail
 	// actually.Got("").Expect(ptr).SamePointer(t)
 	// actually.Got(ptr).Expect("").SamePointer(t)
@@ -64,6 +70,9 @@ func TestSamePointer(t *testing.T) {
 func TestSameNumber(t *testing.T) {
 	actually.Got(int8(1)).Expect(int32(1)).SameNumber(t)
 	actually.Got(float32(1.0)).Expect(int64(1)).SameNumber(t)
+
+	// test name
+	actually.Got(1).Expect(1).SameNumber(t, "Same Number")
 
 	// fail
 	// actually.Got("1").Expect(1).SameNumber(t)

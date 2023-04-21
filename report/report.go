@@ -13,7 +13,8 @@ import (
 
 type Report struct {
 	trace          string `label:"Trace"`
-	name           string `label:"Test func"`
+	name           string `label:"Name"`
+	function       string `label:"Function"`
 	reason         string `label:"Fail reason"`
 	expect         string `label:"Expected"`
 	expectAsString string `label:"Expected Raw"`
@@ -58,6 +59,9 @@ func (r *Report) buildReportContents() *[]*reportContent {
 
 	if r.trace != "" {
 		rContents = append(rContents, &reportContent{label: r.label("trace"), content: r.trace})
+	}
+	if r.function != "" {
+		rContents = append(rContents, &reportContent{label: r.label("function"), content: r.function})
 	}
 	if r.name != "" {
 		rContents = append(rContents, &reportContent{label: r.label("name"), content: r.name})
@@ -108,6 +112,11 @@ func indentMessage(message string, longestLen int) string {
 
 func (r *Report) Trace(trace string) *Report {
 	r.trace = trace
+	return r
+}
+
+func (r *Report) Function(function string) *Report {
+	r.function = function
 	return r
 }
 
