@@ -7,7 +7,8 @@ import (
 	"github.com/bayashi/actually/report"
 )
 
-func (a *testingA) True(t *testing.T) *testingA {
+func (a *testingA) True(t *testing.T, testNames ...string) *testingA {
+	a.name = a.naming(testNames...)
 	a.t = t
 
 	if !a.isBool() {
@@ -30,7 +31,8 @@ func (a *testingA) True(t *testing.T) *testingA {
 	return a
 }
 
-func (a *testingA) False(t *testing.T) *testingA {
+func (a *testingA) False(t *testing.T, testNames ...string) *testingA {
+	a.name = a.naming(testNames...)
 	a.t = t
 
 	if !a.isBool() {

@@ -7,7 +7,8 @@ import (
 	"github.com/bayashi/actually/report"
 )
 
-func (a *testingA) Nil(t *testing.T) *testingA {
+func (a *testingA) Nil(t *testing.T, testNames ...string) *testingA {
+	a.name = a.naming(testNames...)
 	a.t = t
 
 	if !a.isNil() {
@@ -21,7 +22,8 @@ func (a *testingA) Nil(t *testing.T) *testingA {
 	return a
 }
 
-func (a *testingA) NotNil(t *testing.T) *testingA {
+func (a *testingA) NotNil(t *testing.T, testNames ...string) *testingA {
+	a.name = a.naming(testNames...)
 	a.t = t
 
 	if a.isNil() {
