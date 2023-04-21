@@ -94,7 +94,7 @@ same_test.go:19:
 actually.Got(stringA).Expect(stringB).ShowRawData().Same(t)
 ```
 
-It would be helpful to compare intricate strigns, like below:
+It would be helpful to compare intricate strigns, like below. You don't need to keep commented-out lines to dump test data anymore:
 
 ```
 builder_test.go:133:
