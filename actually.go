@@ -119,6 +119,7 @@ func Skip(t *testing.T) {
 	}
 }
 
+// Set test name.
 func (a *testingA) Name(n string) *testingA {
 	a.name = n
 
