@@ -12,8 +12,8 @@ const (
 	failReason_WrongType             = "Each value you set `Got` and `Expect` has a different type"
 	failReason_NotSame               = "Not same value"
 	failReason_WrongPointerAddress   = "Wrong Type"
-	failReason_GotIsFunc             = "`Got` value is type of function. It cannot be used in Same() method"
-	failReason_ExpectIsFunc          = "`Expect` value is type of function. It cannot be used in Same() method"
+	failReason_GotIsFunc             = "`Got` value is type of function. It's not acceptable in Same() method"
+	failReason_ExpectIsFunc          = "`Expect` value is type of function. It's not acceptable in Same() method"
 	failReason_GotIsNotPointer       = "`Got` is NOT type of Pointer. It should be a Pointer for SamePointer() method"
 	failReason_ExpectIsNotPointer    = "`Expect` is NOT type of Pointer. It should be a Pointer for SamePointer() method"
 	failReason_GotIsNilType          = "Type of `Got` is a nil value"
@@ -22,7 +22,7 @@ const (
 	failReason_ExpectIsNotValidValue = "`Expect` value is NOT a valid value"
 	failReason_NotConvertibleTypes   = "The types of `Got` and `Expect` are NOT convertible"
 
-	template_Dump            = "Type: %Y\nDump: %#v"
+	template_Dump            = "Type: %Y, Dump: %#v"
 	template_DumpStringType  = "Dump: %#v"
 	template_DumpAsRawString = "---\n%s\n---"
 )
