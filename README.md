@@ -9,7 +9,7 @@ Yet another pithy testing framework `actually`.
 ## Usage
 
 ```go
-package you
+package main
 
 import (
     "testing"
