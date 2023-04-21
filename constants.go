@@ -11,7 +11,7 @@ const (
 
 	failReason_WrongType             = "Each value you set `Got` and `Expect` has a different type"
 	failReason_NotSame               = "Not same value"
-	failReason_WrongPointerAddress   = "Wrong Type"
+	failReason_WrongPointerAddress   = "Wrong Pointer"
 	failReason_GotIsFunc             = "`Got` value is type of function. It's not acceptable in Same() method"
 	failReason_ExpectIsFunc          = "`Expect` value is type of function. It's not acceptable in Same() method"
 	failReason_GotIsNotPointer       = "`Got` is NOT type of Pointer. It should be a Pointer for SamePointer() method"
