@@ -10,7 +10,7 @@ const (
 	message_ExpectFalse = "Boolean type <false>"
 
 	failReason_WrongType             = "Each value you set `Got` and `Expect` has a different type"
-	failReason_NotSame               = "Not same"
+	failReason_NotSame               = "Not same value"
 	failReason_WrongPointerAddress   = "Wrong Type"
 	failReason_GotIsFunc             = "`Got` value is type of function. It cannot be used in Same() method"
 	failReason_ExpectIsFunc          = "`Expect` value is type of function. It cannot be used in Same() method"
