@@ -6,7 +6,10 @@ const (
 	panicReason_CalledGotTwice    = "Don't call `Got` method twice. It has been called already"
 	panicReason_CalledExpectTwice = "Don't call `Expect` method twice. It has been called already"
 
-	failReason_WrongType             = "Wrong Type"
+	message_ExpectTrue  = "Boolean type <true>"
+	message_ExpectFalse = "Boolean type <false>"
+
+	failReason_WrongType             = "Each value you set `Got` and `Expect` has a different type"
 	failReason_NotSame               = "Not same"
 	failReason_WrongPointerAddress   = "Wrong Type"
 	failReason_GotIsFunc             = "`Got` value is type of function. It cannot be used in Same() method"
