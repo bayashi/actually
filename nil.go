@@ -31,7 +31,7 @@ func (a *testingA) NotNil(t *testing.T, testNames ...string) *testingA {
 		r := report.New().
 			Expect("Not <nil>").
 			Got("<nil>").
-			Reason(failReason_ExpectIsNotNil)
+			Reason(reason_ExpectIsNotNil)
 		return a.fail(r)
 	}
 

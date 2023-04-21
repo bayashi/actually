@@ -20,21 +20,21 @@ func (a *testingA) Same(t *testing.T, testNames ...string) *testingA {
 
 	if !objectsAreSameType(expect, got) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_WrongType))
+		return a.fail(reportForSame(a).Reason(reason_WrongType))
 	}
 
 	if isFuncType(got) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_GotIsFunc).Notice(failNotice_NotAcceptableSameMethod))
+		return a.fail(reportForSame(a).Reason(reason_GotIsFunc).Notice(notice_Same_NotAcceptable))
 	}
 	if isFuncType(expect) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_ExpectIsFunc).Notice(failNotice_NotAcceptableSameMethod))
+		return a.fail(reportForSame(a).Reason(reason_ExpectIsFunc).Notice(notice_Same_NotAcceptable))
 	}
 
 	if !objectsAreSame(expect, got) {
 		a.t.Helper()
-		return a.fail(reportForSameWithDiff(a).Reason(failReason_NotSame))
+		return a.fail(reportForSameWithDiff(a).Reason(reason_NotSame))
 	}
 
 	return a
@@ -50,21 +50,21 @@ func (a *testingA) SamePointer(t *testing.T, testNames ...string) *testingA {
 
 	if !isPointerType(got) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_GotIsNotPointer).Notice(failNotice_ShouldPointerSamePointer))
+		return a.fail(reportForSame(a).Reason(reason_GotIsNotPointer).Notice(notice_SamePointer_ShouldPointer))
 	}
 	if !isPointerType(expect) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNotPointer).Notice(failNotice_ShouldPointerSamePointer))
+		return a.fail(reportForSame(a).Reason(reason_ExpectIsNotPointer).Notice(notice_SamePointer_ShouldPointer))
 	}
 
 	if !objectsAreSameType(expect, got) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_WrongType))
+		return a.fail(reportForSame(a).Reason(reason_WrongType))
 	}
 
 	if got != expect {
 		a.t.Helper()
-		return a.fail(reportForSameWithDiff(a).Reason(failReason_WrongPointerAddress))
+		return a.fail(reportForSameWithDiff(a).Reason(reason_WrongPointerAddress))
 	}
 
 	return a
@@ -90,26 +90,26 @@ func (a *testingA) SameNumber(t *testing.T, testNames ...string) *testingA {
 
 	if isTypeNil(got) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_GotIsNilType).Notice(failNotice_ShouldNumberSameNumber))
+		return a.fail(reportForSame(a).Reason(reason_GotIsNilType).Notice(notice_SameNumber_ShouldNumber))
 	}
 	if isTypeNil(expect) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNilType).Notice(failNotice_ShouldNumberSameNumber))
+		return a.fail(reportForSame(a).Reason(reason_ExpectIsNilType).Notice(notice_SameNumber_ShouldNumber))
 	}
 
 	if !isValidValue(expect) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_ExpectIsNotValidValue))
+		return a.fail(reportForSame(a).Reason(reason_ExpectIsNotValidValue))
 	}
 
 	if !objectsAreConvertible(expect, got) {
 		a.t.Helper()
-		return a.fail(reportForSame(a).Reason(failReason_NotConvertibleTypes))
+		return a.fail(reportForSame(a).Reason(reason_NotConvertibleTypes))
 	}
 
 	if !isSameConvertedValueAsOther(expect, got) {
 		a.t.Helper()
-		return a.fail(reportForSameWithDiff(a).Reason(failReason_NotSame))
+		return a.fail(reportForSameWithDiff(a).Reason(reason_NotSame))
 	}
 
 	return a
