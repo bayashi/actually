@@ -15,6 +15,7 @@ const (
 	failReason_ExpectIsNotPointer    = "`Expect` is NOT type of Pointer. It should be a Pointer for SamePointer() method"
 	failReason_GotIsNilType          = "Type of `Got` is a nil value"
 	failReason_ExpectIsNilType       = "Type of `Expect` is a nil value"
+	failReason_ExpectIsNotNil        = "Expected other than <nil>, but got <nil>"
 	failReason_ExpectIsNotValidValue = "`Expect` value is NOT a valid value"
 	failReason_NotConvertibleTypes   = "The types of `Got` and `Expect` are NOT convertible"
 
