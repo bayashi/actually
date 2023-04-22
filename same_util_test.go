@@ -5,11 +5,30 @@ import (
 	"time"
 )
 
-// func TestReportForSame(t *testing.T) {
-// 	a := Got("Hello.\nThanks!").Expect("Hello.\nThank you!").ShowRawData()
-// 	out := reportForSame(a).Put()
-// 	fmt.Print(out)
-// }
+func TestReportForSame(t *testing.T) {
+	a := Got("EGLL").Expect("LHR")
+	Got(reportForSame(a).Put()).
+		Expect("\tExpected:    \tDump: \"LHR\"\n\tActually got:\tDump: \"EGLL\"\n").
+		ShowRawData().
+		Same(t)
+
+	aa := Got(128).Expect(256)
+	Got(reportForSame(aa).Put()).
+		Expect("\tExpected:    \tType: int, Dump: 256\n\tActually got:\tType: int, Dump: 128\n").
+		ShowRawData().
+		Same(t)
+}
+
+func TestReportForSameWithDiff(t *testing.T) {
+	a := Got("eiko").Expect("aiko")
+	expect := "\tExpected:    \tDump: \"aiko\"\n\tActually got:\tDump: \"eiko\"\n\t" +
+		"Diff Details:\t--- Expected\n\t             \t+++ Actually got\n" +
+		"\t             \t@@ -1 +1 @@\n\t             \t-aiko\n\t             \t+eiko\n"
+	Got(reportForSameWithDiff(a).Put()).
+		Expect(expect).
+		ShowRawData().
+		Same(t)
+}
 
 func TestIsFuncType(t *testing.T) {
 	tts := []struct {
@@ -94,7 +113,9 @@ func TestObjectsAreSameType(t *testing.T) {
 		b      any
 		expect bool
 	}{
+		{name: "<nil>", a: nil, b: nil, expect: true},
 		{name: "Same", a: "a", b: "b", expect: true},
+		{name: "Struct", a: struct{}{}, b: struct{}{}, expect: true},
 		{name: "Number", a: int(7), b: float32(7.0), expect: false},
 		{name: "map", a: map[string]int{}, b: map[string]string{}, expect: false},
 	}
