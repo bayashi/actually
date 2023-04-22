@@ -3,3 +3,4 @@
 *.sw[po]
 vendor
 *.out
+*.html
