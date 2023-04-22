@@ -1,7 +1,17 @@
 // Actual trace_test.go is in ../report directory.
 package trace
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
+
+func TestTraceInfo(t *testing.T) {
+	trace := strings.Join(Info(func(filepath string) bool {return false}), "\n\t")
+	if !strings.Contains(trace, "trace/trace_test.go:10") {
+		t.Errorf("Wrong trace: %#v", trace)
+	}
+}
 
 func TestIsGolangTestFunc(t *testing.T) {
 	if !isGolangTestFunc("TestFoo") {
