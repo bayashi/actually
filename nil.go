@@ -14,7 +14,7 @@ func (a *testingA) Nil(t *testing.T, testNames ...string) *testingA {
 	if !a.isNil() {
 		a.t.Helper()
 		r := report.New().
-			Expect("nil").
+			Expect("<nil>").
 			Gotf("Type:%Y, %#v", a.got, a.got)
 		return a.fail(r)
 	}
@@ -29,8 +29,9 @@ func (a *testingA) NotNil(t *testing.T, testNames ...string) *testingA {
 	if a.isNil() {
 		a.t.Helper()
 		r := report.New().
-			Expect("Not nil").
-			Got("nil")
+			Expect("Not <nil>").
+			Got("<nil>").
+			Reason(reason_ExpectIsNotNil)
 		return a.fail(r)
 	}
 

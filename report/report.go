@@ -16,12 +16,12 @@ type Report struct {
 	name           string `label:"Name"`
 	function       string `label:"Function"`
 	reason         string `label:"Fail reason"`
+	notice         string `label:"Notice"`
 	expect         string `label:"Expected"`
 	expectAsString string `label:"Expected Raw"`
 	got            string `label:"Actually got"`
 	gotAsString    string `label:"Got Raw"`
 	diff           string `label:"Diff Details"`
-	message        string `label:"Message"`
 }
 
 type reportContent struct {
@@ -69,6 +69,9 @@ func (r *Report) buildReportContents() *[]*reportContent {
 	if r.reason != "" {
 		rContents = append(rContents, &reportContent{label: r.label("reason"), content: r.reason})
 	}
+	if r.notice != "" {
+		rContents = append(rContents, &reportContent{label: r.label("notice"), content: r.notice})
+	}
 	if r.expect != "" {
 		rContents = append(rContents, &reportContent{label: r.label("expect"), content: r.expect})
 	}
@@ -83,9 +86,6 @@ func (r *Report) buildReportContents() *[]*reportContent {
 	}
 	if r.gotAsString != "" {
 		rContents = append(rContents, &reportContent{label: r.label("gotAsString"), content: r.gotAsString})
-	}
-	if r.message != "" {
-		rContents = append(rContents, &reportContent{label: r.label("message"), content: r.message})
 	}
 
 	return &rContents
@@ -130,6 +130,16 @@ func (r *Report) Reason(reason string) *Report {
 	return r
 }
 
+func (r *Report) Notice(notice string) *Report {
+	r.notice = notice
+	return r
+}
+
+func (r *Report) Noticef(format string, vars ...any) *Report {
+	r.notice = fmt.Sprintf(format, vars...)
+	return r
+}
+
 func (r *Report) Got(got string) *Report {
 	r.got = got
 	return r
@@ -162,15 +172,5 @@ func (r *Report) ExpectAsString(stringExpect string) *Report {
 
 func (r *Report) Diff(diff string) *Report {
 	r.diff = diff
-	return r
-}
-
-func (r *Report) Message(message string) *Report {
-	r.message = message
-	return r
-}
-
-func (r *Report) Messagef(format string, vars ...any) *Report {
-	r.message = fmt.Sprintf(format, vars...)
 	return r
 }

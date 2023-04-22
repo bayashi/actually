@@ -6,19 +6,29 @@ const (
 	panicReason_CalledGotTwice    = "Don't call `Got` method twice. It has been called already"
 	panicReason_CalledExpectTwice = "Don't call `Expect` method twice. It has been called already"
 
-	failReason_WrongType             = "Wrong Type"
-	failReason_NotSame               = "Not same"
-	failReason_WrongPointerAddress   = "Wrong Type"
-	failReason_GotIsFunc             = "`Got` value is type of function. It cannot be used in Same() method"
-	failReason_ExpectIsFunc          = "`Expect` value is type of function. It cannot be used in Same() method"
-	failReason_GotIsNotPointer       = "`Got` is NOT type of Pointer. It should be a Pointer for SamePointer() method"
-	failReason_ExpectIsNotPointer    = "`Expect` is NOT type of Pointer. It should be a Pointer for SamePointer() method"
-	failReason_GotIsNilType          = "Type of `Got` is a nil value"
-	failReason_ExpectIsNilType       = "Type of `Expect` is a nil value"
-	failReason_ExpectIsNotValidValue = "`Expect` value is NOT a valid value"
-	failReason_NotConvertibleTypes   = "The types of `Got` and `Expect` are NOT convertible"
+	message_ExpectTrue  = "Boolean type <true>"
+	message_ExpectFalse = "Boolean type <false>"
 
-	template_Dump            = "Type: %Y\nDump: %#v"
+	// fail reason
+	reason_WrongType             = "Different type"
+	reason_NotSame               = "Not same value"
+	reason_WrongPointerAddress   = "Wrong pointer address"
+	reason_GotIsFunc             = "`Got` value is type of function"
+	reason_ExpectIsFunc          = "`Expect` value is type of function"
+	reason_GotIsNotPointer       = "`Got` is NOT type of Pointer"
+	reason_ExpectIsNotPointer    = "`Expect` is NOT type of Pointer"
+	reason_GotIsNilType          = "Type of `Got` is a <nil> value"
+	reason_ExpectIsNilType       = "Type of `Expect` is a <nil> value"
+	reason_ExpectIsNotNil        = "Expected other than <nil>, but got <nil>"
+	reason_ExpectIsNotValidValue = "`Expect` value is NOT a valid value"
+	reason_NotConvertibleTypes   = "The types of `Got` and `Expect` are NOT convertible"
+
+	// notice_Method_*
+	notice_Same_NotAcceptable        = "It's not acceptable in Same() method"
+	notice_SamePointer_ShouldPointer = "It should be a Pointer for SamePointer() method"
+	notice_SameNumber_ShouldNumber   = "It should be a number for SameNumber() method"
+
+	template_Dump            = "Type: %Y, Dump: %#v"
 	template_DumpStringType  = "Dump: %#v"
 	template_DumpAsRawString = "---\n%s\n---"
 )
