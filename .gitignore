@@ -2,3 +2,5 @@
 .vscode
 *.sw[po]
 vendor
+*.out
+*.html
