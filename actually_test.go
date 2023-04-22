@@ -100,3 +100,8 @@ func TestName(t *testing.T) {
 	aaa := Got(aa.name).Expect("bar").Name("baz").Same(t, "aiko")
 	Got(aaa.name).Expect("baz, aiko").Same(t)
 }
+
+func TestShowRawData(t *testing.T) {
+	a := Got("beer").Expect("deer").ShowRawData()
+	Got(a.showRawData).True(t)
+}
