@@ -18,6 +18,7 @@ func Info(skipTraceRule func(filepath string) bool) []string {
 	var ok bool
 
 	var funcName string
+	var lastCaller string
 
 	callers := []string{}
 	for i := 0; ; i++ {
@@ -45,8 +46,11 @@ func Info(skipTraceRule func(filepath string) bool) []string {
 			break
 		}
 
-		if !skipTraceRule(file) && !strings.Contains(file, "actually/trace/") {
-			callers = append(callers, fmt.Sprintf("%s:%d", file, line))
+		lastCaller = fmt.Sprintf("%s:%d", file, line)
+
+		if len(strings.Split(file, "/")) > 1 && // https://github.com/stretchr/testify/pull/402
+			!skipTraceRule(file) && !strings.Contains(file, "/actually") {
+			callers = append(callers, lastCaller)
 		}
 
 		segments := strings.Split(funcName, ".")
@@ -54,6 +58,10 @@ func Info(skipTraceRule func(filepath string) bool) []string {
 		if isGolangTestFunc(name) {
 			break
 		}
+	}
+
+	if len(callers) == 0 {
+		callers = append(callers, lastCaller)
 	}
 
 	return callers
