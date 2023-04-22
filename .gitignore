@@ -2,3 +2,4 @@
 .vscode
 *.sw[po]
 vendor
+*.out
