@@ -48,7 +48,8 @@ func Info(skipTraceRule func(filepath string) bool) []string {
 
 		lastCaller = fmt.Sprintf("%s:%d", file, line)
 
-		if !skipTraceRule(file) && !strings.Contains(file, "/actually") {
+		if len(strings.Split(file, "/")) > 1 && // https://github.com/stretchr/testify/pull/402
+			!skipTraceRule(file) && !strings.Contains(file, "/actually") {
 			callers = append(callers, lastCaller)
 		}
 
