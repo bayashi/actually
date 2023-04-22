@@ -8,8 +8,10 @@ Yet another pithy testing framework `actually`.
 
 ## Usage
 
+This is an example code of tests.
+
 ```go
-package you
+package main
 
 import (
     "testing"
@@ -32,29 +34,6 @@ func getLove() (bool, error) {
 }
 ```
 
-This is an example of fail case:
-
-```
-true_test.go:21:
-            Trace:          /go/src/github.com/bayashi/actually/true.go:27
-                                    /go/src/github.com/bayashi/actually/true_test.go:21
-            Test func:      TestTrue()
-            Expected:       true
-            Actually got:   false
-```
-
-Another example:
-
-```
-same_test.go:69:
-            Trace:          /go/src/github.com/bayashi/actually/same.go:99
-                                    /go/src/github.com/bayashi/actually/same_test.go:69
-            Test func:      TestSameNumber()
-            Fail reason:    The types of `Got` and `Expect` are NOT convertible
-            Expected:       Type:int, 1
-            Actually got:   Type:string, "1"
-```
-
 Actually, you can write multiple assertions in one chain like below:
 
 ```go
@@ -71,6 +50,100 @@ func Test(t *testing.T) {
     Got(love).NotNil(t).True(t).
         Expect(true).Same(t) // Obviously pass
 }
+```
+
+NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chain.
+
+## Fail reports
+
+Developers actually spend a lot of time dealing with failing tests, so `actually` can shorten that time.
+
+This is an example of simple fail report:
+
+```
+nil_test.go:28:
+            Trace:          /path/to/src/github.com/bayashi/actually/nil.go:19
+                                    /path/to/src/github.com/bayashi/actually/nil_test.go:28
+            Function:       TestNil()
+            Expected:       <nil>
+            Actually got:   Type:string, ""
+```
+
+Another example with diff:
+
+```
+same_test.go:19:
+            Trace:          /path/to/src/github.com/bayashi/actually/same.go:37
+                                    /path/to/src/github.com/bayashi/actually/same_test.go:19
+            Function:       TestSame()
+            Fail reason:    Not same value
+            Expected:       Type: map[string]int, Dump: map[string]int{"foo":12}
+            Actually got:   Type: map[string]int, Dump: map[string]int{"joo":12}
+            Diff Details:   --- Expected
+                            +++ Actually got
+                            @@ -1,3 +1,3 @@
+                             (map[string]int) (len=1) {
+                            - (string) (len=3) "foo": (int) 12
+                            + (string) (len=3) "joo": (int) 12
+                             }
+```
+
+`actually` has a `ShowRawData()` method to show raw strings in the fail report.
+
+```go
+actually.Got(stringA).Expect(stringB).ShowRawData().Same(t)
+```
+
+It would be helpful to compare intricate strigns, like below:
+
+```
+builder_test.go:133:
+            Trace:          /path/to/src/github.com/bayashi/goverview/builder_test.go:133
+            Function:       TestTree()
+            Fail reason:    Not same
+            Expected:       Dump: "\n┌ 001/\n├── .gitignore\n├── LICENSE: License MIT\n├── go.mod: go 1.18\n└───+ main.go: main\n      Func: X\n      const: X\n"
+            Actually got:   Dump: "\n┌ 001/\n├── .gitignore\n├── LICENSE: License MIT\n├── go.mod: go 1.19\n└──* main.go: main\n      Func: X\n      Const: X\n"
+            Diff Details:   --- Expected
+                            +++ Actually got
+                            @@ -4,6 +4,6 @@
+                             ├── LICENSE: License MIT
+                            -├── go.mod: go 1.18
+                            -└───+ main.go: main
+                            +├── go.mod: go 1.19
+                            +└──* main.go: main
+                                   Func: X
+                            -      const: X
+                            +      Const: X
+            Expected Raw:   ---
+                            ┌ 001/
+                            ├── .gitignore
+                            ├── LICENSE: License MIT
+                            ├── go.mod: go 1.18
+                            └───+ main.go: main
+                                  Func: X
+                                  const: X
+                            ---
+            Got Raw:        ---
+                            ┌ 001/
+                            ├── .gitignore
+                            ├── LICENSE: License MIT
+                            ├── go.mod: go 1.19
+                            └──* main.go: main
+                                  Func: X
+                                  Const: X
+```
+
+There would be a notice message with a fail reason as a hint to pass:
+
+```
+same_test.go:64:
+            Trace:          /path/to/src/github.com/bayashi/actually/same.go:53
+                                    /path/to/src/github.com/bayashi/actually/same_test.go:64
+            Function:       TestSamePointer()
+            Fail reason:    `Got` is NOT type of Pointer
+            Notice:         It should be a Pointer for SamePointer() method
+            Expected:       Type: *int, Dump: (*int)(0xc00001a528)
+            Actually got:   Type: string, Dump: ""
 ```
 
 ## Installation
