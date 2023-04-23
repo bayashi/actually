@@ -1,5 +1,5 @@
-// testdata package provides utilities to handle data of testing
-package testdata
+// testobject package provides utilities to handle data of testing
+package testobject
 
 import (
 	"bufio"
@@ -9,12 +9,12 @@ import (
 	"github.com/davecgh/go-spew/spew"
 )
 
-type TestData struct {
+type TestObject struct {
 	value  any
 	maxLen int
 }
 
-func NewTestData(v any, maxLen int) *TestData {
+func NewTestObject(v any, maxLen int) *TestObject {
 	max := bufio.MaxScanTokenSize
 	if maxLen < 0 {
 		maxLen = max + maxLen
@@ -22,17 +22,17 @@ func NewTestData(v any, maxLen int) *TestData {
 		maxLen = bufio.MaxScanTokenSize
 	}
 
-	return &TestData{
+	return &TestObject{
 		value:  v,
 		maxLen: maxLen,
 	}
 }
 
-func (td *TestData) RawValue() any {
+func (td *TestObject) RawValue() any {
 	return td.value
 }
 
-func (td *TestData) IsStringType() bool {
+func (td *TestObject) IsStringType() bool {
 	if v := td.RawValue(); v != nil {
 		k := reflect.ValueOf(v).Kind()
 		if k == reflect.String {
@@ -43,7 +43,7 @@ func (td *TestData) IsStringType() bool {
 	return false
 }
 
-func (td *TestData) IsDumpableRawType() bool {
+func (td *TestObject) IsDumpableRawType() bool {
 	if v := td.RawValue(); v != nil {
 		k := reflect.ValueOf(v).Kind()
 		if k == reflect.Struct || k == reflect.Map || k == reflect.Slice || k == reflect.Array {
@@ -54,12 +54,12 @@ func (td *TestData) IsDumpableRawType() bool {
 	return false
 }
 
-func (td *TestData) Dump() string {
+func (td *TestObject) Dump() string {
 	return spew.Sdump(td.RawValue())
 }
 
 // For `fmt/print.go` Formatter interface
-func (td *TestData) Format(s fmt.State, verb rune) {
+func (td *TestObject) Format(s fmt.State, verb rune) {
 	switch verb {
 	case 'v':
 		flag := ""
