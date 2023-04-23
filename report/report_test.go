@@ -55,9 +55,9 @@ func TestSetter(t *testing.T) {
 	if r.got != "gf" {
 		t.Errorf("Wrong Gotf(): %#v", r.got)
 	}
-	r = r.GotAsString("gs")
-	if r.gotAsString != "gs" {
-		t.Errorf("Wrong GotAsString(): %#v", r.gotAsString)
+	r = r.GotAsRaw("gs")
+	if r.gotAsRaw != "gs" {
+		t.Errorf("Wrong GotAsRaw(): %#v", r.gotAsRaw)
 	}
 
 	r = r.Expect("e")
@@ -68,9 +68,9 @@ func TestSetter(t *testing.T) {
 	if r.expect != "ef" {
 		t.Errorf("Wrong Expectf(): %#v", r.expect)
 	}
-	r = r.ExpectAsString("es")
-	if r.expectAsString != "es" {
-		t.Errorf("Wrong ExpectAsString(): %#v", r.expectAsString)
+	r = r.ExpectAsRaw("es")
+	if r.expectAsRaw != "es" {
+		t.Errorf("Wrong ExpectAsRaw(): %#v", r.expectAsRaw)
 	}
 
 	r = r.Diff("d")

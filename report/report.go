@@ -18,9 +18,9 @@ type Report struct {
 	reason         string `label:"Fail reason"`
 	notice         string `label:"Notice"`
 	expect         string `label:"Expected"`
-	expectAsString string `label:"Expected Raw"`
+	expectAsRaw    string `label:"Expected Raw"`
 	got            string `label:"Actually got"`
-	gotAsString    string `label:"Got Raw"`
+	gotAsRaw       string `label:"Got Raw"`
 	diff           string `label:"Diff Details"`
 }
 
@@ -81,11 +81,11 @@ func (r *Report) buildReportContents() *[]*reportContent {
 	if r.diff != "" {
 		rContents = append(rContents, &reportContent{label: r.label("diff"), content: r.diff})
 	}
-	if r.expectAsString != "" {
-		rContents = append(rContents, &reportContent{label: r.label("expectAsString"), content: r.expectAsString})
+	if r.expectAsRaw != "" {
+		rContents = append(rContents, &reportContent{label: r.label("expectAsRaw"), content: r.expectAsRaw})
 	}
-	if r.gotAsString != "" {
-		rContents = append(rContents, &reportContent{label: r.label("gotAsString"), content: r.gotAsString})
+	if r.gotAsRaw != "" {
+		rContents = append(rContents, &reportContent{label: r.label("gotAsRaw"), content: r.gotAsRaw})
 	}
 
 	return &rContents
@@ -150,8 +150,8 @@ func (r *Report) Gotf(format string, vars ...any) *Report {
 	return r
 }
 
-func (r *Report) GotAsString(stringGot string) *Report {
-	r.gotAsString = stringGot
+func (r *Report) GotAsRaw(gotRaw string) *Report {
+	r.gotAsRaw = gotRaw
 	return r
 }
 
@@ -165,8 +165,8 @@ func (r *Report) Expectf(format string, vars ...any) *Report {
 	return r
 }
 
-func (r *Report) ExpectAsString(stringExpect string) *Report {
-	r.expectAsString = stringExpect
+func (r *Report) ExpectAsRaw(expectRaw string) *Report {
+	r.expectAsRaw = expectRaw
 	return r
 }
 
