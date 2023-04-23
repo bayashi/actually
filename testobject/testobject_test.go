@@ -1,4 +1,4 @@
-package testdata
+package testobject
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ type Example struct {
 
 func TestTruncate(t *testing.T) {
 	len := 10
-	td := NewTestData(&Example{id: 12, name: "John Doe"}, len)
+	td := NewTestObject(&Example{id: 12, name: "John Doe"}, len)
 
 	tts := []struct {
 		format string
@@ -20,9 +20,9 @@ func TestTruncate(t *testing.T) {
 	}{
 		{format: "%v", expect: "&{12 John <... truncated>"},
 		{format: "%+v", expect: "&{id:12 na<... truncated>"},
-		{format: "%#v", expect: "&testdata.<... truncated>"},
+		{format: "%#v", expect: "&testobjec<... truncated>"},
 		{format: "%s", expect: "&{%!s(int=<... truncated>"},
-		{format: "%Y", expect: "*testdata.Example"}, // The type of RawValue()
+		{format: "%Y", expect: "*testobject.Example"}, // The type of RawValue()
 	}
 	for _, tt := range tts {
 		if got := fmt.Sprintf(tt.format, td); got != tt.expect {
@@ -32,32 +32,32 @@ func TestTruncate(t *testing.T) {
 }
 
 func TestRawValue(t *testing.T) {
-	td := NewTestData("John Doe", 1024)
+	td := NewTestObject("John Doe", 1024)
 	if td.RawValue() != "John Doe" {
 		t.Error("RawValue() was wrong")
 	}
 }
 
 func TestIsStringType(t *testing.T) {
-	if td := NewTestData("John Doe", 1024); !td.IsStringType() {
+	if td := NewTestObject("John Doe", 1024); !td.IsStringType() {
 		t.Error("IsStringType() was wrong")
 	}
-	if td := NewTestData(7, 1024); td.IsStringType() {
+	if td := NewTestObject(7, 1024); td.IsStringType() {
 		t.Error("IsStringType() was wrong")
 	}
 }
 
 func TestIsDumpableRawType(t *testing.T) {
-	if td := NewTestData([]int{1, 2}, 1024); !td.IsDumpableRawType() {
+	if td := NewTestObject([]int{1, 2}, 1024); !td.IsDumpableRawType() {
 		t.Error("IsDumpableRawType() was wrong")
 	}
-	if td := NewTestData(7, 1024); td.IsDumpableRawType() {
+	if td := NewTestObject(7, 1024); td.IsDumpableRawType() {
 		t.Error("IsDumpableRawType() was wrong")
 	}
 }
 
 func TestDump(t *testing.T) {
-	td := NewTestData(123, 1024)
+	td := NewTestObject(123, 1024)
 	if td.Dump() != "(int) 123\n" {
 		t.Error("Dump() was wrong")
 	}
