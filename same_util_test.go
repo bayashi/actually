@@ -17,6 +17,12 @@ func TestReportForSame(t *testing.T) {
 		Expect("\tExpected:    \tType: int, Dump: 256\n\tActually got:\tType: int, Dump: 128\n").
 		X().
 		Same(t)
+
+	aaa := Got([]int{1, 2}).Expect([]int{3, 4})
+	Got(reportForSame(aaa).Put()).
+		Expect("\tExpected:    \tDump: []int{3, 4}\n\tActually got:\tDump: []int{1, 2}\n").
+		X().
+		Same(t)
 }
 
 func TestReportForSameWithDiff(t *testing.T) {

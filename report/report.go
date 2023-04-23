@@ -12,16 +12,18 @@ import (
 )
 
 type Report struct {
-	trace          string `label:"Trace"`
-	name           string `label:"Name"`
-	function       string `label:"Function"`
-	reason         string `label:"Fail reason"`
-	notice         string `label:"Notice"`
-	expect         string `label:"Expected"`
-	expectAsRaw    string `label:"Expected Raw"`
-	got            string `label:"Actually got"`
-	gotAsRaw       string `label:"Got Raw"`
-	diff           string `label:"Diff Details"`
+	trace        string `label:"Trace"`
+	name         string `label:"Name"`
+	function     string `label:"Function"`
+	reason       string `label:"Fail reason"`
+	notice       string `label:"Notice"`
+	expect       string `label:"Expected"`
+	expectAsRaw  string `label:"Expected Raw"`
+	expectAsDump string `label:"Expected Dump"`
+	got          string `label:"Actually got"`
+	gotAsRaw     string `label:"Got Raw"`
+	gotAsDump    string `label:"Got Dump"`
+	diff         string `label:"Diff Details"`
 }
 
 type reportContent struct {
@@ -86,6 +88,12 @@ func (r *Report) buildReportContents() *[]*reportContent {
 	}
 	if r.gotAsRaw != "" {
 		rContents = append(rContents, &reportContent{label: r.label("gotAsRaw"), content: r.gotAsRaw})
+	}
+	if r.expectAsDump != "" {
+		rContents = append(rContents, &reportContent{label: r.label("expectAsDump"), content: r.expectAsDump})
+	}
+	if r.gotAsDump != "" {
+		rContents = append(rContents, &reportContent{label: r.label("gotAsDump"), content: r.gotAsDump})
 	}
 
 	return &rContents
@@ -155,6 +163,11 @@ func (r *Report) GotAsRaw(gotRaw string) *Report {
 	return r
 }
 
+func (r *Report) GotAsDump(gotDump string) *Report {
+	r.gotAsDump = gotDump
+	return r
+}
+
 func (r *Report) Expect(expect string) *Report {
 	r.expect = expect
 	return r
@@ -167,6 +180,11 @@ func (r *Report) Expectf(format string, vars ...any) *Report {
 
 func (r *Report) ExpectAsRaw(expectRaw string) *Report {
 	r.expectAsRaw = expectRaw
+	return r
+}
+
+func (r *Report) ExpectAsDump(expectDump string) *Report {
+	r.expectAsDump = expectDump
 	return r
 }
 

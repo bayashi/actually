@@ -22,7 +22,7 @@ func reportForSame(a *testingA) *report.Report {
 	} else if a.expect.IsDumpableRawType() {
 		r = r.Expectf(template_DumpStringType, a.expect)
 		if a.showRawData {
-			r = r.ExpectAsRaw(a.expect.Dump())
+			r = r.ExpectAsDump(a.expect.Dump())
 		}
 	}
 
@@ -34,7 +34,7 @@ func reportForSame(a *testingA) *report.Report {
 	} else if a.got.IsDumpableRawType() {
 		r = r.Gotf(template_DumpStringType, a.got)
 		if a.showRawData {
-			r = r.GotAsRaw(a.got.Dump())
+			r = r.GotAsDump(a.got.Dump())
 		}
 	}
 
