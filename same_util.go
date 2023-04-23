@@ -18,6 +18,13 @@ func reportForSame(a *testingA) *report.Report {
 			r = r.ExpectAsString(fmt.Sprintf(template_DumpAsRawString, a.expect)).
 				GotAsString(fmt.Sprintf(template_DumpAsRawString, a.got))
 		}
+	} else if a.expect.IsDumpableRawType() && a.got.IsDumpableRawType() {
+		r = r.Expectf(template_DumpStringType, a.expect).
+			Gotf(template_DumpStringType, a.got)
+		if a.showRawData {
+			r = r.ExpectAsString(a.expect.Dump()).
+				GotAsString(a.got.Dump())
+		}
 	} else {
 		r = r.Expectf(template_Dump, a.expect, a.expect).
 			Gotf(template_Dump, a.got, a.got)
