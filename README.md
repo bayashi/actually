@@ -88,10 +88,10 @@ same_test.go:19:
                              }
 ```
 
-`actually` has a `ShowRawData()` method to show raw strings in the fail report.
+`actually` has a `X()` method to show raw strings in the fail report.
 
 ```go
-actually.Got(stringA).Expect(stringB).ShowRawData().Same(t)
+actually.Got(stringA).Expect(stringB).X().Same(t)
 ```
 
 It would be helpful to compare intricate strigns, like below. You don't need to keep commented-out lines to dump test data anymore:

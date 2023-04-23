@@ -88,8 +88,8 @@ func (a *testingA) fail(r *report.Report) *testingA {
 	return a
 }
 
-// `ShowRawData` turns on a flag to show test values as raw text in a fail report.
-func (a *testingA) ShowRawData() *testingA {
+// `X` turns on a flag to show test values as raw text in a fail report.
+func (a *testingA) X() *testingA {
 	a.showRawData = true
 
 	return a

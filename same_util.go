@@ -10,17 +10,32 @@ import (
 )
 
 func reportForSame(a *testingA) *report.Report {
-	r := report.New()
-	if a.expect.IsStringType() && a.got.IsStringType() {
-		r = r.Expectf(template_DumpStringType, a.expect).
-			Gotf(template_DumpStringType, a.got)
+	r := report.New().
+		Expectf(template_Dump, a.expect, a.expect).
+		Gotf(template_Dump, a.got, a.got)
+
+	if a.expect.IsStringType() {
+		r = r.Expectf(template_DumpStringType, a.expect)
 		if a.showRawData {
-			r = r.ExpectAsString(fmt.Sprintf(template_DumpAsRawString, a.expect)).
-				GotAsString(fmt.Sprintf(template_DumpAsRawString, a.got))
+			r = r.ExpectAsRaw(fmt.Sprintf(template_DumpAsRawString, a.expect))
 		}
-	} else {
-		r = r.Expectf(template_Dump, a.expect, a.expect).
-			Gotf(template_Dump, a.got, a.got)
+	} else if a.expect.IsDumpableRawType() {
+		r = r.Expectf(template_DumpStringType, a.expect)
+		if a.showRawData {
+			r = r.ExpectAsDump(a.expect.Dump())
+		}
+	}
+
+	if a.got.IsStringType() {
+		r = r.Gotf(template_DumpStringType, a.got)
+		if a.showRawData {
+			r = r.GotAsRaw(fmt.Sprintf(template_DumpAsRawString, a.got))
+		}
+	} else if a.got.IsDumpableRawType() {
+		r = r.Gotf(template_DumpStringType, a.got)
+		if a.showRawData {
+			r = r.GotAsDump(a.got.Dump())
+		}
 	}
 
 	return r

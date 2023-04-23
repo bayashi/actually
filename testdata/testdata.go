@@ -5,6 +5,8 @@ import (
 	"bufio"
 	"fmt"
 	"reflect"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 type TestData struct {
@@ -39,6 +41,21 @@ func (td *TestData) IsStringType() bool {
 	}
 
 	return false
+}
+
+func (td *TestData) IsDumpableRawType() bool {
+	if v := td.RawValue(); v != nil {
+		k := reflect.ValueOf(v).Kind()
+		if k == reflect.Struct || k == reflect.Map || k == reflect.Slice || k == reflect.Array {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (td *TestData) Dump() string {
+	return spew.Sdump(td.RawValue())
 }
 
 // For `fmt/print.go` Formatter interface
