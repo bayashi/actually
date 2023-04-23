@@ -30,3 +30,35 @@ func TestTruncate(t *testing.T) {
 		}
 	}
 }
+
+func TestRawValue(t *testing.T) {
+	td := NewTestData("John Doe", 1024)
+	if td.RawValue() != "John Doe" {
+		t.Error("RawValue() was wrong")
+	}
+}
+
+func TestIsStringType(t *testing.T) {
+	if td := NewTestData("John Doe", 1024); !td.IsStringType() {
+		t.Error("IsStringType() was wrong")
+	}
+	if td := NewTestData(7, 1024); td.IsStringType() {
+		t.Error("IsStringType() was wrong")
+	}
+}
+
+func TestIsDumpableRawType(t *testing.T) {
+	if td := NewTestData([]int{1, 2}, 1024); !td.IsDumpableRawType() {
+		t.Error("IsDumpableRawType() was wrong")
+	}
+	if td := NewTestData(7, 1024); td.IsDumpableRawType() {
+		t.Error("IsDumpableRawType() was wrong")
+	}
+}
+
+func TestDump(t *testing.T) {
+	td := NewTestData(123, 1024)
+	if td.Dump() != "(int) 123\n" {
+		t.Error("Dump() was wrong")
+	}
+}
