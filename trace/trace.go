@@ -11,6 +11,7 @@ import (
 	"unicode/utf8"
 )
 
+// Info method returns a list of caller info
 func Info(skipTraceRule func(filepath string) bool) []string {
 	var pc uintptr
 	var file string

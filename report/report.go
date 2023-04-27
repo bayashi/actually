@@ -11,6 +11,7 @@ import (
 	"strings"
 )
 
+// Report is data box to create a fail test report
 type Report struct {
 	trace        string `label:"Trace"`
 	name         string `label:"Name"`
@@ -33,10 +34,12 @@ type reportContent struct {
 
 const reportLabelTag = "label"
 
+// New returns Report struct
 func New() *Report {
 	return &Report{}
 }
 
+// Put method returns a fail report text to show
 func (r *Report) Put() string {
 	reportContents := r.buildReportContents()
 

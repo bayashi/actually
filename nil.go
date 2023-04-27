@@ -7,6 +7,10 @@ import (
 	"github.com/bayashi/actually/report"
 )
 
+// Nil asserts that a test data you got is <nil>
+/*
+	actually.Got(a).Nil(t) // If `a` is <nil>, then pass.
+*/
 func (a *testingA) Nil(t *testing.T, testNames ...string) *testingA {
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -22,6 +26,10 @@ func (a *testingA) Nil(t *testing.T, testNames ...string) *testingA {
 	return a
 }
 
+// NotNil asserts that a test data you got is NOT <nil>
+/*
+	actually.Got(a).NotNil(t) // If `a` is NOT <nil>, then pass.
+*/
 func (a *testingA) NotNil(t *testing.T, testNames ...string) *testingA {
 	a.name = a.naming(testNames...)
 	a.t = t
