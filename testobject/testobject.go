@@ -80,7 +80,7 @@ func (td *TestObject) Format(s fmt.State, verb rune) {
 	}
 }
 
-func truncate(data interface{}, format string, maxLen int) string {
+func truncate(data any, format string, maxLen int) string {
 	v := fmt.Sprintf(format, data)
 	if len(v) > maxLen {
 		v = v[0:maxLen] + "<... truncated>"

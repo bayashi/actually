@@ -28,7 +28,7 @@ var spewConfigStringerEnabled = spew.ConfigState{
 	MaxDepth:                10,
 }
 
-func Diff(expectv interface{}, gotv interface{}) string {
+func Diff(expectv any, gotv any) string {
 	if expectv == nil || gotv == nil {
 		return ""
 	}
@@ -71,7 +71,7 @@ func Diff(expectv interface{}, gotv interface{}) string {
 	return diff
 }
 
-func typeAndKind(v interface{}) (reflect.Type, reflect.Kind) {
+func typeAndKind(v any) (reflect.Type, reflect.Kind) {
 	t := reflect.TypeOf(v)
 	k := t.Kind()
 
