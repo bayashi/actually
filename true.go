@@ -7,6 +7,10 @@ import (
 	"github.com/bayashi/actually/report"
 )
 
+// True method asserts that a test data you got is true value of boolean type.
+/*
+	actually.Got(true).True(t) // Truely pass
+*/
 func (a *testingA) True(t *testing.T, testNames ...string) *testingA {
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -31,6 +35,10 @@ func (a *testingA) True(t *testing.T, testNames ...string) *testingA {
 	return a
 }
 
+// False method asserts that a test data you got is false value of boolean type.
+/*
+	actually.Got(false).False(t) // pass
+*/
 func (a *testingA) False(t *testing.T, testNames ...string) *testingA {
 	a.name = a.naming(testNames...)
 	a.t = t

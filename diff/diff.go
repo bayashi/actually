@@ -28,6 +28,7 @@ var spewConfigStringerEnabled = spew.ConfigState{
 	MaxDepth:                10,
 }
 
+// Diff method returns diff text of 2 objects
 func Diff(expectv interface{}, gotv interface{}) string {
 	if expectv == nil || gotv == nil {
 		return ""

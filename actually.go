@@ -10,6 +10,7 @@ import (
 	"github.com/bayashi/actually/trace"
 )
 
+// testingA is a context of the test
 type testingA struct {
 	got         *testobject.TestObject
 	setGot      bool
@@ -21,7 +22,7 @@ type testingA struct {
 	name        string
 }
 
-// `Got` sets the value you actually got.
+// Got sets the value you actually got.
 func Got(g any) *testingA {
 	return &testingA{
 		got:    testobject.NewTestObject(g, 0),
@@ -40,7 +41,7 @@ func (a *testingA) Got(g any) *testingA {
 	return a
 }
 
-// `Expect` sets the value you expect to be the same as the one you got.
+// Expect sets the value you expect to be the same as the one you got.
 func Expect(e any) *testingA {
 	return &testingA{
 		expect:    testobject.NewTestObject(e, 0),
@@ -59,9 +60,11 @@ func (a *testingA) Expect(e any) *testingA {
 	return a
 }
 
-// `FailNotNow` turns a flag so that even if the test fails, execution does not stop immediately.
-//
-// It behaves this way by default. If you want the opposite behavior, call `FailNow` method.
+// FailNotNow turns a flag so that even if the test fails, execution does not stop immediately.
+/*
+    It behaves this way by default. If you want the opposite behavior, call `FailNow` method.
+    NOTE that FailNotNow method should be called after `Got` or `Expect`.
+*/
 func (a *testingA) FailNotNow() *testingA {
 	a.failNow = false
 
@@ -69,6 +72,9 @@ func (a *testingA) FailNotNow() *testingA {
 }
 
 // `FailNow` turns on a flag to stop further test execution immediately if one test fails
+/*
+	NOTE that FailNow method should be called after `Got` or `Expect`.
+*/
 func (a *testingA) FailNow() *testingA {
 	a.failNow = true
 
@@ -88,7 +94,7 @@ func (a *testingA) fail(r *report.Report) *testingA {
 	return a
 }
 
-// `X` turns on a flag to show test values as raw text in a fail report.
+// X turns on a flag to show test values as raw in a fail report.
 func (a *testingA) X() *testingA {
 	a.showRawData = true
 
@@ -104,7 +110,7 @@ func traceinfo() string {
 	return strings.Join(trace.Info(skipTraceRule), traceSeparator)
 }
 
-// `Skip` provides shorthand to skip further tests within the same function for `-short` option.
+// Skip provides shorthand to skip further tests within the same function for `-short` option.
 /*
 	func Test(t *testing.T) {
 		Got(1).NotNil(t) // Run
@@ -119,7 +125,12 @@ func Skip(t *testing.T) {
 	}
 }
 
-// Set test name.
+// Set test name spefically.
+/*
+	You can also set a test name on assertion methods.
+
+	actually.Got(a).Expect(b).Same(t, "Test Name")
+*/
 func (a *testingA) Name(n string) *testingA {
 	a.name = n
 
