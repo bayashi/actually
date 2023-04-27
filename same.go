@@ -4,12 +4,12 @@ import (
 	"testing"
 )
 
-// `Same` verifies that two objects are same in value and type.
+// Same method verifies that two objects are same in value and type.
 // Function type value is not acceptable. And not verify pointer address.
 // It will be fail, int(1) and uint(1), because of type.
 /*
 	Pass: actually.Got(12).Expect(12).Same(t)
-	Fail: actually.Got(int16(12)).Expect(int32(12)).Same(t)
+	Fail: actually.Got(int16(12)).Expect(int32(12)).Same(t) // not same type
 */
 func (a *testingA) Same(t *testing.T, testNames ...string) *testingA {
 	a.name = a.naming(testNames...)
@@ -40,7 +40,7 @@ func (a *testingA) Same(t *testing.T, testNames ...string) *testingA {
 	return a
 }
 
-// `SamePointer` verifies that two objects point to the same object.
+// SamePointer method verifies that two objects point to the same object.
 func (a *testingA) SamePointer(t *testing.T, testNames ...string) *testingA {
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -70,7 +70,7 @@ func (a *testingA) SamePointer(t *testing.T, testNames ...string) *testingA {
 	return a
 }
 
-// `SameNumber` verifies that each pair of numbers are same or
+// SameNumber method verifies that each pair of numbers are same or
 // convertible to the same types and converted objects are equal. (i.e. int* and float*)
 /*
 	Pass: actually.Got(float32(1.0)).Expect(int64(1)).SameNumber(t)
