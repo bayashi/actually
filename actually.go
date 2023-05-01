@@ -9,8 +9,8 @@ import (
 	"github.com/bayashi/actually/trace"
 )
 
-// testingA is a context of the test
-type testingA struct {
+// TestingA is a context of the test
+type TestingA struct {
 	got         *testobject.TestObject
 	setGot      bool
 	expect      *testobject.TestObject
@@ -22,14 +22,14 @@ type testingA struct {
 }
 
 // Got sets the value you actually got.
-func Got(g any) *testingA {
-	return &testingA{
+func Got(g any) *TestingA {
+	return &TestingA{
 		got:    testobject.NewTestObject(g, 0),
 		setGot: true,
 	}
 }
 
-func (a *testingA) Got(g any) *testingA {
+func (a *TestingA) Got(g any) *TestingA {
 	if a.setGot {
 		panic(panicReason_CalledGotTwice)
 	}
@@ -41,14 +41,14 @@ func (a *testingA) Got(g any) *testingA {
 }
 
 // Expect sets the value you expect to be the same as the one you got.
-func Expect(e any) *testingA {
-	return &testingA{
+func Expect(e any) *TestingA {
+	return &TestingA{
 		expect:    testobject.NewTestObject(e, 0),
 		setExpect: true,
 	}
 }
 
-func (a *testingA) Expect(e any) *testingA {
+func (a *TestingA) Expect(e any) *TestingA {
 	if a.setExpect {
 		panic(panicReason_CalledExpectTwice)
 	}
@@ -64,7 +64,7 @@ func (a *testingA) Expect(e any) *testingA {
     It behaves this way by default. If you want the opposite behavior, call `FailNow` method.
     NOTE that FailNotNow method should be called after `Got` or `Expect`.
 */
-func (a *testingA) FailNotNow() *testingA {
+func (a *TestingA) FailNotNow() *TestingA {
 	a.failNow = false
 
 	return a
@@ -74,13 +74,13 @@ func (a *testingA) FailNotNow() *testingA {
 /*
 	NOTE that FailNow method should be called after `Got` or `Expect`.
 */
-func (a *testingA) FailNow() *testingA {
+func (a *TestingA) FailNow() *TestingA {
 	a.failNow = true
 
 	return a
 }
 
-func (a *testingA) fail(r *report.Report) *testingA {
+func (a *TestingA) fail(r *report.Report) *TestingA {
 	a.t.Helper()
 	r.Trace(traceinfo()).Function(a.t.Name() + "()").Name(a.name)
 	a.t.Errorf("\n%s", r.Put())
@@ -94,7 +94,7 @@ func (a *testingA) fail(r *report.Report) *testingA {
 }
 
 // X turns on a flag to show test values as raw in a fail report.
-func (a *testingA) X() *testingA {
+func (a *TestingA) X() *TestingA {
 	a.showRawData = true
 
 	return a
@@ -130,13 +130,13 @@ func Skip(t *testing.T) {
 
 	actually.Got(a).Expect(b).Same(t, "Test Name")
 */
-func (a *testingA) Name(n string) *testingA {
+func (a *TestingA) Name(n string) *TestingA {
 	a.name = n
 
 	return a
 }
 
-func (a *testingA) naming(testNames ...string) string {
+func (a *TestingA) naming(testNames ...string) string {
 	if a.name != "" {
 		if  len(testNames) > 0 {
 			n := []string{a.name}

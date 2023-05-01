@@ -11,7 +11,7 @@ import (
 /*
 	actually.Got(true).True(t) // Truely pass
 */
-func (a *testingA) True(t *testing.T, testNames ...string) *testingA {
+func (a *TestingA) True(t *testing.T, testNames ...string) *TestingA {
 	a.name = a.naming(testNames...)
 	a.t = t
 
@@ -39,7 +39,7 @@ func (a *testingA) True(t *testing.T, testNames ...string) *testingA {
 /*
 	actually.Got(false).False(t) // pass
 */
-func (a *testingA) False(t *testing.T, testNames ...string) *testingA {
+func (a *TestingA) False(t *testing.T, testNames ...string) *TestingA {
 	a.name = a.naming(testNames...)
 	a.t = t
 
@@ -63,7 +63,7 @@ func (a *testingA) False(t *testing.T, testNames ...string) *testingA {
 	return a
 }
 
-func (a *testingA) isBool() bool {
+func (a *TestingA) isBool() bool {
 	v := reflect.ValueOf(a.got.RawValue())
 	k := v.Kind()
 

@@ -19,7 +19,7 @@ func TestGot(t *testing.T) {
 
 func TestActuallyGot(t *testing.T) {
 	i := 12
-	a := &testingA{}
+	a := &TestingA{}
 	a.Got(i).Expect(i)
 
 	if a.got.RawValue() != i {
@@ -47,7 +47,7 @@ func TestExpect(t *testing.T) {
 
 func TestActuallyExpect(t *testing.T) {
 	i := 13
-	a := &testingA{}
+	a := &TestingA{}
 	a.Expect(i).Got(i)
 
 	if a.got.RawValue() != i {
