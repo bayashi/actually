@@ -9,7 +9,7 @@ import (
 	"github.com/bayashi/actually/report"
 )
 
-func reportForSame(a *testingA) *report.Report {
+func reportForSame(a *TestingA) *report.Report {
 	r := report.New().
 		Expectf(template_Dump, a.expect, a.expect).
 		Gotf(template_Dump, a.got, a.got)
@@ -41,7 +41,7 @@ func reportForSame(a *testingA) *report.Report {
 	return r
 }
 
-func reportForSameWithDiff(a *testingA) *report.Report {
+func reportForSameWithDiff(a *TestingA) *report.Report {
 	d := diff.Diff(a.expect.RawValue(), a.got.RawValue())
 	return reportForSame(a).Diff(d)
 }
