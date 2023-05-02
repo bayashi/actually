@@ -8,7 +8,7 @@ Yet another pithy testing framework `actually`.
 
 ## Usage
 
-This is an example code of tests.
+This is an example code of tests. ([Try in playground](https://go.dev/play/p/j_dWHF9HgXi))
 
 ```go
 package main
@@ -34,7 +34,7 @@ func getLove() (bool, error) {
 }
 ```
 
-Actually, you can write multiple assertions in one chain like below:
+Actually, you can write multiple assertions in one chain like below ([Try in playground](https://go.dev/play/p/WBGhhIefQWi)):
 
 ```go
 package main
@@ -53,6 +53,8 @@ func Test(t *testing.T) {
 ```
 
 NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chain.
+
+[Here is full API list](https://pkg.go.dev/github.com/bayashi/actually) of `actually`.
 
 ## Fail reports
 
