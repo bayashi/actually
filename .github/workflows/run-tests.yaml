@@ -35,6 +35,7 @@ jobs:
         with:
           version: "2022.1.3"
           install-go: false
+          min-go-version: ${{ matrix.go }}
           cache-key: ${{ matrix.os }}-${{ matrix.go }}
       - name: Run staticcheck
         run: staticcheck ./...
