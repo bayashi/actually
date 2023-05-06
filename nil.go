@@ -14,9 +14,9 @@ import (
 func (a *TestingA) Nil(t *testing.T, testNames ...string) *TestingA {
 	a.name = a.naming(testNames...)
 	a.t = t
+	a.t.Helper()
 
 	if !a.isNil() {
-		a.t.Helper()
 		r := report.New().
 			Expect("<nil>").
 			Gotf("Type:%Y, %#v", a.got, a.got)
@@ -33,9 +33,9 @@ func (a *TestingA) Nil(t *testing.T, testNames ...string) *TestingA {
 func (a *TestingA) NotNil(t *testing.T, testNames ...string) *TestingA {
 	a.name = a.naming(testNames...)
 	a.t = t
+	a.t.Helper()
 
 	if a.isNil() {
-		a.t.Helper()
 		r := report.New().
 			Expect("Not <nil>").
 			Got("<nil>").

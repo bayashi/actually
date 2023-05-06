@@ -14,9 +14,9 @@ import (
 func (a *TestingA) True(t *testing.T, testNames ...string) *TestingA {
 	a.name = a.naming(testNames...)
 	a.t = t
+	a.t.Helper()
 
 	if !a.isBool() {
-		a.t.Helper()
 		r := report.New().
 			Reason(reason_WrongType).
 			Expect(message_ExpectTrue).
@@ -25,7 +25,6 @@ func (a *TestingA) True(t *testing.T, testNames ...string) *TestingA {
 	}
 
 	if a.got.RawValue() != true {
-		a.t.Helper()
 		r := report.New().
 			Expect(message_ExpectTrue).
 			Gotf("%#v", a.got)
@@ -42,9 +41,9 @@ func (a *TestingA) True(t *testing.T, testNames ...string) *TestingA {
 func (a *TestingA) False(t *testing.T, testNames ...string) *TestingA {
 	a.name = a.naming(testNames...)
 	a.t = t
+	a.t.Helper()
 
 	if !a.isBool() {
-		a.t.Helper()
 		r := report.New().
 			Reason(reason_WrongType).
 			Expect(message_ExpectFalse).
@@ -53,7 +52,6 @@ func (a *TestingA) False(t *testing.T, testNames ...string) *TestingA {
 	}
 
 	if a.got.RawValue() != false {
-		a.t.Helper()
 		r := report.New().
 			Expect(message_ExpectFalse).
 			Gotf("%#v", a.got)
