@@ -28,21 +28,40 @@ var spewConfigStringerEnabled = spew.ConfigState{
 	MaxDepth:                10,
 }
 
-// Diff method returns diff text of 2 objects
+// Diff method returns diff text of 2 testing objects
 func Diff(expectv any, gotv any) string {
-	if expectv == nil || gotv == nil {
+	e, g := pre(expectv, gotv)
+	if e == "" && g == "" {
 		return ""
+	}
+
+	return getDiff(e, g, "Expected", "Actually got")
+}
+
+// DiffSimple method returns diff text of 2 objects as "a and b"
+func DiffSimple(av any, bv any) string {
+	a, b := pre(av, bv)
+	if a == "" && b == "" {
+		return ""
+	}
+
+	return getDiff(a, b, "a", "b")
+}
+
+func pre(expectv any, gotv any) (string, string) {
+	if expectv == nil || gotv == nil {
+		return "", ""
 	}
 
 	et, ek := typeAndKind(expectv)
 	gt, _ := typeAndKind(gotv)
 
 	if et != gt {
-		return ""
+		return "", ""
 	}
 
 	if ek != reflect.Struct && ek != reflect.Map && ek != reflect.Slice && ek != reflect.Array && ek != reflect.String {
-		return ""
+		return "", ""
 	}
 
 	var e, g string
@@ -59,17 +78,7 @@ func Diff(expectv any, gotv any) string {
 		g = spewConfig.Sdump(gotv)
 	}
 
-	diff, _ := difflib.GetUnifiedDiffString(difflib.UnifiedDiff{
-		A:        difflib.SplitLines(e),
-		B:        difflib.SplitLines(g),
-		FromFile: "Expected",
-		FromDate: "",
-		ToFile:   "Actually got",
-		ToDate:   "",
-		Context:  1,
-	})
-
-	return diff
+	return e, g
 }
 
 func typeAndKind(v any) (reflect.Type, reflect.Kind) {
@@ -81,4 +90,18 @@ func typeAndKind(v any) (reflect.Type, reflect.Kind) {
 		k = t.Kind()
 	}
 	return t, k
+}
+
+func getDiff(e string, g string, fromFile string, toFile string) string {
+	diff, _ := difflib.GetUnifiedDiffString(difflib.UnifiedDiff{
+		A:        difflib.SplitLines(e),
+		B:        difflib.SplitLines(g),
+		FromFile: fromFile,
+		FromDate: "",
+		ToFile:   toFile,
+		ToDate:   "",
+		Context:  1,
+	})
+
+	return diff
 }
