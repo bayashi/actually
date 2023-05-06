@@ -5,6 +5,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/bayashi/actually/diff"
 	"github.com/bayashi/actually/report"
 	"github.com/bayashi/actually/testobject"
 	"github.com/bayashi/actually/trace"
@@ -149,4 +150,9 @@ func (a *TestingA) naming(testNames ...string) string {
 	} else {
 		return strings.Join(testNames, ", ")
 	}
+}
+
+// Diff is a helper function to get a diff string of 2 objects for debugging
+func Diff(a any, b any) string {
+	return diff.DiffSimple(a, b)
 }

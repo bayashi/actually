@@ -105,3 +105,15 @@ func TestX(t *testing.T) {
 	a := Got("beer").Expect("deer").X()
 	Got(a.showRawData).True(t)
 }
+
+func TestDiff(t *testing.T) {
+	got := "\n" + Diff("bar", "bug")
+	expect := `
+--- a
++++ b
+@@ -1 +1 @@
+-bar
++bug
+`
+	Got(got).Expect(expect).X().Same(t)
+}
