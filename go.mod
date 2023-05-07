@@ -1,6 +1,6 @@
 module github.com/bayashi/actually
 
-go 1.19
+go 1.18
 
 require github.com/pmezard/go-difflib v1.0.0
 
