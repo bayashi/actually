@@ -7,7 +7,7 @@ import (
 )
 
 func TestTraceInfo(t *testing.T) {
-	trace := strings.Join(Info(func(filepath string) bool {return false}), "\n\t")
+	trace := strings.Join(Info(func(filepath string) bool { return false }), "\n\t")
 	if !strings.Contains(trace, "trace/trace_test.go:10") {
 		t.Errorf("Wrong trace: %#v", trace)
 	}

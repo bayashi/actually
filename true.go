@@ -9,7 +9,7 @@ import (
 
 // True method asserts that a test data you got is true value of boolean type.
 /*
-	actually.Got(true).True(t) // Truely pass
+	actually.Got(true).True(t) // Truly pass
 */
 func (a *TestingA) True(t *testing.T, testNames ...string) *TestingA {
 	a.name = a.naming(testNames...)

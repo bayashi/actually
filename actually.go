@@ -63,8 +63,8 @@ func (a *TestingA) Expect(e any) *TestingA {
 
 // FailNotNow turns a flag so that even if the test fails, execution does not stop immediately.
 /*
-    It behaves this way by default. If you want the opposite behavior, call `FailNow` method.
-    NOTE that FailNotNow method should be called after `Got` or `Expect`.
+   It behaves this way by default. If you want the opposite behavior, call `FailNow` method.
+   NOTE that FailNotNow method should be called after `Got` or `Expect`.
 */
 func (a *TestingA) FailNotNow() *TestingA {
 	a.failNow = false
@@ -140,7 +140,7 @@ func (a *TestingA) Name(n string) *TestingA {
 
 func (a *TestingA) naming(testNames ...string) string {
 	if a.name != "" {
-		if  len(testNames) > 0 {
+		if len(testNames) > 0 {
 			n := []string{a.name}
 			n = append(n, testNames...)
 			return strings.Join(n, ", ")
