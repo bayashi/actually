@@ -1,6 +1,8 @@
 package actually
 
 const (
+	envKey_FailNow = "ACTUALLY_FAIL_NOW"
+
 	traceSeparator = "\n\t"
 
 	panicReason_CalledGotTwice    = "Don't call `Got` method twice. It has been called already"
