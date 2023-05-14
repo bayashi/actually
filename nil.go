@@ -31,6 +31,7 @@ func (a *TestingA) Nil(t *testing.T, testNames ...string) *TestingA {
 	actually.Got(a).NotNil(t) // If `a` is NOT <nil>, then pass.
 */
 func (a *TestingA) NotNil(t *testing.T, testNames ...string) *TestingA {
+	invalidCall(a)
 	a.name = a.naming(testNames...)
 	a.t = t
 	a.t.Helper()

@@ -12,6 +12,7 @@ import (
 	Fail: actually.Got(int16(12)).Expect(int32(12)).Same(t) // not same type
 */
 func (a *TestingA) Same(t *testing.T, testNames ...string) *TestingA {
+	invalidCallForSame(a)
 	a.name = a.naming(testNames...)
 	a.t = t
 	a.t.Helper()
@@ -39,6 +40,7 @@ func (a *TestingA) Same(t *testing.T, testNames ...string) *TestingA {
 
 // SamePointer method verifies that two objects point to the same object.
 func (a *TestingA) SamePointer(t *testing.T, testNames ...string) *TestingA {
+	invalidCallForSame(a)
 	a.name = a.naming(testNames...)
 	a.t = t
 	a.t.Helper()
@@ -72,6 +74,7 @@ func (a *TestingA) SamePointer(t *testing.T, testNames ...string) *TestingA {
 	      actually.Got(nil).Expect(0).SameNumber(t) // <nil> is not acceptable
 */
 func (a *TestingA) SameNumber(t *testing.T, testNames ...string) *TestingA {
+	invalidCallForSame(a)
 	a.name = a.naming(testNames...)
 	a.t = t
 	a.t.Helper()
@@ -113,6 +116,7 @@ func (a *TestingA) SameNumber(t *testing.T, testNames ...string) *TestingA {
 	      actually.Got(1).Expect(1.0).SameType(t)
 */
 func (a *TestingA) SameType(t *testing.T, testNames ...string) *TestingA {
+	invalidCallForSame(a)
 	a.name = a.naming(testNames...)
 	a.t = t
 	a.t.Helper()

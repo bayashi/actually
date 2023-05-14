@@ -20,6 +20,7 @@ import (
 // Got(any) can accept any type of value, but GotError(error) can accept ONLY a type of error.
 // It's more strict when you use GotError(error) to test a type of error.
 func (a *TestingA) NoError(t *testing.T, testNames ...string) *TestingA {
+	invalidCall(a)
 	a.name = a.naming(testNames...)
 	a.t = t
 	a.t.Helper()
