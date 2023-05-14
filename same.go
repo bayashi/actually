@@ -104,3 +104,22 @@ func (a *TestingA) SameNumber(t *testing.T, testNames ...string) *TestingA {
 
 	return a
 }
+
+// SameType method verifies that each pair of values are same type or not.
+// Not care about actual value of these. Just verify the type.
+/*
+	Pass: actually.Got("foo").Expect("bar").SameType(t)
+	Fail: actually.Got("1").Expect(1).SameType(t)
+	      actually.Got(1).Expect(1.0).SameType(t)
+*/
+func (a *TestingA) SameType(t *testing.T, testNames ...string) *TestingA {
+	a.name = a.naming(testNames...)
+	a.t = t
+	a.t.Helper()
+
+	if !objectsAreSameType(a.expect.RawValue(), a.got.RawValue()) {
+		return a.fail(reportForSameType(a))
+	}
+
+	return a
+}
