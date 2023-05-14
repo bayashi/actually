@@ -12,6 +12,7 @@ import (
 	actually.Got(true).True(t) // Truly pass
 */
 func (a *TestingA) True(t *testing.T, testNames ...string) *TestingA {
+	invalidCall(a)
 	a.name = a.naming(testNames...)
 	a.t = t
 	a.t.Helper()
@@ -39,6 +40,7 @@ func (a *TestingA) True(t *testing.T, testNames ...string) *TestingA {
 	actually.Got(false).False(t) // pass
 */
 func (a *TestingA) False(t *testing.T, testNames ...string) *TestingA {
+	invalidCall(a)
 	a.name = a.naming(testNames...)
 	a.t = t
 	a.t.Helper()

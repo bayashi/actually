@@ -104,3 +104,12 @@ func objectsAreSame(expectv any, gotv any) bool {
 
 	return bytes.Equal(exp, act)
 }
+
+func invalidCallForSame(a *TestingA) {
+	if !a.setExpect {
+		panic("You called kind of Same() method, but you forgot to call Expect().")
+	}
+	if !a.setGot {
+		panic("You called kind of Same() method, but you forgot to call Got().")
+	}
+}

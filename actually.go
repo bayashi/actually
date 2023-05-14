@@ -197,3 +197,9 @@ func (a *TestingA) naming(testNames ...string) string {
 func Diff(a any, b any) string {
 	return diff.DiffSimple(a, b)
 }
+
+func invalidCall(a *TestingA) {
+	if !a.setGot {
+		panic("You called assertion method, but you forgot to call Got().")
+	}
+}
