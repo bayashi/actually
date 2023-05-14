@@ -84,3 +84,15 @@ func TestChain(t *testing.T) {
 	actually.Got(7).NotNil(t).
 		Expect(7).SameNumber(t).Same(t)
 }
+
+func TestSameType(t *testing.T) {
+	actually.Got(nil).Expect(nil).SameType(t)
+	actually.Got(true).Expect(false).SameType(t) // both are boolean
+	a := actually.Got(t).Expect(t).SameType(t)
+	actually.Got(a).Expect(a).SameType(t)
+
+	// fail
+	//actually.Got("1").Expect(1).SameType(t)
+	//actually.Got(nil).Expect(0).SameType(t)
+	//actually.Got(a).Expect(t).SameType(t)
+}

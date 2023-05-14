@@ -46,6 +46,14 @@ func reportForSameWithDiff(a *TestingA) *report.Report {
 	return reportForSame(a).Diff(d)
 }
 
+func reportForSameType(a *TestingA) *report.Report {
+	return report.New().
+		Expectf("Type: %Y", a.expect).
+		Gotf("Type: %Y", a.got).
+		Reason(reason_WrongType).
+		Notice("SameType() just verifies the type. It doesn't care about the actual value")
+}
+
 func isFuncType(v any) bool {
 	return v != nil && reflect.TypeOf(v).Kind() == reflect.Func
 }
