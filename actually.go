@@ -23,7 +23,7 @@ type TestingA struct {
 	name        string
 }
 
-// Got sets the value you actually got.
+// Got sets the value you actually got. Got() creates *TestingA and returns it.
 func Got(g any) *TestingA {
 	return &TestingA{
 		got:    testobject.NewTestObject(g, 0),
@@ -31,6 +31,7 @@ func Got(g any) *TestingA {
 	}
 }
 
+// Got sets the value you actually got.
 func (a *TestingA) Got(g any) *TestingA {
 	if a.setGot {
 		panic(panicReason_CalledGotTwice)
@@ -43,6 +44,7 @@ func (a *TestingA) Got(g any) *TestingA {
 }
 
 // Expect sets the value you expect to be the same as the one you got.
+// Expect creates *TestingA and returns it.
 func Expect(e any) *TestingA {
 	return &TestingA{
 		expect:    testobject.NewTestObject(e, 0),
@@ -50,6 +52,7 @@ func Expect(e any) *TestingA {
 	}
 }
 
+// Expect sets the value you expect to be the same as the one you got.
 func (a *TestingA) Expect(e any) *TestingA {
 	if a.setExpect {
 		panic(panicReason_CalledExpectTwice)
