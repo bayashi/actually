@@ -3,13 +3,13 @@
 <a href="https://github.com/bayashi/actually/blob/main/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-GREEN.png"></a>
 <a href="https://github.com/bayashi/actually/actions"><img src="https://github.com/bayashi/actually/workflows/main/badge.svg?_t=1681289447"/></a>
 <a href="https://goreportcard.com/report/github.com/bayashi/actually" title="actually report card" target="_blank"><img src="https://goreportcard.com/badge/github.com/bayashi/actually" alt="actually report card"></a>
-<a href="https://pkg.go.dev/github.com/bayashi/actually"><img src="https://pkg.go.dev/badge/github.com/bayashi/actually.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/bayashi/actually" target="_blank"><img src="https://pkg.go.dev/badge/github.com/bayashi/actually.svg" alt="Go Reference"></a>
 
 Yet another pithy testing framework `actually`.
 
 ## Usage
 
-This is an example code of tests. ([Try in playground](https://go.dev/play/p/j_dWHF9HgXi))
+This is an example code of tests. ([Try in playground](https://go.dev/play/p/Ut-hIr3vmYQ))
 
 ```go
 package main
@@ -21,10 +21,15 @@ import (
 
 func Test(t *testing.T) {
     love, err := getLove()
+
+    // Assert 1 object
     actually.Got(love).True(t)
-    actually.Got(err).Nil(t)
+    actually.Got(err).NoError(t)
+
+    // Assert 2 objects
     actually.Got(love).Expect(true).Same(t)
     actually.Got(int32(1)).Expect(float64(1.0)).SameNumber(t)
+
     heart := &love
     body  := heart
     actually.Got(heart).Expect(body).SamePointer(t)
@@ -35,7 +40,7 @@ func getLove() (bool, error) {
 }
 ```
 
-Actually, you can write multiple assertions in one chain like below ([Try in playground](https://go.dev/play/p/WBGhhIefQWi)):
+You can write multiple assertions in one chain like below ([Try in playground](https://go.dev/play/p/GxCV1Ubg6Uo)):
 
 ```go
 package main
@@ -43,12 +48,12 @@ package main
 import (
 	"testing"
 
-	. "github.com/bayashi/actually"
+	a "github.com/bayashi/actually"
 )
 
 func Test(t *testing.T) {
     love := true
-    Got(love).NotNil(t).True(t).
+    a.Got(love).NotNil(t).True(t).
         Expect(true).Same(t) // Obviously pass
 }
 ```
@@ -59,14 +64,13 @@ NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chai
 
 ## Fail reports
 
-Developers actually spend a lot of time dealing with failing tests, so `actually` can shorten that time.
+We spend a lot of time dealing with failing tests, so `actually` can shorten that time.
 
 This is an example of simple fail report:
 
 ```
 nil_test.go:28:
-            Trace:          /path/to/src/github.com/bayashi/actually/nil.go:19
-                                    /path/to/src/github.com/bayashi/actually/nil_test.go:28
+            Trace:          /path/to/src/github.com/bayashi/actually/nil_test.go:28
             Function:       TestNil()
             Expected:       <nil>
             Actually got:   Type:string, ""
@@ -76,8 +80,7 @@ Another example with diff:
 
 ```
 same_test.go:19:
-            Trace:          /path/to/src/github.com/bayashi/actually/same.go:37
-                                    /path/to/src/github.com/bayashi/actually/same_test.go:19
+            Trace:          /path/to/src/github.com/bayashi/actually/same_test.go:19
             Function:       TestSame()
             Fail reason:    Not same value
             Expected:       Type: map[string]int, Dump: map[string]int{"foo":12}
@@ -148,6 +151,15 @@ same_test.go:64:
             Expected:       Type: *int, Dump: (*int)(0xc00001a528)
             Actually got:   Type: string, Dump: ""
 ```
+
+`actually` has a `Diff` method to see differences between 2 objects.
+
+```go
+Println(actually.Diff(objA, objB))
+```
+
+If objects are not string, even if these are objects, you can see the diff of dumped data.
+
 
 ## Installation
 
