@@ -161,9 +161,9 @@ func traceinfo() string {
 		Got(3).NotNil(t) // Skip Also
 	}
 */
-func Skip(t *testing.T) {
+func Skip(t *testing.T, skipReasons ...any) {
 	if testing.Short() {
-		t.SkipNow()
+		t.Skip(skipReasons...)
 	}
 }
 

@@ -82,7 +82,7 @@ func TestDuplicateCall(t *testing.T) {
 
 func TestSkip(t *testing.T) {
 	Got(1).NotNil(t)
-	Skip(t)
+	Skip(t, "Skip reason")
 	Got(2).NotNil(t)
 	Got(3).NotNil(t)
 }
