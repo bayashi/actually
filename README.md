@@ -60,7 +60,7 @@ func Test(t *testing.T) {
 
 NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chain.
 
-[Here is full API list](https://pkg.go.dev/github.com/bayashi/actually) of `actually`.
+[Here is full documentation Wiki](https://github.com/bayashi/actually/wiki).
 
 ## Fail reports
 
@@ -160,6 +160,7 @@ Println(actually.Diff(objA, objB))
 
 If objects are not string, even if these are objects, you can see the diff of dumped data.
 
+[See more details in here](https://github.com/bayashi/actually/wiki).
 
 ## Installation
 
