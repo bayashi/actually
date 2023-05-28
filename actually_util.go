@@ -12,7 +12,7 @@ import (
 
 func (a *TestingA) fail(r *report.Report) *TestingA {
 	a.t.Helper()
-	r.Trace(traceinfo()).Function(a.t.Name() + "()").Name(a.name)
+	r.Trace(traceinfo()).Function(a.t.Name()).Name(a.name)
 	a.t.Errorf("\n%s", r.Put())
 	if a.failNow != nil && !*a.failNow {
 		a.t.Fail()
