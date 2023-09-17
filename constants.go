@@ -13,8 +13,10 @@ const (
 
 	// fail reason
 	reason_WrongType             = "Different type"
+	reason_SameType              = "Unexpectedly same type"
 	reason_NotSame               = "Not same value"
 	reason_WrongPointerAddress   = "Wrong pointer address"
+	reason_SamePointerAddress    = "Unexpectedly same pointer address"
 	reason_GotIsFunc             = "`Got` value is type of function"
 	reason_ExpectIsFunc          = "`Expect` value is type of function"
 	reason_GotIsNotPointer       = "`Got` is NOT type of Pointer"
@@ -28,9 +30,10 @@ const (
 	reason_NotConvertibleTypes   = "The types of `Got` and `Expect` are NOT convertible"
 
 	// notice_Method_*
-	notice_Same_NotAcceptable        = "It's not acceptable in Same() method"
-	notice_SamePointer_ShouldPointer = "It should be a Pointer for SamePointer() method"
-	notice_SameNumber_ShouldNumber   = "It should be a number(int or float) for SameNumber() method"
+	notice_Same_NotAcceptable           = "It's not acceptable in Same() method"
+	notice_SamePointer_ShouldPointer    = "It should be a Pointer for SamePointer() method"
+	notice_SameNumber_ShouldNumber      = "It should be a number(int or float) for SameNumber() method"
+	notice_NotSamePointer_ShouldPointer = "It should be a Pointer for NotSamePointer() method"
 
 	template_Dump            = "Type: %Y, Dump: %#v"
 	template_DumpStringType  = "Dump: %#v"

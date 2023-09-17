@@ -55,6 +55,13 @@ func reportForSameType(a *TestingA) *report.Report {
 		Notice("SameType() just verifies the type. It doesn't care about the actual value")
 }
 
+func reportForNotSameType(a *TestingA) *report.Report {
+	return report.New().
+		Expectf("Type: %#v", a.expect).
+		Gotf("Type: %#v", a.got).
+		Reason(reason_SameType)
+}
+
 func isFuncType(v any) bool {
 	return v != nil && reflect.TypeOf(v).Kind() == reflect.Func
 }
