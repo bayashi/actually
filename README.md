@@ -1,15 +1,15 @@
-# Test Actually
+# Actually
 
 <a href="https://github.com/bayashi/actually/blob/main/LICENSE"><img src="https://img.shields.io/badge/LICENSE-MIT-GREEN.png"></a>
 <a href="https://github.com/bayashi/actually/actions"><img src="https://github.com/bayashi/actually/workflows/main/badge.svg?_t=1681289447"/></a>
 <a href="https://goreportcard.com/report/github.com/bayashi/actually" title="actually report card" target="_blank"><img src="https://goreportcard.com/badge/github.com/bayashi/actually" alt="actually report card"></a>
 <a href="https://pkg.go.dev/github.com/bayashi/actually" target="_blank"><img src="https://pkg.go.dev/badge/github.com/bayashi/actually.svg" alt="Go Reference"></a>
 
-Yet another pithy testing framework `actually`.
+Yet another pithy testing framework, `actually`.
 
 ## Usage
 
-This is an example code of tests. ([Try in playground](https://go.dev/play/p/Ut-hIr3vmYQ))
+This is an example code of tests in `actually`. ([Try in playground](https://go.dev/play/p/Ut-hIr3vmYQ))
 
 ```go
 package main
@@ -60,7 +60,7 @@ func Test(t *testing.T) {
 
 NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chain.
 
-[Here is full documentation Wiki](https://github.com/bayashi/actually/wiki).
+[Here is a Wiki of full API documentation](https://github.com/bayashi/actually/wiki).
 
 ## Fail reports
 
@@ -94,13 +94,13 @@ same_test.go:19:
                              }
 ```
 
-`actually` has a `X()` method to show raw strings in the fail report.
+`actually` has a `X()` method to show raw strings in the fail report. It would be helpful to compare intricate strigns, like below. You don't need to keep commented-out lines to dump test data anymore:
 
 ```go
 actually.Got(stringA).Expect(stringB).X().Same(t)
 ```
 
-It would be helpful to compare intricate strigns, like below. You don't need to keep commented-out lines to dump test data anymore:
+Below report would be lovely.
 
 ```
 builder_test.go:133:
@@ -158,9 +158,9 @@ same_test.go:64:
 Println(actually.Diff(objA, objB))
 ```
 
-If objects are not string, even if these are objects, you can see the diff of dumped data.
+If objects are not string, even if these are objects, you can see the differences of dumped data.
 
-[See more details in here](https://github.com/bayashi/actually/wiki).
+[See more details in a Wiki](https://github.com/bayashi/actually/wiki).
 
 ## Installation
 
