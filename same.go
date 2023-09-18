@@ -82,15 +82,18 @@ func (a *TestingA) SameNumber(t *testing.T, testNames ...string) *TestingA {
 	got := a.got.RawValue()
 	expect := a.expect.RawValue()
 
-	if !isFuncType(got) && !isFuncType(expect) && objectsAreSame(expect, got) {
-		return a // Pass
-	}
-
 	if isTypeNil(got) {
 		return a.fail(reportForSame(a).Reason(reason_GotIsNilType).Notice(notice_SameNumber_ShouldNumber))
 	}
 	if isTypeNil(expect) {
 		return a.fail(reportForSame(a).Reason(reason_ExpectIsNilType).Notice(notice_SameNumber_ShouldNumber))
+	}
+
+	if !isTypeNumber(got) {
+		return a.fail(reportForSame(a).Reason(reason_GotIsNotNumber).Notice(notice_SameNumber_ShouldNumber))
+	}
+	if !isTypeNumber(expect) {
+		return a.fail(reportForSame(a).Reason(reason_ExpectIsNotNumber).Notice(notice_SameNumber_ShouldNumber))
 	}
 
 	if !isValidValue(expect) {

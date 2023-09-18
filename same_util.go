@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"reflect"
+	"strings"
 
 	"github.com/bayashi/actually/diff"
 	"github.com/bayashi/actually/report"
@@ -68,6 +69,11 @@ func isTypeNil(v any) bool {
 
 func isValidValue(v any) bool {
 	return reflect.ValueOf(v).IsValid()
+}
+
+func isTypeNumber(v any) bool {
+	typ := reflect.TypeOf(v).Name()
+	return strings.HasPrefix(typ, "int") || strings.HasPrefix(typ, "float")
 }
 
 // Just confirming only types are convertible or not
