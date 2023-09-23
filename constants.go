@@ -15,6 +15,7 @@ const (
 	reason_WrongType             = "Different type"
 	reason_SameType              = "Unexpectedly same type"
 	reason_NotSame               = "Not same value"
+	reason_Same                  = "Unexpectedly same value"
 	reason_WrongPointerAddress   = "Wrong pointer address"
 	reason_SamePointerAddress    = "Unexpectedly same pointer address"
 	reason_GotIsFunc             = "`Got` value is type of function"

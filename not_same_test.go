@@ -23,3 +23,21 @@ func TestNotSamePointer(t *testing.T) {
 	// actually.Got(ptr).Expect("").NotSamePointer(t)
 	// actually.Got(ptr).Expect(&i).NotSamePointer(t)
 }
+
+func TestNotSameNumber(t *testing.T) {
+	actually.Got(1).Expect(2).NotSameNumber(t, "these should be different number")
+	actually.Got(int8(1)).Expect(int32(2)).NotSameNumber(t)
+	actually.Got(float32(1.1)).Expect(int64(1)).NotSameNumber(t)
+	actually.Got(1).Expect(float64(1.000000000000001)).NotSameNumber(t)
+
+	// fail
+	// actually.Got(1).Expect(1).NotSameNumber(t)
+	// actually.Got("1").Expect(1).NotSameNumber(t)
+	// actually.Got(1).Expect("1").NotSameNumber(t)
+	// actually.Got(nil).Expect(nil).NotSameNumber(t)
+	// actually.Got(nil).Expect(0).NotSameNumber(t)
+	// actually.Got(0).Expect(nil).NotSameNumber(t)
+	// actually.Got([]byte("0")).Expect([]byte("0")).NotSameNumber(t)
+	// actually.Got("0").Expect("0").NotSameNumber(t)
+	// actually.Got(1).Expect(float64(1.0000000000000001)).NotSameNumber(t)
+}

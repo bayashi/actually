@@ -27,3 +27,42 @@ func (a *TestingA) NotSamePointer(t *testing.T, testNames ...string) *TestingA {
 
 	return a
 }
+
+// NotSameNumber method verifies that two objects are not same number.
+func (a *TestingA) NotSameNumber(t *testing.T, testNames ...string) *TestingA {
+	invalidCallForSame(a)
+	a.name = a.naming(testNames...)
+	a.t = t
+	a.t.Helper()
+
+	got := a.got.RawValue()
+	expect := a.expect.RawValue()
+
+	if isTypeNil(got) {
+		return a.fail(reportForSame(a).Reason(reason_GotIsNilType).Notice(notice_SameNumber_ShouldNumber))
+	}
+	if isTypeNil(expect) {
+		return a.fail(reportForSame(a).Reason(reason_ExpectIsNilType).Notice(notice_SameNumber_ShouldNumber))
+	}
+
+	if !isTypeNumber(got) {
+		return a.fail(reportForSame(a).Reason(reason_GotIsNotNumber).Notice(notice_SameNumber_ShouldNumber))
+	}
+	if !isTypeNumber(expect) {
+		return a.fail(reportForSame(a).Reason(reason_ExpectIsNotNumber).Notice(notice_SameNumber_ShouldNumber))
+	}
+
+	if !isValidValue(expect) {
+		return a.fail(reportForSame(a).Reason(reason_ExpectIsNotValidValue))
+	}
+
+	if !objectsAreConvertible(expect, got) {
+		return a.fail(reportForSame(a).Reason(reason_NotConvertibleTypes))
+	}
+
+	if convert2float64(expect) == convert2float64(got) {
+		return a.fail(reportForSameWithDiff(a).Reason(reason_Same))
+	}
+
+	return a
+}
