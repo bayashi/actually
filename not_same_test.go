@@ -41,3 +41,14 @@ func TestNotSameNumber(t *testing.T) {
 	// actually.Got("0").Expect("0").NotSameNumber(t)
 	// actually.Got(1).Expect(float64(1.0000000000000001)).NotSameNumber(t)
 }
+
+func TestNotSameType(t *testing.T) {
+	actually.Got(nil).Expect(0).NotSameType(t)
+	actually.Got("1").Expect(1).NotSameType(t)
+	actually.Got(t).Expect(&testing.B{}).NotSameType(t)
+
+	// fail
+	// actually.Got(nil).Expect(nil).NotSameType(t)
+	// actually.Got(true).Expect(false).NotSameType(t) // both are same boolean
+	// actually.Got(&testing.T{}).Expect(t).NotSameType(t)
+}

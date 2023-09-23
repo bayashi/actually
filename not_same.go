@@ -66,3 +66,18 @@ func (a *TestingA) NotSameNumber(t *testing.T, testNames ...string) *TestingA {
 
 	return a
 }
+
+// NotSameType method verifies that each pair of values are NOT same type.
+// Not care about actual value of these. Just verify the type.
+func (a *TestingA) NotSameType(t *testing.T, testNames ...string) *TestingA {
+	invalidCallForSame(a)
+	a.name = a.naming(testNames...)
+	a.t = t
+	a.t.Helper()
+
+	if !objectsAreSameType(a.expect.RawValue(), a.got.RawValue()) {
+		return a
+	}
+
+	return a.fail(reportForNotSameType(a))
+}
