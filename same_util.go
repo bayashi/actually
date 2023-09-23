@@ -55,6 +55,13 @@ func reportForSameType(a *TestingA) *report.Report {
 		Notice("SameType() just verifies the type. It doesn't care about the actual value")
 }
 
+func reportForNotSameType(a *TestingA) *report.Report {
+	return report.New().
+		Expectf("Type: %#v", a.expect).
+		Gotf("Type: %#v", a.got).
+		Reason(reason_SameType)
+}
+
 func isFuncType(v any) bool {
 	return v != nil && reflect.TypeOf(v).Kind() == reflect.Func
 }
@@ -73,7 +80,7 @@ func isValidValue(v any) bool {
 
 func isTypeNumber(v any) bool {
 	typ := reflect.TypeOf(v).Name()
-	return strings.HasPrefix(typ, "int") || strings.HasPrefix(typ, "float")
+	return strings.HasPrefix(typ, "int") || strings.HasPrefix(typ, "uint") || strings.HasPrefix(typ, "float")
 }
 
 // Just confirming only types are convertible or not
@@ -118,4 +125,21 @@ func invalidCallForSame(a *TestingA) {
 	if !a.setGot {
 		panic("You called kind of Same() method, but you forgot to call Got().")
 	}
+}
+
+func convert2float64(a any) float64 {
+	var f float64
+
+	b := reflect.TypeOf(a).Kind()
+
+	// https://pkg.go.dev/reflect#Kind
+	if b >= 2 && b <= 6 {
+		f = float64(reflect.ValueOf(a).Int())
+	} else if b >= 7 && b <= 11 {
+		f = float64(reflect.ValueOf(a).Uint())
+	} else if b == 13 || b == 14 {
+		f = reflect.ValueOf(a).Float()
+	}
+
+	return f
 }
