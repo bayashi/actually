@@ -32,7 +32,7 @@ func (a *TestingA) NoError(t *testing.T, testNames ...string) *TestingA {
 		} else {
 			r.Reason("Error happened").Expect("No error")
 		}
-		return a.fail(r.Gotf("Type:%Y, %#v", a.got, a.got))
+		return a.fail(r.Gotf("Type:%Y, %+v", a.got, a.got))
 	}
 
 	return a
