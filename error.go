@@ -3,7 +3,7 @@ package actually
 import (
 	"testing"
 
-	"github.com/bayashi/actually/report"
+	w "github.com/bayashi/witness"
 )
 
 // NoError(t) method asserts that an error you got is NOt kind of error.
@@ -25,21 +25,24 @@ func (a *TestingA) NoError(t *testing.T, testNames ...string) *TestingA {
 	a.t = t
 	a.t.Helper()
 
-	if a.got.RawValue() != nil {
-		r := report.New()
+	if a.got != nil {
+		var reason string
+		w := w.Got(a.got)
 		if !a.isTypeOfError() {
-			r.Reason(reason_WrongType).Expect("It should be type of error")
+			reason = reason_WrongType
+			w.Message("Notice", "It should be type of error")
 		} else {
-			r.Reason("Error happened").Expect("No error")
+			reason = "Error happened"
+			w.Message("Notice", "No error")
 		}
-		return a.fail(r.Gotf("Type:%Y, %+v", a.got, a.got))
+		return a.fail(w, reason)
 	}
 
 	return a
 }
 
 func (a *TestingA) isTypeOfError() bool {
-	_, ok := a.got.RawValue().(error)
+	_, ok := a.got.(error)
 
 	return ok
 }

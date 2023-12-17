@@ -8,8 +8,8 @@ const (
 	panicReason_CalledGotTwice    = "Don't call `Got` method twice. It has been called already"
 	panicReason_CalledExpectTwice = "Don't call `Expect` method twice. It has been called already"
 
-	message_ExpectTrue  = "Boolean type <true>"
-	message_ExpectFalse = "Boolean type <false>"
+	message_ExpectTrue  = "It should be boolean type <true>"
+	message_ExpectFalse = "It should be boolean type <false>"
 
 	// fail reason
 	reason_WrongType             = "Different type"

@@ -1,7 +1,6 @@
 package actually
 
 import (
-	"strings"
 	"testing"
 )
 
@@ -10,13 +9,6 @@ func TestSkip(t *testing.T) {
 	Skip(t, "Skip reason")
 	Got(2).NotNil(t)
 	Got(3).NotNil(t)
-}
-
-func TestTraceinfo(t *testing.T) {
-	trace := traceinfo()
-	if !strings.Contains(trace, "helpers_test.go:16") {
-		t.Errorf("trace is wrong. Actual trace:%s", trace)
-	}
 }
 
 func TestName(t *testing.T) {

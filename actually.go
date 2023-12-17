@@ -3,15 +3,13 @@ package actually
 
 import (
 	"testing"
-
-	"github.com/bayashi/actually/testobject"
 )
 
 // TestingA is a context of the test
 type TestingA struct {
-	got         *testobject.TestObject
+	got         any
 	setGot      bool
-	expect      *testobject.TestObject
+	expect      any
 	setExpect   bool
 	t           *testing.T
 	failNow     *bool
@@ -22,7 +20,7 @@ type TestingA struct {
 // Got sets the value you actually got. Got() creates *TestingA and returns it.
 func Got(g any) *TestingA {
 	return &TestingA{
-		got:    testobject.NewTestObject(g, 0),
+		got:    g,
 		setGot: true,
 	}
 }
@@ -33,7 +31,7 @@ func (a *TestingA) Got(g any) *TestingA {
 		panic(panicReason_CalledGotTwice)
 	}
 
-	a.got = testobject.NewTestObject(g, 0)
+	a.got = g
 	a.setGot = true
 
 	return a
@@ -43,7 +41,7 @@ func (a *TestingA) Got(g any) *TestingA {
 // Expect creates *TestingA and returns it.
 func Expect(e any) *TestingA {
 	return &TestingA{
-		expect:    testobject.NewTestObject(e, 0),
+		expect:    e,
 		setExpect: true,
 	}
 }
@@ -54,7 +52,7 @@ func (a *TestingA) Expect(e any) *TestingA {
 		panic(panicReason_CalledExpectTwice)
 	}
 
-	a.expect = testobject.NewTestObject(e, 0)
+	a.expect = e
 	a.setExpect = true
 
 	return a
