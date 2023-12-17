@@ -70,18 +70,19 @@ This is an example of simple fail report:
 
 ```
 nil_test.go:28:
+            Test name:      TestNil
             Trace:          /path/to/src/github.com/bayashi/actually/nil_test.go:28
-            Function:       TestNil()
-            Expected:       <nil>
-            Actually got:   Type:string, ""
+            Fail reason:    Expected <nil>, but it was NOT <nil>
+            Type:           Got:string
+            Actually got:   ""
 ```
 
 Another example with diff:
 
 ```
 same_test.go:19:
+            Test name:      TestSame
             Trace:          /path/to/src/github.com/bayashi/actually/same_test.go:19
-            Function:       TestSame()
             Fail reason:    Not same value
             Expected:       Type: map[string]int, Dump: map[string]int{"foo":12}
             Actually got:   Type: map[string]int, Dump: map[string]int{"joo":12}
@@ -104,8 +105,8 @@ Below report would be lovely.
 
 ```
 builder_test.go:133:
+            Test name:      TestTree
             Trace:          /path/to/src/github.com/bayashi/goverview/builder_test.go:133
-            Function:       TestTree()
             Fail reason:    Not same
             Expected:       Dump: "\n┌ 001/\n├── .gitignore\n├── LICENSE: License MIT\n├── go.mod: go 1.18\n└───+ main.go: main\n      Func: X\n      const: X\n"
             Actually got:   Dump: "\n┌ 001/\n├── .gitignore\n├── LICENSE: License MIT\n├── go.mod: go 1.19\n└──* main.go: main\n      Func: X\n      Const: X\n"
@@ -120,7 +121,7 @@ builder_test.go:133:
                                    Func: X
                             -      const: X
                             +      Const: X
-            Expected Raw:   ---
+            Raw Expect:     ---
                             ┌ 001/
                             ├── .gitignore
                             ├── LICENSE: License MIT
@@ -129,7 +130,7 @@ builder_test.go:133:
                                   Func: X
                                   const: X
                             ---
-            Got Raw:        ---
+            Raw Got:        ---
                             ┌ 001/
                             ├── .gitignore
                             ├── LICENSE: License MIT
@@ -143,13 +144,13 @@ There would be a notice message with a fail reason as a hint to pass:
 
 ```
 same_test.go:64:
+            Test name:      TestSamePointer
             Trace:          /path/to/src/github.com/bayashi/actually/same.go:53
                                     /path/to/src/github.com/bayashi/actually/same_test.go:64
-            Function:       TestSamePointer()
             Fail reason:    `Got` is NOT type of Pointer
-            Notice:         It should be a Pointer for SamePointer() method
             Expected:       Type: *int, Dump: (*int)(0xc00001a528)
             Actually got:   Type: string, Dump: ""
+            Notice:         It should be a Pointer for SamePointer() method
 ```
 
 `actually` has a `Diff` method to see differences between 2 objects.
@@ -173,6 +174,10 @@ MIT License
 ## Author
 
 Dai Okabayashi: https://github.com/bayashi
+
+## See Also
+
+* https://github.com/bayashi/witness
 
 ## Special Thanks
 
