@@ -17,7 +17,7 @@ func (a *TestingA) Nil(t *testing.T, testNames ...string) *TestingA {
 	a.t.Helper()
 
 	if !a.isNil() {
-		w := w.Expect("<nil>").Got(a.got)
+		w := w.Got(a.got)
 		return a.fail(w, "Expected <nil>, but it was NOT <nil>")
 	}
 
@@ -35,7 +35,7 @@ func (a *TestingA) NotNil(t *testing.T, testNames ...string) *TestingA {
 	a.t.Helper()
 
 	if a.isNil() {
-		w := w.Expect("Not <nil>").Got("<nil>")
+		w := w.Got(a.got)
 		return a.fail(w, reason_ExpectIsNotNil)
 	}
 
