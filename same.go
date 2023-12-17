@@ -133,7 +133,7 @@ func (a *TestingA) SameType(t *testing.T, testNames ...string) *TestingA {
 	a.t.Helper()
 
 	if !objectsAreSameType(a.expect, a.got) {
-		w := reportForSame(a).Expect(a.expect).Got(a.got).
+		w := reportForSame(a).
 			Message(notice_Label, "SameType() just verifies the type. It doesn't care about the actual value")
 		return a.fail(w, reason_WrongType)
 	}
