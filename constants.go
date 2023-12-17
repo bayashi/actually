@@ -3,8 +3,6 @@ package actually
 const (
 	envKey_FailNow = "ACTUALLY_FAIL_NOW"
 
-	traceSeparator = "\n\t"
-
 	panicReason_CalledGotTwice    = "Don't call `Got` method twice. It has been called already"
 	panicReason_CalledExpectTwice = "Don't call `Expect` method twice. It has been called already"
 
@@ -35,8 +33,4 @@ const (
 	notice_SamePointer_ShouldPointer    = "It should be a Pointer for SamePointer() method"
 	notice_SameNumber_ShouldNumber      = "It should be a number(int or float) for SameNumber() method"
 	notice_NotSamePointer_ShouldPointer = "It should be a Pointer for NotSamePointer() method"
-
-	template_Dump            = "Type: %Y, Dump: %#v"
-	template_DumpStringType  = "Dump: %#v"
-	template_DumpAsRawString = "---\n%s\n---"
 )
