@@ -15,11 +15,11 @@ func (a *TestingA) NotSamePointer(t *testing.T, testNames ...string) *TestingA {
 	expect := a.expect
 
 	if !isPointerType(got) {
-		w := reportForSame(a).Message("Notice", notice_NotSamePointer_ShouldPointer)
+		w := reportForSame(a).Message(notice_Label, notice_NotSamePointer_ShouldPointer)
 		return a.fail(w, reason_GotIsNotPointer)
 	}
 	if !isPointerType(expect) {
-		w := reportForSame(a).Message("Notice", notice_NotSamePointer_ShouldPointer)
+		w := reportForSame(a).Message(notice_Label, notice_NotSamePointer_ShouldPointer)
 		return a.fail(w, reason_ExpectIsNotPointer)
 	}
 
@@ -41,20 +41,20 @@ func (a *TestingA) NotSameNumber(t *testing.T, testNames ...string) *TestingA {
 	expect := a.expect
 
 	if isTypeNil(got) {
-		w := reportForSame(a).Message("Notice", notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
 		return a.fail(w, reason_GotIsNilType)
 	}
 	if isTypeNil(expect) {
-		w := reportForSame(a).Message("Notice", notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
 		return a.fail(w, reason_ExpectIsNilType)
 	}
 
 	if !isTypeNumber(got) {
-		w := reportForSame(a).Message("Notice", notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
 		return a.fail(w, reason_GotIsNotNumber)
 	}
 	if !isTypeNumber(expect) {
-		w := reportForSame(a).Message("Notice", notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
 		return a.fail(w, reason_ExpectIsNotNumber)
 	}
 

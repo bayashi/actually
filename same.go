@@ -25,11 +25,11 @@ func (a *TestingA) Same(t *testing.T, testNames ...string) *TestingA {
 	}
 
 	if isFuncType(got) {
-		w := reportForSame(a).Message("Notice", notice_Same_NotAcceptable)
+		w := reportForSame(a).Message(notice_Label, notice_Same_NotAcceptable)
 		return a.fail(w, reason_GotIsFunc)
 	}
 	if isFuncType(expect) {
-		w := reportForSame(a).Message("Notice", notice_Same_NotAcceptable)
+		w := reportForSame(a).Message(notice_Label, notice_Same_NotAcceptable)
 		return a.fail(w, reason_ExpectIsFunc)
 	}
 
@@ -51,11 +51,11 @@ func (a *TestingA) SamePointer(t *testing.T, testNames ...string) *TestingA {
 	expect := a.expect
 
 	if !isPointerType(got) {
-		w := reportForSame(a).Message("Notice", notice_SamePointer_ShouldPointer)
+		w := reportForSame(a).Message(notice_Label, notice_SamePointer_ShouldPointer)
 		return a.fail(w, reason_GotIsNotPointer)
 	}
 	if !isPointerType(expect) {
-		w := reportForSame(a).Message("Notice", notice_SamePointer_ShouldPointer)
+		w := reportForSame(a).Message(notice_Label, notice_SamePointer_ShouldPointer)
 		return a.fail(w, reason_ExpectIsNotPointer)
 	}
 
@@ -87,20 +87,20 @@ func (a *TestingA) SameNumber(t *testing.T, testNames ...string) *TestingA {
 	expect := a.expect
 
 	if isTypeNil(got) {
-		w := reportForSame(a).Message("Notice", notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
 		return a.fail(w, reason_GotIsNilType)
 	}
 	if isTypeNil(expect) {
-		w := reportForSame(a).Message("Notice", notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
 		return a.fail(w, reason_ExpectIsNilType)
 	}
 
 	if !isTypeNumber(got) {
-		w := reportForSame(a).Message("Notice", notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
 		return a.fail(w, reason_GotIsNotNumber)
 	}
 	if !isTypeNumber(expect) {
-		w := reportForSame(a).Message("Notice", notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
 		return a.fail(w, reason_ExpectIsNotNumber)
 	}
 
@@ -134,7 +134,7 @@ func (a *TestingA) SameType(t *testing.T, testNames ...string) *TestingA {
 
 	if !objectsAreSameType(a.expect, a.got) {
 		w := reportForSame(a).Expect(a.expect).Got(a.got).
-			Message("Notice", "SameType() just verifies the type. It doesn't care about the actual value")
+			Message(notice_Label, "SameType() just verifies the type. It doesn't care about the actual value")
 		return a.fail(w, reason_WrongType)
 	}
 

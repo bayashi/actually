@@ -30,10 +30,10 @@ func (a *TestingA) NoError(t *testing.T, testNames ...string) *TestingA {
 		w := w.Got(a.got)
 		if !a.isTypeOfError() {
 			reason = reason_WrongType
-			w.Message("Notice", "It should be type of error")
+			w.Message(notice_Label, "It should be type of error")
 		} else {
 			reason = "Error happened"
-			w.Message("Notice", "No error")
+			w.Message(notice_Label, "No error")
 		}
 		return a.fail(w, reason)
 	}

@@ -16,7 +16,7 @@ func (a *TestingA) True(t *testing.T, testNames ...string) *TestingA {
 	a.t.Helper()
 
 	if !a.isBool() {
-		w := reportForSame(a).Message("Notice", "It should be boolean")
+		w := reportForSame(a).Message(notice_Label, "It should be boolean")
 		return a.fail(w, reason_WrongType)
 	}
 
@@ -38,7 +38,7 @@ func (a *TestingA) False(t *testing.T, testNames ...string) *TestingA {
 	a.t.Helper()
 
 	if !a.isBool() {
-		w := reportForSame(a).Message("Notice", "It should be boolean")
+		w := reportForSame(a).Message(notice_Label, "It should be boolean")
 		return a.fail(w, reason_WrongType)
 	}
 

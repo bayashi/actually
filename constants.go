@@ -29,6 +29,7 @@ const (
 	reason_NotConvertibleTypes   = "The types of `Got` and `Expect` are NOT convertible"
 
 	// notice_Method_*
+	notice_Label                        = "Notice"
 	notice_Same_NotAcceptable           = "It's not acceptable in Same() method"
 	notice_SamePointer_ShouldPointer    = "It should be a Pointer for SamePointer() method"
 	notice_SameNumber_ShouldNumber      = "It should be a number(int or float) for SameNumber() method"
