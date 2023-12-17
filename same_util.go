@@ -2,64 +2,23 @@ package actually
 
 import (
 	"bytes"
-	"fmt"
 	"reflect"
 	"strings"
 
-	"github.com/bayashi/actually/diff"
-	"github.com/bayashi/actually/report"
+	w "github.com/bayashi/witness"
 )
 
-func reportForSame(a *TestingA) *report.Report {
-	r := report.New().
-		Expectf(template_Dump, a.expect, a.expect).
-		Gotf(template_Dump, a.got, a.got)
-
-	if a.expect.IsStringType() {
-		r = r.Expectf(template_DumpStringType, a.expect)
-		if a.showRawData {
-			r = r.ExpectAsRaw(fmt.Sprintf(template_DumpAsRawString, a.expect))
-		}
-	} else if a.expect.IsDumpableRawType() {
-		r = r.Expectf(template_DumpStringType, a.expect)
-		if a.showRawData {
-			r = r.ExpectAsDump(a.expect.Dump())
-		}
-	}
-
-	if a.got.IsStringType() {
-		r = r.Gotf(template_DumpStringType, a.got)
-		if a.showRawData {
-			r = r.GotAsRaw(fmt.Sprintf(template_DumpAsRawString, a.got))
-		}
-	} else if a.got.IsDumpableRawType() {
-		r = r.Gotf(template_DumpStringType, a.got)
-		if a.showRawData {
-			r = r.GotAsDump(a.got.Dump())
-		}
+func reportForSame(a *TestingA) *w.Witness {
+	r := w.Expect(a.expect).Got(a.got)
+	if a.showRawData {
+		r = r.ShowRaw()
 	}
 
 	return r
 }
 
-func reportForSameWithDiff(a *TestingA) *report.Report {
-	d := diff.Diff(a.expect.RawValue(), a.got.RawValue())
-	return reportForSame(a).Diff(d)
-}
-
-func reportForSameType(a *TestingA) *report.Report {
-	return report.New().
-		Expectf("Type: %Y", a.expect).
-		Gotf("Type: %Y", a.got).
-		Reason(reason_WrongType).
-		Notice("SameType() just verifies the type. It doesn't care about the actual value")
-}
-
-func reportForNotSameType(a *TestingA) *report.Report {
-	return report.New().
-		Expectf("Type: %#v", a.expect).
-		Gotf("Type: %#v", a.got).
-		Reason(reason_SameType)
+func reportForSameWithDiff(a *TestingA) *w.Witness {
+	return reportForSame(a).ShowDiff()
 }
 
 func isFuncType(v any) bool {

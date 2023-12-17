@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/bayashi/actually/report"
+	w "github.com/bayashi/witness"
 )
 
 // True method asserts that a test data you got is true value of boolean type.
@@ -18,18 +18,12 @@ func (a *TestingA) True(t *testing.T, testNames ...string) *TestingA {
 	a.t.Helper()
 
 	if !a.isBool() {
-		r := report.New().
-			Reason(reason_WrongType).
-			Expect(message_ExpectTrue).
-			Gotf("Type:%Y, %#v", a.got, a.got)
-		return a.fail(r)
+		w := w.Got(a.got).Message(notice_Label, "It should be boolean")
+		return a.fail(w, reason_WrongType)
 	}
 
-	if a.got.RawValue() != true {
-		r := report.New().
-			Expect(message_ExpectTrue).
-			Gotf("%#v", a.got)
-		return a.fail(r)
+	if a.got != true {
+		return a.fail(w.Got(a.got), message_ExpectTrue)
 	}
 
 	return a
@@ -46,25 +40,19 @@ func (a *TestingA) False(t *testing.T, testNames ...string) *TestingA {
 	a.t.Helper()
 
 	if !a.isBool() {
-		r := report.New().
-			Reason(reason_WrongType).
-			Expect(message_ExpectFalse).
-			Gotf("Type:%Y, %#v", a.got, a.got)
-		return a.fail(r)
+		w := w.Got(a.got).Message(notice_Label, "It should be boolean")
+		return a.fail(w, reason_WrongType)
 	}
 
-	if a.got.RawValue() != false {
-		r := report.New().
-			Expect(message_ExpectFalse).
-			Gotf("%#v", a.got)
-		return a.fail(r)
+	if a.got != false {
+		return a.fail(w.Got(a.got), message_ExpectFalse)
 	}
 
 	return a
 }
 
 func (a *TestingA) isBool() bool {
-	v := reflect.ValueOf(a.got.RawValue())
+	v := reflect.ValueOf(a.got)
 	k := v.Kind()
 
 	return k == reflect.Bool

@@ -5,7 +5,7 @@ package actually
 import (
 	"testing"
 
-	"github.com/bayashi/actually/diff"
+	"github.com/bayashi/witness"
 )
 
 func failNowPtr(v bool) *bool {
@@ -100,5 +100,5 @@ func (a *TestingA) Name(n string) *TestingA {
 
 // Diff is a helper function to get a diff string of 2 objects for debugging
 func Diff(a any, b any) string {
-	return diff.DiffSimple(a, b)
+	return witness.Diff(a, b)
 }

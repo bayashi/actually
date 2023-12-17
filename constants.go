@@ -3,13 +3,11 @@ package actually
 const (
 	envKey_FailNow = "ACTUALLY_FAIL_NOW"
 
-	traceSeparator = "\n\t"
-
 	panicReason_CalledGotTwice    = "Don't call `Got` method twice. It has been called already"
 	panicReason_CalledExpectTwice = "Don't call `Expect` method twice. It has been called already"
 
-	message_ExpectTrue  = "Boolean type <true>"
-	message_ExpectFalse = "Boolean type <false>"
+	message_ExpectTrue  = "It should be boolean type <true>"
+	message_ExpectFalse = "It should be boolean type <false>"
 
 	// fail reason
 	reason_WrongType             = "Different type"
@@ -31,12 +29,9 @@ const (
 	reason_NotConvertibleTypes   = "The types of `Got` and `Expect` are NOT convertible"
 
 	// notice_Method_*
+	notice_Label                        = "Notice"
 	notice_Same_NotAcceptable           = "It's not acceptable in Same() method"
 	notice_SamePointer_ShouldPointer    = "It should be a Pointer for SamePointer() method"
 	notice_SameNumber_ShouldNumber      = "It should be a number(int or float) for SameNumber() method"
 	notice_NotSamePointer_ShouldPointer = "It should be a Pointer for NotSamePointer() method"
-
-	template_Dump            = "Type: %Y, Dump: %#v"
-	template_DumpStringType  = "Dump: %#v"
-	template_DumpAsRawString = "---\n%s\n---"
 )

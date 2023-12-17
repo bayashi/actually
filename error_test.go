@@ -31,13 +31,13 @@ func TestIsTypeOfError(t *testing.T) {
 func TestGotError(t *testing.T) {
 	_, err := os.Open(NotExistingFileInThisModule)
 	a := GotError(err)
-	if a.got.RawValue() != err {
+	if a.got != err {
 		t.Errorf("`GotError()` was broken. Expected:%#v, but Actual:%#v", err, a.got)
 	}
 
 	_, err2 := os.Open(ExistingFileInThisModule)
 	a2 := GotError(err2)
-	if a2.got.RawValue() != err2 {
+	if a2.got != err2 {
 		t.Errorf("`GotError()` was broken. Expected:%#v, but Actual:%#v", err2, a2.got)
 	}
 }
@@ -46,14 +46,14 @@ func TestActuallyGotError(t *testing.T) {
 	_, err := os.Open(NotExistingFileInThisModule)
 	a := &TestingA{}
 	a.GotError(err)
-	if a.got.RawValue() != err {
+	if a.got != err {
 		t.Errorf("`actually.GotError()` was broken. Expected:%#v, but Actual:%#v", err, a.got)
 	}
 
 	_, err2 := os.Open(ExistingFileInThisModule)
 	a2 := &TestingA{}
 	a2.GotError(err2)
-	if a2.got.RawValue() != err2 {
+	if a2.got != err2 {
 		t.Errorf("`actually.GotError()` was broken. Expected:%#v, but Actual:%#v", err2, a2.got)
 	}
 }

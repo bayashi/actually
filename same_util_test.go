@@ -1,39 +1,19 @@
 package actually
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
 
 func TestReportForSame(t *testing.T) {
 	a := Got("EGLL").Expect("LHR")
-	Got(reportForSame(a).Put()).
-		Expect("\tExpected:    \tDump: \"LHR\"\n\tActually got:\tDump: \"EGLL\"\n").
-		X().
-		Same(t)
-
-	aa := Got(128).Expect(256)
-	Got(reportForSame(aa).Put()).
-		Expect("\tExpected:    \tType: int, Dump: 256\n\tActually got:\tType: int, Dump: 128\n").
-		X().
-		Same(t)
-
-	aaa := Got([]int{1, 2}).Expect([]int{3, 4})
-	Got(reportForSame(aaa).Put()).
-		Expect("\tExpected:    \tDump: []int{3, 4}\n\tActually got:\tDump: []int{1, 2}\n").
-		X().
-		Same(t)
+	Got(fmt.Sprintf("%T", reportForSame(a))).Expect("*witness.Witness").Same(t)
 }
 
 func TestReportForSameWithDiff(t *testing.T) {
 	a := Got("eiko").Expect("aiko")
-	expect := "\tExpected:    \tDump: \"aiko\"\n\tActually got:\tDump: \"eiko\"\n\t" +
-		"Diff Details:\t--- Expected\n\t             \t+++ Actually got\n" +
-		"\t             \t@@ -1 +1 @@\n\t             \t-aiko\n\t             \t+eiko\n"
-	Got(reportForSameWithDiff(a).Put()).
-		Expect(expect).
-		X().
-		Same(t)
+	Got(fmt.Sprintf("%T", reportForSameWithDiff(a))).Expect("*witness.Witness").Same(t)
 }
 
 func TestIsFuncType(t *testing.T) {

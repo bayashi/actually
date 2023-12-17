@@ -6,32 +6,20 @@ import (
 	"os"
 	"strings"
 
-	"github.com/bayashi/actually/report"
-	"github.com/bayashi/actually/trace"
+	w "github.com/bayashi/witness"
 )
 
-func (a *TestingA) fail(r *report.Report) *TestingA {
+func (a *TestingA) fail(w *w.Witness, reason string) *TestingA {
 	a.t.Helper()
-	r.Trace(traceinfo()).Function(a.t.Name()).Name(a.name)
-	a.t.Errorf("\n%s", r.Put())
 	if a.failNow != nil && !*a.failNow {
-		a.t.Fail()
+		w.Fail(a.t, reason)
 	} else if (a.failNow != nil && *a.failNow) || len(os.Getenv(envKey_FailNow)) > 0 {
-		a.t.FailNow()
+		w.FailNow(a.t, reason)
 	} else {
-		a.t.Fail()
+		w.Fail(a.t, reason)
 	}
 
 	return a
-}
-
-var skipTraceRule = func(filepath string) bool {
-	// Skip myself
-	return strings.Contains(filepath, "actually.go")
-}
-
-func traceinfo() string {
-	return strings.Join(trace.Info(skipTraceRule), traceSeparator)
 }
 
 func (a *TestingA) naming(testNames ...string) string {

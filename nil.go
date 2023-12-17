@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/bayashi/actually/report"
+	w "github.com/bayashi/witness"
 )
 
 // Nil asserts that a test data you got is <nil>
@@ -17,10 +17,8 @@ func (a *TestingA) Nil(t *testing.T, testNames ...string) *TestingA {
 	a.t.Helper()
 
 	if !a.isNil() {
-		r := report.New().
-			Expect("<nil>").
-			Gotf("Type:%Y, %#v", a.got, a.got)
-		return a.fail(r)
+		w := w.Got(a.got)
+		return a.fail(w, "Expected <nil>, but it was NOT <nil>")
 	}
 
 	return a
@@ -37,22 +35,19 @@ func (a *TestingA) NotNil(t *testing.T, testNames ...string) *TestingA {
 	a.t.Helper()
 
 	if a.isNil() {
-		r := report.New().
-			Expect("Not <nil>").
-			Got("<nil>").
-			Reason(reason_ExpectIsNotNil)
-		return a.fail(r)
+		w := w.Got(a.got)
+		return a.fail(w, reason_ExpectIsNotNil)
 	}
 
 	return a
 }
 
 func (a *TestingA) isNil() bool {
-	if a.got.RawValue() == nil {
+	if a.got == nil {
 		return true
 	}
 
-	return isSpecialNil(a.got.RawValue())
+	return isSpecialNil(a.got)
 }
 
 func isSpecialNil(gotv any) bool {

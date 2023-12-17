@@ -11,18 +11,20 @@ func (a *TestingA) NotSamePointer(t *testing.T, testNames ...string) *TestingA {
 	a.t = t
 	a.t.Helper()
 
-	got := a.got.RawValue()
-	expect := a.expect.RawValue()
+	got := a.got
+	expect := a.expect
 
 	if !isPointerType(got) {
-		return a.fail(reportForSame(a).Reason(reason_GotIsNotPointer).Notice(notice_NotSamePointer_ShouldPointer))
+		w := reportForSame(a).Message(notice_Label, notice_NotSamePointer_ShouldPointer)
+		return a.fail(w, reason_GotIsNotPointer)
 	}
 	if !isPointerType(expect) {
-		return a.fail(reportForSame(a).Reason(reason_ExpectIsNotPointer).Notice(notice_NotSamePointer_ShouldPointer))
+		w := reportForSame(a).Message(notice_Label, notice_NotSamePointer_ShouldPointer)
+		return a.fail(w, reason_ExpectIsNotPointer)
 	}
 
 	if got == expect {
-		return a.fail(reportForNotSameType(a).Reason(reason_SamePointerAddress))
+		return a.fail(reportForSame(a), reason_SamePointerAddress)
 	}
 
 	return a
@@ -35,33 +37,37 @@ func (a *TestingA) NotSameNumber(t *testing.T, testNames ...string) *TestingA {
 	a.t = t
 	a.t.Helper()
 
-	got := a.got.RawValue()
-	expect := a.expect.RawValue()
+	got := a.got
+	expect := a.expect
 
 	if isTypeNil(got) {
-		return a.fail(reportForSame(a).Reason(reason_GotIsNilType).Notice(notice_SameNumber_ShouldNumber))
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		return a.fail(w, reason_GotIsNilType)
 	}
 	if isTypeNil(expect) {
-		return a.fail(reportForSame(a).Reason(reason_ExpectIsNilType).Notice(notice_SameNumber_ShouldNumber))
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		return a.fail(w, reason_ExpectIsNilType)
 	}
 
 	if !isTypeNumber(got) {
-		return a.fail(reportForSame(a).Reason(reason_GotIsNotNumber).Notice(notice_SameNumber_ShouldNumber))
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		return a.fail(w, reason_GotIsNotNumber)
 	}
 	if !isTypeNumber(expect) {
-		return a.fail(reportForSame(a).Reason(reason_ExpectIsNotNumber).Notice(notice_SameNumber_ShouldNumber))
+		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		return a.fail(w, reason_ExpectIsNotNumber)
 	}
 
 	if !isValidValue(expect) {
-		return a.fail(reportForSame(a).Reason(reason_ExpectIsNotValidValue))
+		return a.fail(reportForSame(a), reason_ExpectIsNotValidValue)
 	}
 
 	if !objectsAreConvertible(expect, got) {
-		return a.fail(reportForSame(a).Reason(reason_NotConvertibleTypes))
+		return a.fail(reportForSame(a), reason_NotConvertibleTypes)
 	}
 
 	if convert2float64(expect) == convert2float64(got) {
-		return a.fail(reportForSameWithDiff(a).Reason(reason_Same))
+		return a.fail(reportForSameWithDiff(a), reason_Same)
 	}
 
 	return a
@@ -75,9 +81,9 @@ func (a *TestingA) NotSameType(t *testing.T, testNames ...string) *TestingA {
 	a.t = t
 	a.t.Helper()
 
-	if !objectsAreSameType(a.expect.RawValue(), a.got.RawValue()) {
+	if !objectsAreSameType(a.expect, a.got) {
 		return a
 	}
 
-	return a.fail(reportForNotSameType(a))
+	return a.fail(reportForSame(a), reason_SameType)
 }
