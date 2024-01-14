@@ -153,7 +153,7 @@ same_test.go:64:
             Notice:         It should be a Pointer for SamePointer() method
 ```
 
-`actually` has a `Diff` method to see differences between 2 objects.
+`actually` has a `Diff` method to see differences between 2 objects for debugging.
 
 ```go
 Println(actually.Diff(objA, objB))
