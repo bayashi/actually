@@ -7,6 +7,8 @@ import (
 	w "github.com/bayashi/witness"
 )
 
+// Len asserts that the specified object has specific length.
+// Len also fails if the object has a type that len() not accept.
 func (a *TestingA) Len(t *testing.T, testNames ...string) *TestingA {
 	invalidCall(a)
 	a.name = a.naming(testNames...)
