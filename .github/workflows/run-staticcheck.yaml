@@ -20,28 +20,34 @@ jobs:
       fail-fast: false
       matrix:
         os:  ["ubuntu-latest"]
-        go:  ["1.19"]
+        go:  ["1.21"]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
       - name: Setup Go
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go }}
+
       - name: Install dependencies
         run: go get .
+
       - name: Run vet
         run: go vet -v ./...
+
       - name: Check diff of goimports
         run: |
             go install golang.org/x/tools/cmd/goimports@latest
             goimports -w . && git diff --exit-code
+
       - name: Setup staticcheck
         uses: dominikh/staticcheck-action@v1.3.0
         with:
-          version: "2022.1.3"
+          version: "2023.1.6"
           install-go: false
           min-go-version: ${{ matrix.go }}
           cache-key: ${{ matrix.os }}-${{ matrix.go }}
+
       - name: Run staticcheck
         run: staticcheck ./...
