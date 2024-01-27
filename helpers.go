@@ -12,16 +12,29 @@ func failNowPtr(v bool) *bool {
 	return &v
 }
 
-// FailNotNow turns a flag off, so that even if the test fails, execution does not stop immediately.
+// `FailNow` turns a flag on to stop further test execution immediately if one test fails.
+// NOTE that FailNow method should be called after `Got` or `Expect`.
 /*
-   It behaves this way by default. If you want the opposite behavior, call `FailNow` method.
-   NOTE that FailNotNow method should be called after `Got` or `Expect`.
+	actually.Got(something).FailNow().Nil(t) // Fail now for only this test
 */
-// Deprecated: Anyone uses? This method will be removed in the near future.
-func (a *TestingA) FailNotNow() *TestingA {
-	a.failNow = failNowPtr(false)
+func (a *TestingA) FailNow() *TestingA {
+	a.failNow = failNowPtr(true)
 
 	return a
+}
+
+// FailNowOn function turns an ENV flag on to stop further test execution immediately if one test fails.
+// This switch is enabled within the test. Not only during function.
+/*
+	func Test(t *testing.T) {
+		actually.FailNowOn(t)
+		actually.Got(something).Nil(t)                    // Fail Now
+		actually.Got(something).Expect(something).Same(t) // Fail Now
+	}
+*/
+// Warning: Do not use FailNowOn along with t.Parallel.
+func FailNowOn(t *testing.T) {
+	t.Setenv(envKey_FailNow, envKey_FailNow)
 }
 
 // FailNotNowOn function turns an ENV flag off to stop further test execution immediately if one test fails.
@@ -51,29 +64,16 @@ func FailNotNowOn(t *testing.T) {
 	t.Setenv(envKey_FailNow, "")
 }
 
-// `FailNow` turns a flag on to stop further test execution immediately if one test fails.
-// NOTE that FailNow method should be called after `Got` or `Expect`.
+// FailNotNow turns a flag off, so that even if the test fails, execution does not stop immediately.
 /*
-	actually.Got(something).FailNow().Nil(t) // Fail now for only this test
+   It behaves this way by default. If you want the opposite behavior, call `FailNow` method.
+   NOTE that FailNotNow method should be called after `Got` or `Expect`.
 */
-func (a *TestingA) FailNow() *TestingA {
-	a.failNow = failNowPtr(true)
+// Deprecated: Anyone uses? This method will be removed in the near future.
+func (a *TestingA) FailNotNow() *TestingA {
+	a.failNow = failNowPtr(false)
 
 	return a
-}
-
-// FailNowOn function turns an ENV flag on to stop further test execution immediately if one test fails.
-// This switch is enabled within the test. Not only during function.
-/*
-	func Test(t *testing.T) {
-		actually.FailNowOn(t)
-		actually.Got(something).Nil(t)                    // Fail Now
-		actually.Got(something).Expect(something).Same(t) // Fail Now
-	}
-*/
-// Warning: Do not use FailNowOn along with t.Parallel.
-func FailNowOn(t *testing.T) {
-	t.Setenv(envKey_FailNow, envKey_FailNow)
 }
 
 // X turns on a flag to show test values as raw in a fail report.
