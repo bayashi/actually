@@ -17,7 +17,7 @@ func (a *TestingA) fail(w *w.Witness, reason string) *TestingA {
 	return a
 }
 
-func (a *TestingA) failf(w *w.Witness, reasonFormat string, args...any) *TestingA {
+func (a *TestingA) failf(w *w.Witness, reasonFormat string, args ...any) *TestingA {
 	a.t.Helper()
 	a.doFail(w, fmt.Sprintf(reasonFormat, args...))
 
