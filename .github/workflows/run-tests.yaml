@@ -33,4 +33,4 @@ jobs:
       - name: Build
         run: go build -v ./...
       - name: Test with the Go CLI
-        run: go test -v ./... -shuffle=on -timeout=3m -cover
+        run: go test -v ./... -race -shuffle=on -timeout=3m -cover
