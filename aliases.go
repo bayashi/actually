@@ -1,5 +1,7 @@
 package actually
 
+import "testing"
+
 // Actual is an alias of Got.
 func Actual(g any) *TestingA {
 	return Got(g)
@@ -18,4 +20,14 @@ func Want(e any) *TestingA {
 // Want is an alias of Expect.
 func (a *TestingA) Want(e any) *TestingA {
 	return a.Expect(e)
+}
+
+// Fatal is an alias of FailNow.
+func (a *TestingA) Fatal() *TestingA {
+	return a.FailNow()
+}
+
+// FatalOn is an alias of FailNowOn.
+func FatalOn(t *testing.T) {
+	FailNowOn(t)
 }
