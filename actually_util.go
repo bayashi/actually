@@ -3,6 +3,7 @@ package actually
 // internal utils
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
@@ -11,6 +12,20 @@ import (
 
 func (a *TestingA) fail(w *w.Witness, reason string) *TestingA {
 	a.t.Helper()
+	a.doFail(w, reason)
+
+	return a
+}
+
+func (a *TestingA) failf(w *w.Witness, reasonFormat string, args...any) *TestingA {
+	a.t.Helper()
+	a.doFail(w, fmt.Sprintf(reasonFormat, args...))
+
+	return a
+}
+
+func (a *TestingA) doFail(w *w.Witness, reason string) {
+	a.t.Helper()
 	if a.failNow != nil && !*a.failNow {
 		w.Fail(a.t, reason)
 	} else if (a.failNow != nil && *a.failNow) || len(os.Getenv(envKey_FailNow)) > 0 {
@@ -18,8 +33,6 @@ func (a *TestingA) fail(w *w.Witness, reason string) *TestingA {
 	} else {
 		w.Fail(a.t, reason)
 	}
-
-	return a
 }
 
 func (a *TestingA) naming(testNames ...string) string {

@@ -27,6 +27,9 @@ const (
 	reason_ExpectIsNotNil        = "Expected other than <nil>, but got <nil>"
 	reason_ExpectIsNotValidValue = "`Expect` value is NOT a valid value"
 	reason_NotConvertibleTypes   = "The types of `Got` and `Expect` are NOT convertible"
+	reason_ExpectvalueNotInt     = "`Expect` value should be `int` or `int32` type, but it's `%s`"
+	reason_CouldNotBeAppliedLen  = "`Got` value could NOT be applied builtin `len`"
+	reason_ShouldHaveItems       = "`Got` value should have %d item(s), but has %d"
 
 	// notice_Method_*
 	notice_Label                        = "Notice"
