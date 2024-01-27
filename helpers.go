@@ -17,6 +17,7 @@ func failNowPtr(v bool) *bool {
    It behaves this way by default. If you want the opposite behavior, call `FailNow` method.
    NOTE that FailNotNow method should be called after `Got` or `Expect`.
 */
+// Deprecated: Anyone uses? This method will be removed in the near future.
 func (a *TestingA) FailNotNow() *TestingA {
 	a.failNow = failNowPtr(false)
 
