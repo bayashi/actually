@@ -75,6 +75,29 @@ func TestFail(t *testing.T) {
 }
 
 func TestDuplicateCall(t *testing.T) {
-	//Got(1).Got(1).NotNil(t)
-	//Expect(1).Expect(1).NotNil(t)
+	f := false
+	defer func() {
+		err := recover()
+		if err != panicReason_CalledGotTwice {
+			t.Errorf("expect error %s, but got %+v", panicReason_CalledGotTwice, err)
+		}
+		f = true
+	}()
+	Got(1).Got(2) // duplicate calling Got should be panic
+	if !f {
+		t.Error("panic wouldn't happen")
+	}
+
+	f = false
+	defer func() {
+		err := recover()
+		if err != panicReason_CalledExpectTwice {
+			t.Errorf("expect error %s, but got %+v", panicReason_CalledExpectTwice, err)
+		}
+		f = true
+	}()
+	Expect(1).Expect(1) // duplicate calling Expect should be panic
+	if !f {
+		t.Error("panic wouldn't happen")
+	}
 }
