@@ -32,7 +32,7 @@ func (a *TestingA) NoError(t *testing.T, testNames ...string) *TestingA {
 			reason = reason_WrongType
 			w.Message(notice_Label, "It should be type of error")
 		} else {
-			reason = "Error happened"
+			reason = reason_UnexpectedlyError
 			w.Message(notice_Label, "No error")
 		}
 		return a.fail(w, reason)

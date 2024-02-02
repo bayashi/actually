@@ -24,7 +24,7 @@ func (a *TestingA) failf(w *w.Witness, reasonFormat string, args ...any) *Testin
 	return a
 }
 
-func (a *TestingA) doFail(w *w.Witness, reason string) {
+var funcFail = func(a *TestingA, w *w.Witness, reason string) {
 	a.t.Helper()
 	if a.failNow != nil && !*a.failNow {
 		w.Fail(a.t, reason)
@@ -33,6 +33,11 @@ func (a *TestingA) doFail(w *w.Witness, reason string) {
 	} else {
 		w.Fail(a.t, reason)
 	}
+}
+
+func (a *TestingA) doFail(w *w.Witness, reason string) {
+	a.t.Helper()
+	funcFail(a, w, reason)
 }
 
 func (a *TestingA) naming(testNames ...string) string {
@@ -51,6 +56,6 @@ func (a *TestingA) naming(testNames ...string) string {
 
 func invalidCall(a *TestingA) {
 	if !a.setGot {
-		panic("You called assertion method, but you forgot to call Got().")
+		panic(panicReason_NotCalledGot)
 	}
 }

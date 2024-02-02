@@ -11,10 +11,19 @@ const NotExistingFileInThisModule = "not-found-01xt79a5jk.exe"
 func TestNoError(t *testing.T) {
 	_, err := os.Open(ExistingFileInThisModule)
 	Got(err).NoError(t)
+}
 
-	// Fail case
-	// _, err2 := os.Open(NotExistingFileInThisModule)
-	// Got(err2).NoError(t)
+func TestNoError_Fail(t *testing.T) {
+	stub()
+
+	_, err := os.Open(NotExistingFileInThisModule)
+	Got(err).NoError(t)
+	if !stubFailed {
+		t.Error(notCalledFail)
+	}
+	if stubRes != reason_UnexpectedlyError {
+		t.Errorf("expected `%s`, but got `%s`", reason_UnexpectedlyError, stubRes)
+	}
 }
 
 func TestIsTypeOfError(t *testing.T) {

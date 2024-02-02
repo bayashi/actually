@@ -27,8 +27,8 @@ func (a *TestingA) Match(t *testing.T, testNames ...string) *TestingA {
 
 	target := fmt.Sprint(a.got)
 	if !r.MatchString(target) {
-		wi := w.Message("Regexp", r.String()).Message("Target", target)
-		return a.fail(wi, "Not matched the regexp")
+		wi := w.Message(message_label_Regexp, r.String()).Message(message_label_Target, target)
+		return a.fail(wi, reason_NotMatch)
 	}
 
 	return a
@@ -53,8 +53,8 @@ func (a *TestingA) NotMatch(t *testing.T, testNames ...string) *TestingA {
 
 	target := fmt.Sprint(a.got)
 	if r.MatchString(target) {
-		wi := w.Message("Regexp", r.String()).Message("Target", target)
-		return a.fail(wi, "Unexpectedly matched the regexp")
+		wi := w.Message(message_label_Regexp, r.String()).Message(message_label_Target, target)
+		return a.fail(wi, reason_UnexpectedlyMatch)
 	}
 
 	return a
