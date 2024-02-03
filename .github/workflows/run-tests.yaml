@@ -28,6 +28,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: ${{ matrix.go }}
+          cache-dependency-path: "./go.sum"
       - name: Install dependencies
         run: go get .
       - name: Build
@@ -40,14 +41,14 @@ jobs:
       fail-fast: false
       matrix:
         os:  ["windows-latest", "macOS-latest"]
-        go:  ["1.21"]
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - name: Setup Go
         uses: actions/setup-go@v5
         with:
-          go-version: ${{ matrix.go }}
+          go-version-file: "./go.mod"
+          cache-dependency-path: "./go.sum"
       - name: Install dependencies
         run: go get .
       - name: Build
