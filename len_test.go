@@ -24,34 +24,19 @@ func TestLen(t *testing.T) {
 }
 
 func TestLen_Fail(t *testing.T) {
-	stub()
-	Got("aiko").Expect(5).Len(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
 	expectRes := fmt.Sprintf(reason_ShouldHaveItems, 5, 4)
-	if stubRes != expectRes {
-		t.Errorf("expected `%s`, but got `%s`", expectRes, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got("aiko").Expect(5).Len(t)
+	}, expectRes)
 
-	stub()
-	Got("LLR").Expect("3").Len(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
 	expectRes = fmt.Sprintf(reason_ExpectvalueNotInt, "string")
-	if stubRes != expectRes {
-		t.Errorf("expected `%s`, but got `%s`", expectRes, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got("LLR").Expect("3").Len(t)
+	}, expectRes)
 
-	stub()
-	Got(nil).Expect(0).Len(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_CouldNotBeAppliedLen {
-		t.Errorf("expected `%s`, but got `%s`", reason_CouldNotBeAppliedLen, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(nil).Expect(0).Len(t)
+	}, reason_CouldNotBeAppliedLen)
 
 	// other fail cases
 	// actually.Got(1234).Expect(5).Len(t)

@@ -6,61 +6,35 @@ import (
 
 func TestNotSame(t *testing.T) {
 	Got("bar").Expect("baz").NotSame(t)
-	Got([]int{1,2,3}).Expect([]int{1,2,3,4}).NotSame(t)
+	Got([]int{1, 2, 3}).Expect([]int{1, 2, 3, 4}).NotSame(t)
 
 	// test name
 	Got("aiko").Expect("eiko").NotSame(t, "Not Same")
 }
 
 func TestNotSame_Fail(t *testing.T) {
-	stub()
-	Got("foo").Expect("foo").NotSame(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_Same {
-		t.Errorf("expected `%s`, but got `%s`", reason_Same, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got("foo").Expect("foo").NotSame(t)
+	}, reason_Same)
 
-	stub()
-	Got([]int{1,2,3}).Expect([]int{1,2,3}).NotSame(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_Same {
-		t.Errorf("expected `%s`, but got `%s`", reason_Same, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got([]int{1, 2, 3}).Expect([]int{1, 2, 3}).NotSame(t)
+	}, reason_Same)
 
-
-	i := &[]int{1,2,3}
-	j := &[]int{1,2,3}
+	i := &[]int{1, 2, 3}
+	j := &[]int{1, 2, 3}
 	Got(i).Expect(j).NotSamePointer(t) // pass
-	stub()
-	Got(i).Expect(j).NotSame(t) // Not same pointer address, but same values. So, expected fail. These are same.
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_Same {
-		t.Errorf("expected `%s`, but got `%s`", reason_Same, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(i).Expect(j).NotSame(t) // Not same pointer address, but same values. So, expected fail. These are same.
+	}, reason_Same)
 
 	f := func() {}
-	stub()
-	Got(f).Expect("").NotSame(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_GotIsFunc {
-		t.Errorf("expected `%s`, but got `%s`", reason_GotIsFunc, stubRes)
-	}
-	stub()
-	Got("").Expect(f).NotSame(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_ExpectIsFunc {
-		t.Errorf("expected `%s`, but got `%s`", reason_ExpectIsFunc, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got("").Expect(f).NotSame(t)
+	}, reason_ExpectIsFunc)
+	stubConfirm(t, func() {
+		Got(f).Expect("").NotSame(t)
+	}, reason_GotIsFunc)
 }
 
 func TestNotSamePointer(t *testing.T) {
@@ -80,32 +54,16 @@ func TestNotSamePointer_Fail(t *testing.T) {
 	i := 7
 	ptr := &i
 
-	stub()
-	Got("").Expect(ptr).NotSamePointer(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_GotIsNotPointer {
-		t.Errorf("expected `%s`, but got `%s`", reason_GotIsNotPointer, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(ptr).Expect("").NotSamePointer(t)
+	}, reason_ExpectIsNotPointer)
+	stubConfirm(t, func() {
+		Got("").Expect(ptr).NotSamePointer(t)
+	}, reason_GotIsNotPointer)
 
-	stub()
-	Got(ptr).Expect("").NotSamePointer(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_ExpectIsNotPointer {
-		t.Errorf("expected `%s`, but got `%s`", reason_ExpectIsNotPointer, stubRes)
-	}
-
-	stub()
-	Got(ptr).Expect(&i).NotSamePointer(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_SamePointerAddress {
-		t.Errorf("expected `%s`, but got `%s`", reason_SamePointerAddress, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(ptr).Expect(&i).NotSamePointer(t)
+	}, reason_SamePointerAddress)
 }
 
 func TestNotSameNumber(t *testing.T) {
@@ -118,58 +76,32 @@ func TestNotSameNumber(t *testing.T) {
 }
 
 func TestNotSameNumber_Fail(t *testing.T) {
-	stub()
-	Got(1).Expect(1).NotSameNumber(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_Same {
-		t.Errorf("expected `%s`, but got `%s`", reason_Same, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(1).Expect(1).NotSameNumber(t)
+	}, reason_Same)
 
-	stub()
-	Got(nil).Expect(0).NotSameNumber(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_GotIsNilType {
-		t.Errorf("expected `%s`, but got `%s`", reason_GotIsNilType, stubRes)
-	}
-	stub()
-	Got(0).Expect(nil).NotSameNumber(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_ExpectIsNilType {
-		t.Errorf("expected `%s`, but got `%s`", reason_ExpectIsNilType, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(0).Expect(nil).NotSameNumber(t)
+	}, reason_ExpectIsNilType)
+	stubConfirm(t, func() {
+		Got(nil).Expect(0).NotSameNumber(t)
+	}, reason_GotIsNilType)
 
-	stub()
-	Got("1").Expect(1).NotSameNumber(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_GotIsNotNumber {
-		t.Errorf("expected `%s`, but got `%s`", reason_GotIsNotNumber, stubRes)
-	}
-	stub()
-	Got(0).Expect([]byte("0")).NotSameNumber(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_ExpectIsNotNumber {
-		t.Errorf("expected `%s`, but got `%s`", reason_ExpectIsNotNumber, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(0).Expect(nil).NotSameNumber(t)
+	}, reason_ExpectIsNilType)
 
-	// NOTE: Be aware of a result of test to compare int value with float value
-	stub()
-	Got(1).Expect(float64(1.0000000000000001)).NotSameNumber(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_Same {
-		t.Errorf("expected `%s`, but got `%s`", reason_Same, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(0).Expect([]byte("0")).NotSameNumber(t)
+	}, reason_ExpectIsNotNumber)
+	stubConfirm(t, func() {
+		Got("1").Expect(1).NotSameNumber(t)
+	}, reason_GotIsNotNumber)
+
+	stubConfirm(t, func() {
+		// NOTE: Be aware of a result of test to compare int value with float value
+		Got(1).Expect(float64(1.0000000000000001)).NotSameNumber(t)
+	}, reason_Same)
 }
 
 func TestNotSameType(t *testing.T) {
@@ -179,30 +111,15 @@ func TestNotSameType(t *testing.T) {
 }
 
 func TestNotSameType_Fail(t *testing.T) {
-	stub()
-	Got(nil).Expect(nil).NotSameType(t) // Both are nil, it will be failed. regarded same.
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_SameType {
-		t.Errorf("expected `%s`, but got `%s`", reason_SameType, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(nil).Expect(nil).NotSameType(t) // Both are nil, it will be failed. regarded same.
+	}, reason_SameType)
 
-	stub()
-	Got(true).Expect(false).NotSameType(t) // Both are boolean.
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_SameType {
-		t.Errorf("expected `%s`, but got `%s`", reason_SameType, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(true).Expect(false).NotSameType(t) // Both are boolean.
+	}, reason_SameType)
 
-	stub()
-	Got(&testing.T{}).Expect(t).NotSameType(t) // Both are same type.
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_SameType {
-		t.Errorf("expected `%s`, but got `%s`", reason_SameType, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(&testing.T{}).Expect(t).NotSameType(t) // Both are same type.
+	}, reason_SameType)
 }

@@ -20,21 +20,11 @@ func TestNil(t *testing.T) {
 }
 
 func TestNil_Fail(t *testing.T) {
-	stub()
-	Got("").Nil(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_ExpectNilButNotNil {
-		t.Errorf("expected `%s`, but got `%s`", reason_ExpectNilButNotNil, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got("").Nil(t)
+	}, reason_ExpectNilButNotNil)
 
-	stub()
-	Got(nil).NotNil(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_ExpectIsNotNil {
-		t.Errorf("expected `%s`, but got `%s`", reason_ExpectNilButNotNil, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(nil).NotNil(t)
+	}, reason_ExpectIsNotNil)
 }
