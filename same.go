@@ -28,10 +28,6 @@ func (a *TestingA) Same(t *testing.T, testNames ...string) *TestingA {
 		w := reportForSame(a).Message(notice_Label, notice_Same_NotAcceptable)
 		return a.fail(w, reason_GotIsFunc)
 	}
-	if isFuncType(expect) {
-		w := reportForSame(a).Message(notice_Label, notice_Same_NotAcceptable)
-		return a.fail(w, reason_ExpectIsFunc)
-	}
 
 	if !objectsAreSame(expect, got) {
 		return a.fail(reportForSameWithDiff(a), reason_NotSame)

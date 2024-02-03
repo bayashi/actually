@@ -1,30 +1,40 @@
-package actually_test
+package actually
 
 import (
 	"testing"
 	"unsafe"
-
-	"github.com/bayashi/actually"
 )
 
 func TestNil(t *testing.T) {
-	// pass
-	actually.Got(nil).Nil(t)
-	actually.Got("").NotNil(t)
+	Got(nil).Nil(t)
+	Got("").NotNil(t)
 
 	var n unsafe.Pointer = nil
-	actually.Got(n).Nil(t)
+	Got(n).Nil(t)
 
 	// test name
-	actually.Got(nil).Nil(t, "nil test")
-	actually.Got(1).NotNil(t, "not nil test")
-	actually.Got(nil).Name("nil test").Nil(t)
-	actually.Got(nil).Name("Not nil").Nil(t, "Not nil", "Not nil")
+	Got(nil).Nil(t, "nil test")
+	Got(1).NotNil(t, "not nil test")
+	Got(nil).Name("nil test").Nil(t)
+	Got(nil).Name("Not nil").Nil(t, "Not nil", "Not nil")
+}
 
-	// fail now
-	//actually.Got("").FailNow().Nil(t)
+func TestNil_Fail(t *testing.T) {
+	stub()
+	Got("").Nil(t)
+	if !stubFailed {
+		t.Error(notCalledFail)
+	}
+	if stubRes != reason_ExpectNilButNotNil {
+		t.Errorf("expected `%s`, but got `%s`", reason_ExpectNilButNotNil, stubRes)
+	}
 
-	// fail
-	// actually.Got("").Nil(t)
-	// actually.Got(nil).NotNil(t)
+	stub()
+	Got(nil).NotNil(t)
+	if !stubFailed {
+		t.Error(notCalledFail)
+	}
+	if stubRes != reason_ExpectIsNotNil {
+		t.Errorf("expected `%s`, but got `%s`", reason_ExpectNilButNotNil, stubRes)
+	}
 }

@@ -12,13 +12,14 @@ import (
 	actually.Got(a).Nil(t) // If `a` is <nil>, then pass.
 */
 func (a *TestingA) Nil(t *testing.T, testNames ...string) *TestingA {
+	invalidCall(a)
 	a.name = a.naming(testNames...)
 	a.t = t
 	a.t.Helper()
 
 	if !a.isNil() {
 		w := w.Got(a.got)
-		return a.fail(w, "Expected <nil>, but it was NOT <nil>")
+		return a.fail(w, reason_ExpectNilButNotNil)
 	}
 
 	return a
