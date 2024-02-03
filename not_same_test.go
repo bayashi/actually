@@ -4,6 +4,65 @@ import (
 	"testing"
 )
 
+func TestNotSame(t *testing.T) {
+	Got("bar").Expect("baz").NotSame(t)
+	Got([]int{1,2,3}).Expect([]int{1,2,3,4}).NotSame(t)
+
+	// test name
+	Got("aiko").Expect("eiko").NotSame(t, "Not Same")
+}
+
+func TestNotSame_Fail(t *testing.T) {
+	stub()
+	Got("foo").Expect("foo").NotSame(t)
+	if !stubFailed {
+		t.Error(notCalledFail)
+	}
+	if stubRes != reason_Same {
+		t.Errorf("expected `%s`, but got `%s`", reason_Same, stubRes)
+	}
+
+	stub()
+	Got([]int{1,2,3}).Expect([]int{1,2,3}).NotSame(t)
+	if !stubFailed {
+		t.Error(notCalledFail)
+	}
+	if stubRes != reason_Same {
+		t.Errorf("expected `%s`, but got `%s`", reason_Same, stubRes)
+	}
+
+
+	i := &[]int{1,2,3}
+	j := &[]int{1,2,3}
+	Got(i).Expect(j).NotSamePointer(t) // pass
+	stub()
+	Got(i).Expect(j).NotSame(t) // Not same pointer address, but same values. So, expected fail. These are same.
+	if !stubFailed {
+		t.Error(notCalledFail)
+	}
+	if stubRes != reason_Same {
+		t.Errorf("expected `%s`, but got `%s`", reason_Same, stubRes)
+	}
+
+	f := func() {}
+	stub()
+	Got(f).Expect("").NotSame(t)
+	if !stubFailed {
+		t.Error(notCalledFail)
+	}
+	if stubRes != reason_GotIsFunc {
+		t.Errorf("expected `%s`, but got `%s`", reason_GotIsFunc, stubRes)
+	}
+	stub()
+	Got("").Expect(f).NotSame(t)
+	if !stubFailed {
+		t.Error(notCalledFail)
+	}
+	if stubRes != reason_ExpectIsFunc {
+		t.Errorf("expected `%s`, but got `%s`", reason_ExpectIsFunc, stubRes)
+	}
+}
+
 func TestNotSamePointer(t *testing.T) {
 	i := 7
 	j := 7
