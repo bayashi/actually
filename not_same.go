@@ -4,6 +4,42 @@ import (
 	"testing"
 )
 
+// NotSame method verifies that two objects are not same value.
+// NOTE1: Function type value is not acceptable.
+// NOTE2: Not verify pointer address, just verify only values.
+// NOTE3: If you would like to verify pointers, types or numbers, then please use NotSame* method instead for more accuracy.
+/*
+	// Pass
+	actually.Got(12).Expect(34).NotSame(t)
+	actually.Got("bar").Expect("baz").NotSame(t)
+	// Fail
+	actually.Got("foo").Expect("foo").NotSame(t)
+*/
+func (a *TestingA) NotSame(t *testing.T, testNames ...string) *TestingA {
+	invalidCallForSame(a)
+	a.name = a.naming(testNames...)
+	a.t = t
+	a.t.Helper()
+
+	got := a.got
+	expect := a.expect
+
+	if isFuncType(got) {
+		w := reportForSame(a).Message(notice_Label, notice_Same_NotAcceptable)
+		return a.fail(w, reason_GotIsFunc)
+	}
+	if isFuncType(expect) {
+		w := reportForSame(a).Message(notice_Label, notice_Same_NotAcceptable)
+		return a.fail(w, reason_ExpectIsFunc)
+	}
+
+	if objectsAreSame(expect, got) {
+		return a.fail(reportForSameWithDiff(a), reason_Same)
+	}
+
+	return a
+}
+
 // NotSamePointer method verifies that two objets are not same pointer.
 func (a *TestingA) NotSamePointer(t *testing.T, testNames ...string) *TestingA {
 	invalidCallForSame(a)

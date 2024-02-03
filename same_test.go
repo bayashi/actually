@@ -41,33 +41,18 @@ func TestSame(t *testing.T) {
 }
 
 func TestSame_Fail(t *testing.T) {
-	stub()
-	Got("a").Expect("b").Same(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_NotSame {
-		t.Errorf("expected `%s`, but got `%s`", reason_NotSame, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got("a").Expect("b").Same(t)
+	}, reason_NotSame)
 
-	stub()
-	Got(int16(12)).Expect(int32(12)).Same(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_WrongType {
-		t.Errorf("expected `%s`, but got `%s`", reason_WrongType, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(int16(12)).Expect(int32(12)).Same(t)
+	}, reason_WrongType)
 
 	f := func() {}
-	stub()
-	Got(f).Expect(f).Same(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_GotIsFunc {
-		t.Errorf("expected `%s`, but got `%s`", reason_GotIsFunc, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(f).Expect(f).Same(t)
+	}, reason_GotIsFunc)
 }
 
 func TestSamePointer(t *testing.T) {
@@ -90,33 +75,17 @@ func TestSamePointer(t *testing.T) {
 func TestSamePointer_Fail(t *testing.T) {
 	i := 7
 	ptr := &i
-
-	stub()
-	Got(1).Expect(ptr).SamePointer(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_GotIsNotPointer {
-		t.Errorf("expected `%s`, but got `%s`", reason_GotIsNotPointer, stubRes)
-	}
-	stub()
-	Got(ptr).Expect(1).SamePointer(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_ExpectIsNotPointer {
-		t.Errorf("expected `%s`, but got `%s`", reason_ExpectIsNotPointer, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(ptr).Expect(1).SamePointer(t)
+	}, reason_ExpectIsNotPointer)
+	stubConfirm(t, func() {
+		Got(1).Expect(ptr).SamePointer(t)
+	}, reason_GotIsNotPointer)
 
 	j := 7
-	stub()
-	Got(ptr).Expect(&j).SamePointer(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_WrongPointerAddress {
-		t.Errorf("expected `%s`, but got `%s`", reason_WrongPointerAddress, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(ptr).Expect(&j).SamePointer(t)
+	}, reason_WrongPointerAddress)
 }
 
 func TestSameNumber(t *testing.T) {
@@ -128,39 +97,19 @@ func TestSameNumber(t *testing.T) {
 }
 
 func TestSameNumber_Fail(t *testing.T) {
-	stub()
-	Got("1").Expect(1).SameNumber(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_GotIsNotNumber {
-		t.Errorf("expected `%s`, but got `%s`", reason_GotIsNotNumber, stubRes)
-	}
-	stub()
-	Got(1).Expect("1").SameNumber(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_ExpectIsNotNumber {
-		t.Errorf("expected `%s`, but got `%s`", reason_ExpectIsNotNumber, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(1).Expect("1").SameNumber(t)
+	}, reason_ExpectIsNotNumber)
+	stubConfirm(t, func() {
+		Got("1").Expect(1).SameNumber(t)
+	}, reason_GotIsNotNumber)
 
-	stub()
-	Got(nil).Expect(0).SameNumber(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_GotIsNilType {
-		t.Errorf("expected `%s`, but got `%s`", reason_GotIsNilType, stubRes)
-	}
-	stub()
-	Got(0).Expect(nil).SameNumber(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_ExpectIsNilType {
-		t.Errorf("expected `%s`, but got `%s`", reason_ExpectIsNilType, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(0).Expect(nil).SameNumber(t)
+	}, reason_ExpectIsNilType)
+	stubConfirm(t, func() {
+		Got(nil).Expect(0).SameNumber(t)
+	}, reason_GotIsNilType)
 }
 
 func TestChain(t *testing.T) {
@@ -176,21 +125,11 @@ func TestSameType(t *testing.T) {
 }
 
 func TestSameType_Fail(t *testing.T) {
-	stub()
-	Got("1").Expect(1).SameType(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_WrongType {
-		t.Errorf("expected `%s`, but got `%s`", reason_WrongType, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got("1").Expect(1).SameType(t)
+	}, reason_WrongType)
 
-	stub()
-	Got(nil).Expect(0).SameType(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_WrongType {
-		t.Errorf("expected `%s`, but got `%s`", reason_WrongType, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(nil).Expect(0).SameType(t)
+	}, reason_WrongType)
 }

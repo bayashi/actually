@@ -10,21 +10,11 @@ func TestMatch(t *testing.T) {
 }
 
 func TestMatch_Fail(t *testing.T) {
-	stub()
-	Got("target string").Expect(`^[a-z]+$`).Match(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_NotMatch {
-		t.Errorf("expected `%s`, but got `%s`", reason_NotMatch, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got("target string").Expect(`^[a-z]+$`).Match(t)
+	}, reason_NotMatch)
 
-	stub()
-	Got("target string").Expect(`.ing$`).NotMatch(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_UnexpectedlyMatch {
-		t.Errorf("expected `%s`, but got `%s`", reason_UnexpectedlyMatch, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got("target string").Expect(`.ing$`).NotMatch(t)
+	}, reason_UnexpectedlyMatch)
 }

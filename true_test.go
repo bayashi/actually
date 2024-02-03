@@ -27,37 +27,19 @@ func TestTrue(t *testing.T) {
 }
 
 func TestTrue_Fail(t *testing.T) {
-	stub()
-	Got(false).True(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != message_ExpectTrue {
-		t.Errorf("expected `%s`, but got `%s`", message_ExpectTrue, stubRes)
-	}
-	stub()
-	Got(12).True(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_WrongType {
-		t.Errorf("expected `%s`, but got `%s`", reason_WrongType, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(false).True(t)
+	}, message_ExpectTrue)
 
-	stub()
-	Got(true).False(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != message_ExpectFalse {
-		t.Errorf("expected `%s`, but got `%s`", message_ExpectFalse, stubRes)
-	}
-	stub()
-	Got(12).False(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_WrongType {
-		t.Errorf("expected `%s`, but got `%s`", reason_WrongType, stubRes)
-	}
+	stubConfirm(t, func() {
+		Got(12).True(t)
+	}, reason_WrongType)
+
+	stubConfirm(t, func() {
+		Got(true).False(t)
+	}, message_ExpectFalse)
+
+	stubConfirm(t, func() {
+		Got(12).False(t)
+	}, reason_WrongType)
 }

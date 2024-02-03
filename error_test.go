@@ -14,16 +14,10 @@ func TestNoError(t *testing.T) {
 }
 
 func TestNoError_Fail(t *testing.T) {
-	stub()
-
-	_, err := os.Open(NotExistingFileInThisModule)
-	Got(err).NoError(t)
-	if !stubFailed {
-		t.Error(notCalledFail)
-	}
-	if stubRes != reason_UnexpectedlyError {
-		t.Errorf("expected `%s`, but got `%s`", reason_UnexpectedlyError, stubRes)
-	}
+	stubConfirm(t, func() {
+		_, err := os.Open(NotExistingFileInThisModule)
+		Got(err).NoError(t)
+	}, reason_UnexpectedlyError)
 }
 
 func TestIsTypeOfError(t *testing.T) {
