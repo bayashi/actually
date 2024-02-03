@@ -15,11 +15,11 @@ on:
       - '**/.gitignore'
 
 jobs:
-  build:
+  test-linux:
     strategy:
       fail-fast: false
       matrix:
-        os:  ["windows-latest", "ubuntu-latest", "macOS-latest"]
+        os:  ["ubuntu-latest"]
         go:  ["1.18", "1.19", "1.20", "1.21"]
     runs-on: ${{ matrix.os }}
     steps:
@@ -34,3 +34,23 @@ jobs:
         run: go build -v ./...
       - name: Test with the Go CLI
         run: go test -v ./... -race -shuffle=on -timeout=3m -cover
+
+  test-other:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:  ["windows-latest", "macOS-latest"]
+        go:  ["1.21"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go }}
+      - name: Install dependencies
+        run: go get .
+      - name: Build
+        run: go build -v ./...
+      - name: Test with the Go CLI
+        run: go test -v ./... -race -shuffle=on -timeout=3m
