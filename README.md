@@ -7,6 +7,11 @@
 
 Yet another pithy assertion library, `actually`.
 
+* Builder interface to make test code easier to understand
+* Consistent method name
+    * An assertion method for 2 objects is always named `SameXXX()` or `NotSameXXX`
+* Specific fail report
+
 ## Usage
 
 This is an example code of tests in `actually`. ([Try in playground](https://go.dev/play/p/Ut-hIr3vmYQ))
