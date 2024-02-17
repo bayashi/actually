@@ -108,7 +108,7 @@ func (a *TestingA) SameNumber(t *testing.T, testNames ...string) *TestingA {
 		return a.fail(reportForSame(a), reason_NotConvertibleTypes)
 	}
 
-	if !isSameConvertedValueAsOther(expect, got) {
+	if !isSameConvertedValueAsOther(expect, got) || !isSameConvertedValueAsOther(got, expect) {
 		return a.fail(reportForSameWithDiff(a), reason_NotSame)
 	}
 
