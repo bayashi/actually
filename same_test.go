@@ -6,15 +6,15 @@ import (
 )
 
 type TestCase struct {
-	expected    any
-	actuallyGot any
+	expected           any
+	actuallyGot        any
 	expectedFailReason string
 }
 
 type TestName = string
 
 func TestSame(t *testing.T) {
-	for tn, tt := range map[TestName]TestCase {
+	for tn, tt := range map[TestName]TestCase{
 		"nil": {
 			expected: nil, actuallyGot: nil,
 		},
@@ -43,7 +43,7 @@ func TestSame(t *testing.T) {
 			expected: map[string]int{"foo": 12}, actuallyGot: map[string]int{"foo": 12},
 		},
 		"struct": {
-			expected: struct{bar string}{bar: "foo"}, actuallyGot: struct{bar string}{bar: "foo"},
+			expected: struct{ bar string }{bar: "foo"}, actuallyGot: struct{ bar string }{bar: "foo"},
 		},
 	} {
 		t.Run(tn, func(t *testing.T) {
@@ -62,7 +62,7 @@ func TestSame(t *testing.T) {
 	}{
 		bar: "foo",
 	}
-	Got(foo).Expect(bar).Same(t) // Pass
+	Got(foo).Expect(bar).Same(t)                                     // Pass
 	Got(fmt.Sprintf("%p", &foo) == fmt.Sprintf("%p", &bar)).False(t) // Different
 
 	// test name
@@ -77,7 +77,7 @@ func TestSame(t *testing.T) {
 }
 
 func TestSame_Fail(t *testing.T) {
-	for tn, tt := range map[TestName]TestCase {
+	for tn, tt := range map[TestName]TestCase{
 		"different strings": {
 			expected: "a", actuallyGot: "b", expectedFailReason: reason_NotSame,
 		},
@@ -85,7 +85,7 @@ func TestSame_Fail(t *testing.T) {
 			expected: int16(12), actuallyGot: int32(12), expectedFailReason: reason_WrongType,
 		},
 		"func type is not supported": {
-			expected: func(){}, actuallyGot: func(){}, expectedFailReason: reason_GotIsFunc,
+			expected: func() {}, actuallyGot: func() {}, expectedFailReason: reason_GotIsFunc,
 		},
 	} {
 		t.Run(tn, func(t *testing.T) {
@@ -130,7 +130,7 @@ func TestSamePointer_Fail(t *testing.T) {
 }
 
 func TestSameNumber(t *testing.T) {
-	for tn, tt := range map[TestName]TestCase {
+	for tn, tt := range map[TestName]TestCase{
 		"same number": {
 			expected: 1, actuallyGot: 1,
 		},
@@ -154,7 +154,7 @@ func TestSameNumber(t *testing.T) {
 }
 
 func TestSameNumber_Fail(t *testing.T) {
-	for tn, tt := range map[TestName]TestCase {
+	for tn, tt := range map[TestName]TestCase{
 		"expected is not number": {
 			expected: "1", actuallyGot: 1, expectedFailReason: reason_ExpectIsNotNumber,
 		},
@@ -195,7 +195,7 @@ func TestSameType(t *testing.T) {
 }
 
 func TestSameType_Fail(t *testing.T) {
-	for tn, tt := range map[TestName]TestCase {
+	for tn, tt := range map[TestName]TestCase{
 		"string - int": {
 			expected: "1", actuallyGot: 1, expectedFailReason: reason_WrongType,
 		},

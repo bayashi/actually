@@ -7,11 +7,11 @@ import (
 
 func TestLen(t *testing.T) {
 	var (
-		l []int
+		l  []int
 		l2 [2]int
 	)
 
-	for tn, tt := range map[TestName]TestCase {
+	for tn, tt := range map[TestName]TestCase{
 		"blank string": {
 			expected: 0, actuallyGot: "",
 		},
