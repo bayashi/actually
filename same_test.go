@@ -91,6 +91,7 @@ func TestSamePointer_Fail(t *testing.T) {
 func TestSameNumber(t *testing.T) {
 	Got(int8(1)).Expect(int32(1)).SameNumber(t)
 	Got(float32(1.0)).Expect(int64(1)).SameNumber(t)
+	Got(complex128(1e+10 + 1e+10i)).Expect(complex64(1e+10 + 1e+10i)).SameNumber(t)
 
 	// test name
 	Got(1).Expect(1).SameNumber(t, "Same Number")
@@ -110,6 +111,13 @@ func TestSameNumber_Fail(t *testing.T) {
 	stubConfirm(t, func() {
 		Got(nil).Expect(0).SameNumber(t)
 	}, reason_GotIsNilType)
+
+	stubConfirm(t, func() {
+		Got(int(270)).Expect(int8(14)).SameNumber(t)
+	}, reason_NotSame)
+	stubConfirm(t, func() {
+		Got(int8(14)).Expect(int(270)).SameNumber(t)
+	}, reason_NotSame)
 }
 
 func TestChain(t *testing.T) {
