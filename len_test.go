@@ -6,18 +6,38 @@ import (
 )
 
 func TestLen(t *testing.T) {
-	var l []int
-	Got(l).Expect(0).Len(t)
+	var (
+		l  []int
+		l2 [2]int
+	)
 
-	var l2 [2]int
-	Got(l2).Expect(2).Len(t) // actually, it's 2 length. Not zero length.
-
-	Got("").Expect(0).Len(t)
-
-	Got("aiko").Expect(4).Len(t)
-	Got(`LLR`).Expect(3).Len(t)
-	Got([]int{1, 2}).Expect(2).Len(t)
-	Got(map[int]int{123: 255}).Expect(1).Len(t)
+	for tn, tt := range map[TestName]TestCase{
+		"blank string": {
+			expected: 0, actuallyGot: "",
+		},
+		"string 'aiko'": {
+			expected: 4, actuallyGot: "aiko",
+		},
+		"string 'LLR'": {
+			expected: 3, actuallyGot: "LLR",
+		},
+		"map": {
+			expected: 1, actuallyGot: map[int]int{12: 34},
+		},
+		"slice": {
+			expected: 2, actuallyGot: []int{1, 2},
+		},
+		"slice 0 length": {
+			expected: 0, actuallyGot: l,
+		},
+		"array: it's 2 length. Not zero length even if it's undefined.": {
+			expected: 2, actuallyGot: l2,
+		},
+	} {
+		t.Run(tn, func(t *testing.T) {
+			Got(tt.actuallyGot).Expect(tt.expected).Len(t)
+		})
+	}
 
 	// This test passes Go1.19 or later
 	// actually.Got(&[3]int{1, 2, 3}).Expect(3).Len(t) // Ptr of array can be applied builtin `len`

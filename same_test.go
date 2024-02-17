@@ -5,17 +5,53 @@ import (
 	"testing"
 )
 
-func TestSame(t *testing.T) {
-	Got(nil).Expect(nil).Same(t)
-	Got("").Expect("").Same(t)
-	Got("a").Expect("a").Same(t)
-	Got(0).Expect(0).Same(t)
-	Got(12).Expect(12).Same(t)
-	Got([2]int{1, 2}).Expect([2]int{1, 2}).Same(t)
-	Got([]string{}).Expect([]string{}).Same(t)
-	Got([]string{"a"}).Expect([]string{"a"}).Same(t)
-	Got(map[string]int{"foo": 12}).Expect(map[string]int{"foo": 12}).Same(t)
+type TestCase struct {
+	expected           any
+	actuallyGot        any
+	expectedFailReason string
+}
 
+type TestName = string
+
+func TestSame(t *testing.T) {
+	for tn, tt := range map[TestName]TestCase{
+		"nil": {
+			expected: nil, actuallyGot: nil,
+		},
+		"blank string": {
+			expected: "", actuallyGot: "",
+		},
+		"string": {
+			expected: "a", actuallyGot: "a",
+		},
+		"zero": {
+			expected: 0, actuallyGot: 0,
+		},
+		"int8": {
+			expected: int8(12), actuallyGot: int8(12),
+		},
+		"array": {
+			expected: [2]int{1, 2}, actuallyGot: [2]int{1, 2},
+		},
+		"blank slice": {
+			expected: []string{}, actuallyGot: []string{},
+		},
+		"slice": {
+			expected: []string{"a"}, actuallyGot: []string{"a"},
+		},
+		"map": {
+			expected: map[string]int{"foo": 12}, actuallyGot: map[string]int{"foo": 12},
+		},
+		"struct": {
+			expected: struct{ bar string }{bar: "foo"}, actuallyGot: struct{ bar string }{bar: "foo"},
+		},
+	} {
+		t.Run(tn, func(t *testing.T) {
+			Got(tt.actuallyGot).Expect(tt.expected).Same(t)
+		})
+	}
+
+	// `foo` and `bar` are same value. But these pointer addresses are different in fact.
 	foo := struct {
 		bar string
 	}{
@@ -26,8 +62,8 @@ func TestSame(t *testing.T) {
 	}{
 		bar: "foo",
 	}
-	Got(foo).Expect(bar).Same(t)
-	Got(fmt.Sprintf("%p", &foo) == fmt.Sprintf("%p", &bar)).False(t)
+	Got(foo).Expect(bar).Same(t)                                     // Pass
+	Got(fmt.Sprintf("%p", &foo) == fmt.Sprintf("%p", &bar)).False(t) // Different
 
 	// test name
 	Got(0).Expect(0).Same(t, "zero")
@@ -41,18 +77,23 @@ func TestSame(t *testing.T) {
 }
 
 func TestSame_Fail(t *testing.T) {
-	stubConfirm(t, func() {
-		Got("a").Expect("b").Same(t)
-	}, reason_NotSame)
-
-	stubConfirm(t, func() {
-		Got(int16(12)).Expect(int32(12)).Same(t)
-	}, reason_WrongType)
-
-	f := func() {}
-	stubConfirm(t, func() {
-		Got(f).Expect(f).Same(t)
-	}, reason_GotIsFunc)
+	for tn, tt := range map[TestName]TestCase{
+		"different strings": {
+			expected: "a", actuallyGot: "b", expectedFailReason: reason_NotSame,
+		},
+		"different type": {
+			expected: int16(12), actuallyGot: int32(12), expectedFailReason: reason_WrongType,
+		},
+		"func type is not supported": {
+			expected: func() {}, actuallyGot: func() {}, expectedFailReason: reason_GotIsFunc,
+		},
+	} {
+		t.Run(tn, func(t *testing.T) {
+			stubConfirm(t, func() {
+				Got(tt.actuallyGot).Expect(tt.expected).Same(t)
+			}, tt.expectedFailReason)
+		})
+	}
 }
 
 func TestSamePointer(t *testing.T) {
@@ -89,35 +130,56 @@ func TestSamePointer_Fail(t *testing.T) {
 }
 
 func TestSameNumber(t *testing.T) {
-	Got(int8(1)).Expect(int32(1)).SameNumber(t)
-	Got(float32(1.0)).Expect(int64(1)).SameNumber(t)
-	Got(complex128(1e+10 + 1e+10i)).Expect(complex64(1e+10 + 1e+10i)).SameNumber(t)
+	for tn, tt := range map[TestName]TestCase{
+		"same number": {
+			expected: 1, actuallyGot: 1,
+		},
+		"converted same": {
+			expected: int8(12), actuallyGot: int64(12),
+		},
+		"float and int are convertible": {
+			expected: float32(1.0), actuallyGot: int64(1),
+		},
+		// "complex number": {
+		// 	expected: complex64(1e+10 + 1e+10i), actuallyGot: complex128(1e+10 + 1e+10i),
+		// },
+	} {
+		t.Run(tn, func(t *testing.T) {
+			Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t)
+		})
+	}
 
 	// test name
 	Got(1).Expect(1).SameNumber(t, "Same Number")
 }
 
 func TestSameNumber_Fail(t *testing.T) {
-	stubConfirm(t, func() {
-		Got(1).Expect("1").SameNumber(t)
-	}, reason_ExpectIsNotNumber)
-	stubConfirm(t, func() {
-		Got("1").Expect(1).SameNumber(t)
-	}, reason_GotIsNotNumber)
-
-	stubConfirm(t, func() {
-		Got(0).Expect(nil).SameNumber(t)
-	}, reason_ExpectIsNilType)
-	stubConfirm(t, func() {
-		Got(nil).Expect(0).SameNumber(t)
-	}, reason_GotIsNilType)
-
-	stubConfirm(t, func() {
-		Got(int(270)).Expect(int8(14)).SameNumber(t)
-	}, reason_NotSame)
-	stubConfirm(t, func() {
-		Got(int8(14)).Expect(int(270)).SameNumber(t)
-	}, reason_NotSame)
+	for tn, tt := range map[TestName]TestCase{
+		"expected is not number": {
+			expected: "1", actuallyGot: 1, expectedFailReason: reason_ExpectIsNotNumber,
+		},
+		"got is not number": {
+			expected: 1, actuallyGot: "1", expectedFailReason: reason_GotIsNotNumber,
+		},
+		"expected is nil": {
+			expected: nil, actuallyGot: 1, expectedFailReason: reason_ExpectIsNilType,
+		},
+		"got is nil": {
+			expected: 1, actuallyGot: nil, expectedFailReason: reason_GotIsNilType,
+		},
+		"should not be same": {
+			expected: int8(14), actuallyGot: int(270), expectedFailReason: reason_NotSame,
+		},
+		"should not be same, too": {
+			expected: int(270), actuallyGot: int8(14), expectedFailReason: reason_NotSame,
+		},
+	} {
+		t.Run(tn, func(t *testing.T) {
+			stubConfirm(t, func() {
+				Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t)
+			}, tt.expectedFailReason)
+		})
+	}
 }
 
 func TestChain(t *testing.T) {
@@ -133,11 +195,21 @@ func TestSameType(t *testing.T) {
 }
 
 func TestSameType_Fail(t *testing.T) {
-	stubConfirm(t, func() {
-		Got("1").Expect(1).SameType(t)
-	}, reason_WrongType)
-
-	stubConfirm(t, func() {
-		Got(nil).Expect(0).SameType(t)
-	}, reason_WrongType)
+	for tn, tt := range map[TestName]TestCase{
+		"string - int": {
+			expected: "1", actuallyGot: 1, expectedFailReason: reason_WrongType,
+		},
+		"nil - int": {
+			expected: nil, actuallyGot: 0, expectedFailReason: reason_WrongType,
+		},
+		"int32 - int64": {
+			expected: int32(5), actuallyGot: int64(5), expectedFailReason: reason_WrongType,
+		},
+	} {
+		t.Run(tn, func(t *testing.T) {
+			stubConfirm(t, func() {
+				Got(tt.actuallyGot).Expect(tt.expected).SameType(t)
+			}, tt.expectedFailReason)
+		})
+	}
 }

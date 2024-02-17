@@ -11,7 +11,7 @@ func TestSkip(t *testing.T) {
 	Got(3).NotNil(t)
 }
 
-func TestName(t *testing.T) {
+func TestTestName(t *testing.T) {
 	a := Got(1).Name("foo").NotNil(t)
 	aa := Got(a.name).Expect("foo").Same(t, "bar")
 	aaa := Got(aa.name).Expect("bar").Name("baz").Same(t, "aiko")
