@@ -46,24 +46,6 @@ func getLove() (bool, error) {
 }
 ```
 
-You can write multiple assertions in one chain like below ([Try in playground](https://go.dev/play/p/GxCV1Ubg6Uo)):
-
-```go
-package main
-
-import (
-	"testing"
-
-	a "github.com/bayashi/actually"
-)
-
-func Test(t *testing.T) {
-    love := true
-    a.Got(love).NotNil(t).True(t).
-        Expect(true).Same(t) // Obviously pass
-}
-```
-
 NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chain.
 
 -----
@@ -78,15 +60,6 @@ NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chai
 * NotNil
 * NoError
 
-### [Assertion for string value by regexp](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-string-value-by-regexp)
-
-* Match
-* NotMatch
-
-### [Assertion for length of an object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-length-of-an-object)
-
-* Len
-
 ### [Assertion for 2 objects](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-2-objects)
 
 * Same
@@ -97,6 +70,15 @@ NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chai
 * NotSameNumber
 * NotSamePointer
 * NotSameType
+
+### [Assertion for string value by regexp](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-string-value-by-regexp)
+
+* Match
+* NotMatch
+
+### [Assertion for length of an object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-length-of-an-object)
+
+* Len
 
 [Here is a Wiki of full API documentation](https://github.com/bayashi/actually/wiki).
 
