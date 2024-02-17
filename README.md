@@ -11,6 +11,8 @@ Yet another pithy assertion library, `actually`.
     * An assertion method for 2 objects is always named `SameXXX()` or `NotSameXXX()`
 * Specific fail report
 
+-----
+
 ## Usage
 
 This is an example code of tests in `actually`. ([Try in playground](https://go.dev/play/p/Ut-hIr3vmYQ))
@@ -64,7 +66,41 @@ func Test(t *testing.T) {
 
 NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chain.
 
+-----
+
+## Assertion Methods
+
+### [Assertion for 1 object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-1-object)
+
+* True
+* False
+* Nil
+* NotNil
+* NoError
+
+### [Assertion for string value by regexp](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-string-value-by-regexp)
+
+* Match
+* NotMatch
+
+### [Assertion for length of an object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-length-of-an-object)
+
+* Len
+
+### [Assertion for 2 objects](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-2-objects)
+
+* Same
+* SameNumber
+* SamePointer
+* SameType
+* NotSame
+* NotSameNumber
+* NotSamePointer
+* NotSameType
+
 [Here is a Wiki of full API documentation](https://github.com/bayashi/actually/wiki).
+
+-----
 
 ## Fail reports
 
@@ -166,6 +202,8 @@ Println(actually.Diff(objA, objB))
 If objects are not string, even if these are objects, you can see the differences of dumped data.
 
 [See more details in a Wiki](https://github.com/bayashi/actually/wiki).
+
+-----
 
 ## Installation
 
