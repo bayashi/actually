@@ -33,6 +33,8 @@ func stub() {
 }
 
 func stubConfirm(t *testing.T, f func(), res string) {
+	t.Helper()
+
 	stub()
 
 	f()
