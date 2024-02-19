@@ -15,7 +15,7 @@ func TestTestName(t *testing.T) {
 	a := Got(1).Name("foo").NotNil(t)
 	aa := Got(a.name).Expect("foo").Same(t, "bar")
 	aaa := Got(aa.name).Expect("bar").Name("baz").Same(t, "aiko")
-	Got(aaa.name).Expect("baz, aiko").Same(t)
+	Got(aaa.name).Expect("baz.aiko").Same(t)
 }
 
 func TestX(t *testing.T) {
