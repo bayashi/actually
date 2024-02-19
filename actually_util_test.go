@@ -43,12 +43,12 @@ func TestNaming(t *testing.T) {
 		t.Errorf("Expect `%s`, but got `%s`", expect, n)
 	}
 
-	expect2 := "Name, FooTest"
+	expect2 := "Name.FooTest"
 	if n := Got(12).Name("Name").naming(expect); n != expect2 {
 		t.Errorf("Expect `%s`, but got `%s`", expect2, n)
 	}
 
-	if n := Got(12).Name("Name").naming(expect, expect); n != expect2+", "+expect {
+	if n := Got(12).Name("Name").naming(expect, expect); n != expect2+"."+expect {
 		t.Errorf("Expect `%s`, but got `%s`", expect2+", "+expect, n)
 	}
 }

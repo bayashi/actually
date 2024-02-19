@@ -17,8 +17,7 @@ func (a *TestingA) Same(t *testing.T, testNames ...string) *TestingA {
 	a.t = t
 	a.t.Helper()
 
-	got := a.got
-	expect := a.expect
+	got, expect := a.got, a.expect
 
 	if !objectsAreSameType(expect, got) {
 		return a.fail(reportForSame(a), reason_WrongType)
@@ -43,8 +42,7 @@ func (a *TestingA) SamePointer(t *testing.T, testNames ...string) *TestingA {
 	a.t = t
 	a.t.Helper()
 
-	got := a.got
-	expect := a.expect
+	got, expect := a.got, a.expect
 
 	if !isPointerType(got) {
 		w := reportForSame(a).Message(notice_Label, notice_SamePointer_ShouldPointer)
@@ -79,8 +77,7 @@ func (a *TestingA) SameNumber(t *testing.T, testNames ...string) *TestingA {
 	a.t = t
 	a.t.Helper()
 
-	got := a.got
-	expect := a.expect
+	got, expect := a.got, a.expect
 
 	if isTypeNil(got) {
 		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
