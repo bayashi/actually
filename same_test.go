@@ -46,7 +46,9 @@ func TestSame(t *testing.T) {
 			expected: struct{ bar string }{bar: "foo"}, actuallyGot: struct{ bar string }{bar: "foo"},
 		},
 	} {
-		Got(tt.actuallyGot).Expect(tt.expected).Same(t, tn)
+		t.Run(tn, func(t *testing.T) {
+			Got(tt.actuallyGot).Expect(tt.expected).Same(t)
+		})
 	}
 
 	// `foo` and `bar` are same value. But these pointer addresses are different in fact.
@@ -86,9 +88,11 @@ func TestSame_Fail(t *testing.T) {
 			expected: func() {}, actuallyGot: func() {}, expectedFailReason: reason_GotIsFunc,
 		},
 	} {
-		stubConfirm(t, func() {
-			Got(tt.actuallyGot).Expect(tt.expected).Same(t, tn)
-		}, tt.expectedFailReason)
+		t.Run(tn, func(t *testing.T) {
+			stubConfirm(t, func() {
+				Got(tt.actuallyGot).Expect(tt.expected).Same(t)
+			}, tt.expectedFailReason)
+		})
 	}
 }
 
@@ -140,7 +144,9 @@ func TestSameNumber(t *testing.T) {
 		// 	expected: complex64(1e+10 + 1e+10i), actuallyGot: complex128(1e+10 + 1e+10i),
 		// },
 	} {
-		Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t, tn)
+		t.Run(tn, func(t *testing.T) {
+			Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t, tn)
+		})
 	}
 
 	// test name
@@ -168,9 +174,11 @@ func TestSameNumber_Fail(t *testing.T) {
 			expected: int(270), actuallyGot: int8(14), expectedFailReason: reason_NotSame,
 		},
 	} {
-		stubConfirm(t, func() {
-			Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t, tn)
-		}, tt.expectedFailReason)
+		t.Run(tn, func(t *testing.T) {
+			stubConfirm(t, func() {
+				Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t, tn)
+			}, tt.expectedFailReason)
+		})
 	}
 }
 
@@ -198,8 +206,10 @@ func TestSameType_Fail(t *testing.T) {
 			expected: int32(5), actuallyGot: int64(5), expectedFailReason: reason_WrongType,
 		},
 	} {
-		stubConfirm(t, func() {
-			Got(tt.actuallyGot).Expect(tt.expected).SameType(t, tn)
-		}, tt.expectedFailReason)
+		t.Run(tn, func(t *testing.T) {
+			stubConfirm(t, func() {
+				Got(tt.actuallyGot).Expect(tt.expected).SameType(t, tn)
+			}, tt.expectedFailReason)
+		})
 	}
 }
