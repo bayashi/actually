@@ -145,7 +145,7 @@ func TestSameNumber(t *testing.T) {
 		// },
 	} {
 		t.Run(tn, func(t *testing.T) {
-			Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t)
+			Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t, tn)
 		})
 	}
 
@@ -176,7 +176,7 @@ func TestSameNumber_Fail(t *testing.T) {
 	} {
 		t.Run(tn, func(t *testing.T) {
 			stubConfirm(t, func() {
-				Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t)
+				Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t, tn)
 			}, tt.expectedFailReason)
 		})
 	}
@@ -208,7 +208,7 @@ func TestSameType_Fail(t *testing.T) {
 	} {
 		t.Run(tn, func(t *testing.T) {
 			stubConfirm(t, func() {
-				Got(tt.actuallyGot).Expect(tt.expected).SameType(t)
+				Got(tt.actuallyGot).Expect(tt.expected).SameType(t, tn)
 			}, tt.expectedFailReason)
 		})
 	}

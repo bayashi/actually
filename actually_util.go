@@ -45,12 +45,12 @@ func (a *TestingA) naming(testNames ...string) string {
 		if len(testNames) > 0 {
 			n := []string{a.name}
 			n = append(n, testNames...)
-			return strings.Join(n, ", ")
+			return strings.Join(n, ".")
 		} else {
 			return a.name
 		}
 	} else {
-		return strings.Join(testNames, ", ")
+		return strings.Join(testNames, ".")
 	}
 }
 
