@@ -4,17 +4,17 @@
 <a href="https://goreportcard.com/report/github.com/bayashi/actually" title="actually report card" target="_blank"><img src="https://goreportcard.com/badge/github.com/bayashi/actually" alt="actually report card"></a>
 <a href="https://pkg.go.dev/github.com/bayashi/actually" target="_blank"><img src="https://pkg.go.dev/badge/github.com/bayashi/actually.svg" alt="Go Reference"></a>
 
-Yet another pithy assertion library, `actually`.
+Yet another assertion library, `actually`.
 
-* Builder interface to make test code easier
-* Consistent method name for less things to remember
-* Specific fail report to improve your DX
+* Builder interface to make test code obvious
+* Consistent method name to reduce things you have to remember
+* Specific fail report to improve your Developer eXperience
 
 -----
 
 ## Usage
 
-This is an example code of tests in `actually`. ([Try in playground](https://go.dev/play/p/Ut-hIr3vmYQ))
+[Try in playground](https://go.dev/play/p/Ut-hIr3vmYQ)
 
 ```go
 package main
@@ -85,9 +85,11 @@ NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chai
 
 ## Fail reports
 
-We spend a lot of time dealing with failing tests, so `actually` can shorten that time.
+Test code often breaks.
 
-This is an example of simple fail report:
+We often end up spending valuable time fixing failed tests written by someone who is no longer with us.
+
+`actually` will help you with specific fail report:
 
 ```
 nil_test.go:28:
