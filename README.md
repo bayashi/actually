@@ -21,23 +21,23 @@ package main
 
 import (
     "testing"
-    "github.com/bayashi/actually"
+    a "github.com/bayashi/actually"
 )
 
 func Test(t *testing.T) {
     love, err := getLove()
 
     // Assert 1 object
-    actually.Got(love).True(t)
-    actually.Got(err).NoError(t)
+    a.Got(love).True(t)
+    a.Got(err).NoError(t)
 
     // Assert 2 objects
-    actually.Got(love).Expect(true).Same(t)
-    actually.Got(int32(1)).Expect(float64(1.0)).SameNumber(t)
+    a.Got(love).Expect(true).Same(t)
+    a.Got(int32(1)).Expect(float64(1.0)).SameNumber(t)
 
     heart := &love
     body  := heart
-    actually.Got(heart).Expect(body).SamePointer(t)
+    a.Got(heart).Expect(body).SamePointer(t)
 }
 
 func getLove() (bool, error) {
