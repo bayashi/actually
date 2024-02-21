@@ -6,10 +6,9 @@
 
 Yet another pithy assertion library, `actually`.
 
-* Builder interface to make test code easier to understand
-* Consistent method name
-    * An assertion method for 2 objects is always named `SameXXX()` or `NotSameXXX()`
-* Specific fail report
+* Builder interface to make test code easier
+* Consistent method name for less things to remember
+* Specific fail report to improve your DX
 
 -----
 
