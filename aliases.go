@@ -1,6 +1,10 @@
 package actually
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/bayashi/witness"
+)
 
 // Actual is an alias of Got.
 func Actual(g any) *TestingA {
@@ -30,4 +34,9 @@ func (a *TestingA) Fatal() *TestingA {
 // FatalOn is an alias of FailNowOn.
 func FatalOn(t *testing.T) {
 	FailNowOn(t)
+}
+
+// Fatal is an alias of FailNow
+func Fatal(t *testing.T, reason string, got any, expect ...any) {
+	witness.FailNow(t, reason, got, expect...)
 }

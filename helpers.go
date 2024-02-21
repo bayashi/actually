@@ -114,3 +114,23 @@ func (a *TestingA) Name(n string) *TestingA {
 func Diff(a any, b any) string {
 	return witness.Diff(a, b)
 }
+
+// Fail is to show decorated fail report. (Actual shortcut to witness.Fail)
+/*
+	if g != e {
+		actually.Fail(t, "Not same", g, e)
+	}
+*/
+func Fail(t *testing.T, reason string, got any, expect ...any) {
+	witness.Fail(t, reason, got, expect...)
+}
+
+// FailNow is to show decorated fail report by t.Fatal. (Actual shortcut to witness.FailNow)
+/*
+	if g != e {
+		actually.FailNow(t, "Not same", g, e)
+	}
+*/
+func FailNow(t *testing.T, reason string, got any, expect ...any) {
+	witness.FailNow(t, reason, got, expect...)
+}
