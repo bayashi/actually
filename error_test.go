@@ -6,7 +6,7 @@ import (
 )
 
 const ExistingFileInThisModule = "README.md"
-const NotExistingFileInThisModule = "not-found-01xt79a5jk.exe"
+const notExistingFileInThisModule = "not-found-01xt79a5jk.exe"
 
 func TestNoError(t *testing.T) {
 	_, err := os.Open(ExistingFileInThisModule)
@@ -15,7 +15,7 @@ func TestNoError(t *testing.T) {
 
 func TestNoError_Fail(t *testing.T) {
 	stubConfirm(t, func() {
-		_, err := os.Open(NotExistingFileInThisModule)
+		_, err := os.Open(notExistingFileInThisModule)
 		Got(err).NoError(t)
 	}, reason_UnexpectedlyError)
 }
@@ -25,14 +25,14 @@ func TestIsTypeOfError(t *testing.T) {
 		t.Error("Integer should NOT be a type of error")
 	}
 
-	_, err := os.Open(NotExistingFileInThisModule)
+	_, err := os.Open(notExistingFileInThisModule)
 	if Got(err).isTypeOfError() != true {
 		t.Errorf("%#v should be a type of error", err)
 	}
 }
 
 func TestGotError(t *testing.T) {
-	_, err := os.Open(NotExistingFileInThisModule)
+	_, err := os.Open(notExistingFileInThisModule)
 	a := GotError(err)
 	if a.got != err {
 		t.Errorf("`GotError()` was broken. Expected:%#v, but Actual:%#v", err, a.got)
@@ -46,7 +46,7 @@ func TestGotError(t *testing.T) {
 }
 
 func TestActuallyGotError(t *testing.T) {
-	_, err := os.Open(NotExistingFileInThisModule)
+	_, err := os.Open(notExistingFileInThisModule)
 	a := &testingA{}
 	a.GotError(err)
 	if a.got != err {
