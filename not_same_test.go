@@ -82,32 +82,32 @@ func TestNotSameNumber(t *testing.T) {
 }
 
 func TestNotSameNumber_Fail(t *testing.T) {
-	stubConfirm(t, func() {
-		Got(1).Expect(1).NotSameNumber(t)
-	}, reason_Same)
-
-	stubConfirm(t, func() {
-		Got(0).Expect(nil).NotSameNumber(t)
-	}, reason_ExpectIsNilType)
-	stubConfirm(t, func() {
-		Got(nil).Expect(0).NotSameNumber(t)
-	}, reason_GotIsNilType)
-
-	stubConfirm(t, func() {
-		Got(0).Expect(nil).NotSameNumber(t)
-	}, reason_ExpectIsNilType)
-
-	stubConfirm(t, func() {
-		Got(0).Expect([]byte("0")).NotSameNumber(t)
-	}, reason_ExpectIsNotNumber)
-	stubConfirm(t, func() {
-		Got("1").Expect(1).NotSameNumber(t)
-	}, reason_GotIsNotNumber)
-
-	stubConfirm(t, func() {
-		// NOTE: Be aware of a result of test to compare int value with float value
-		Got(1).Expect(float64(1.0000000000000001)).NotSameNumber(t)
-	}, reason_Same)
+	for tn, tt := range map[testName]testCase{
+		"same number": {
+			expected: 1, actuallyGot: 1, expectedFailReason: reason_Same,
+		},
+		"expect value is nil": {
+			expected: nil, actuallyGot: 0, expectedFailReason: reason_ExpectIsNilType,
+		},
+		"got value is nil": {
+			expected: 0, actuallyGot: nil, expectedFailReason: reason_GotIsNilType,
+		},
+		"expect value is not a kind of number": {
+			expected: []byte("0"), actuallyGot: 0, expectedFailReason: reason_ExpectIsNotNumber,
+		},
+		"got value is not a kind of number": {
+			expected: 1, actuallyGot: "1", expectedFailReason: reason_GotIsNotNumber,
+		},
+		"NOTE: Be aware of a result of test to compare int value with float value": {
+			expected: float64(1.0000000000000001), actuallyGot: 1, expectedFailReason: reason_Same,
+		},
+	} {
+		t.Run(tn, func(t *testing.T) {
+			stubConfirm(t, func() {
+				Got(tt.actuallyGot).Expect(tt.expected).NotSameNumber(t)
+			}, tt.expectedFailReason)
+		})
+	}
 }
 
 func TestNotSameType(t *testing.T) {
