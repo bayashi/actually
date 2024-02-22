@@ -9,7 +9,7 @@ import (
 
 // Len asserts that the specified object has specific length.
 // Len also fails if the object has a type that len() not accept.
-func (a *TestingA) Len(t *testing.T, testNames ...string) *TestingA {
+func (a *testingA) Len(t *testing.T, testNames ...string) *testingA {
 	invalidCall(a)
 	a.name = a.naming(testNames...)
 	a.t = t

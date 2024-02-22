@@ -47,14 +47,14 @@ func TestGotError(t *testing.T) {
 
 func TestActuallyGotError(t *testing.T) {
 	_, err := os.Open(NotExistingFileInThisModule)
-	a := &TestingA{}
+	a := &testingA{}
 	a.GotError(err)
 	if a.got != err {
 		t.Errorf("`actually.GotError()` was broken. Expected:%#v, but Actual:%#v", err, a.got)
 	}
 
 	_, err2 := os.Open(ExistingFileInThisModule)
-	a2 := &TestingA{}
+	a2 := &testingA{}
 	a2.GotError(err2)
 	if a2.got != err2 {
 		t.Errorf("`actually.GotError()` was broken. Expected:%#v, but Actual:%#v", err2, a2.got)

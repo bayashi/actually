@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-// TestingA is a context of the test
-type TestingA struct {
+// testingA is a context of the test
+type testingA struct {
 	got         any
 	setGot      bool
 	expect      any
@@ -17,16 +17,16 @@ type TestingA struct {
 	name        string
 }
 
-// Got sets the value you actually got. Got() creates *TestingA and returns it.
-func Got(g any) *TestingA {
-	return &TestingA{
+// Got sets the value you actually got. Got() creates *testingA and returns it.
+func Got(g any) *testingA {
+	return &testingA{
 		got:    g,
 		setGot: true,
 	}
 }
 
 // Got sets the value you actually got.
-func (a *TestingA) Got(g any) *TestingA {
+func (a *testingA) Got(g any) *testingA {
 	if a.setGot {
 		panic(panicReason_CalledGotTwice)
 	}
@@ -38,16 +38,16 @@ func (a *TestingA) Got(g any) *TestingA {
 }
 
 // Expect sets the value you expect to be the same as the one you got.
-// Expect creates *TestingA and returns it.
-func Expect(e any) *TestingA {
-	return &TestingA{
+// Expect creates *testingA and returns it.
+func Expect(e any) *testingA {
+	return &testingA{
 		expect:    e,
 		setExpect: true,
 	}
 }
 
 // Expect sets the value you expect to be the same as the one you got.
-func (a *TestingA) Expect(e any) *TestingA {
+func (a *testingA) Expect(e any) *testingA {
 	if a.setExpect {
 		panic(panicReason_CalledExpectTwice)
 	}

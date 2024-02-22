@@ -12,7 +12,7 @@ import (
 /*
 	actually.Got("target string").Expect(`.ing$`).Match(t) // pass
 */
-func (a *TestingA) Match(t *testing.T, testNames ...string) *TestingA {
+func (a *testingA) Match(t *testing.T, testNames ...string) *testingA {
 	invalidCall(a)
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -38,7 +38,7 @@ func (a *TestingA) Match(t *testing.T, testNames ...string) *TestingA {
 /*
 	actually.Got("target string").Expect(`^[a-z]+$`).NotMatch(t) // pass
 */
-func (a *TestingA) NotMatch(t *testing.T, testNames ...string) *TestingA {
+func (a *testingA) NotMatch(t *testing.T, testNames ...string) *testingA {
 	invalidCall(a)
 	a.name = a.naming(testNames...)
 	a.t = t

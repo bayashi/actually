@@ -17,7 +17,7 @@ func failNowPtr(v bool) *bool {
 /*
 	actually.Got(something).FailNow().Nil(t) // Fail now for only this test
 */
-func (a *TestingA) FailNow() *TestingA {
+func (a *testingA) FailNow() *testingA {
 	a.failNow = failNowPtr(true)
 
 	return a
@@ -70,14 +70,14 @@ func FailNotNowOn(t *testing.T) {
    NOTE that FailNotNow method should be called after `Got` or `Expect`.
 */
 // Deprecated: Anyone uses? This method will be removed in the near future.
-func (a *TestingA) FailNotNow() *TestingA {
+func (a *testingA) FailNotNow() *testingA {
 	a.failNow = failNowPtr(false)
 
 	return a
 }
 
 // X turns on a flag to show test values as raw in a fail report.
-func (a *TestingA) X() *TestingA {
+func (a *testingA) X() *testingA {
 	a.showRawData = true
 
 	return a
@@ -104,7 +104,7 @@ func Skip(t *testing.T, skipReasons ...any) {
 
 	actually.Got(a).Expect(b).Same(t, "Test Name")
 */
-func (a *TestingA) Name(n string) *TestingA {
+func (a *testingA) Name(n string) *testingA {
 	a.name = n
 
 	return a

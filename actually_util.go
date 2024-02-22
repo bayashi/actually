@@ -10,21 +10,21 @@ import (
 	w "github.com/bayashi/witness"
 )
 
-func (a *TestingA) fail(w *w.Witness, reason string) *TestingA {
+func (a *testingA) fail(w *w.Witness, reason string) *testingA {
 	a.t.Helper()
 	a.doFail(w, reason)
 
 	return a
 }
 
-func (a *TestingA) failf(w *w.Witness, reasonFormat string, args ...any) *TestingA {
+func (a *testingA) failf(w *w.Witness, reasonFormat string, args ...any) *testingA {
 	a.t.Helper()
 	a.doFail(w, fmt.Sprintf(reasonFormat, args...))
 
 	return a
 }
 
-var funcFail = func(a *TestingA, w *w.Witness, reason string) {
+var funcFail = func(a *testingA, w *w.Witness, reason string) {
 	a.t.Helper()
 	if a.failNow != nil && !*a.failNow {
 		w.Fail(a.t, reason)
@@ -35,12 +35,12 @@ var funcFail = func(a *TestingA, w *w.Witness, reason string) {
 	}
 }
 
-func (a *TestingA) doFail(w *w.Witness, reason string) {
+func (a *testingA) doFail(w *w.Witness, reason string) {
 	a.t.Helper()
 	funcFail(a, w, reason)
 }
 
-func (a *TestingA) naming(testNames ...string) string {
+func (a *testingA) naming(testNames ...string) string {
 	if a.name != "" {
 		if len(testNames) > 0 {
 			n := []string{a.name}
@@ -54,7 +54,7 @@ func (a *TestingA) naming(testNames ...string) string {
 	}
 }
 
-func invalidCall(a *TestingA) {
+func invalidCall(a *testingA) {
 	if !a.setGot {
 		panic(panicReason_NotCalledGot)
 	}

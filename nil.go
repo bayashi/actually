@@ -11,7 +11,7 @@ import (
 /*
 	actually.Got(a).Nil(t) // If `a` is <nil>, then pass.
 */
-func (a *TestingA) Nil(t *testing.T, testNames ...string) *TestingA {
+func (a *testingA) Nil(t *testing.T, testNames ...string) *testingA {
 	invalidCall(a)
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -29,7 +29,7 @@ func (a *TestingA) Nil(t *testing.T, testNames ...string) *TestingA {
 /*
 	actually.Got(a).NotNil(t) // If `a` is NOT <nil>, then pass.
 */
-func (a *TestingA) NotNil(t *testing.T, testNames ...string) *TestingA {
+func (a *testingA) NotNil(t *testing.T, testNames ...string) *testingA {
 	invalidCall(a)
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -43,7 +43,7 @@ func (a *TestingA) NotNil(t *testing.T, testNames ...string) *TestingA {
 	return a
 }
 
-func (a *TestingA) isNil() bool {
+func (a *testingA) isNil() bool {
 	if a.got == nil {
 		return true
 	}
