@@ -13,28 +13,34 @@ func TestNotSame(t *testing.T) {
 }
 
 func TestNotSame_Fail(t *testing.T) {
-	stubConfirm(t, func() {
-		Got("foo").Expect("foo").NotSame(t)
-	}, reason_Same)
-
-	stubConfirm(t, func() {
-		Got([]int{1, 2, 3}).Expect([]int{1, 2, 3}).NotSame(t)
-	}, reason_Same)
-
 	i := &[]int{1, 2, 3}
 	j := &[]int{1, 2, 3}
-	Got(i).Expect(j).NotSamePointer(t) // pass
-	stubConfirm(t, func() {
-		Got(i).Expect(j).NotSame(t) // Not same pointer address, but same values. So, expected fail. These are same.
-	}, reason_Same)
 
-	f := func() {}
-	stubConfirm(t, func() {
-		Got("").Expect(f).NotSame(t)
-	}, reason_ExpectIsFunc)
-	stubConfirm(t, func() {
-		Got(f).Expect("").NotSame(t)
-	}, reason_GotIsFunc)
+	Got(i).Expect(j).NotSamePointer(t) // pass. pointer addresses are different
+
+	for tn, tt := range map[testName]testCase{
+		"same string": {
+			expected: "foo", actuallyGot: "foo", expectedFailReason: reason_Same,
+		},
+		"same slice": {
+			expected: []int{1, 2, 3}, actuallyGot: []int{1, 2, 3}, expectedFailReason: reason_Same,
+		},
+		"Not same pointer address, but same values. These are same. So, expected to fail": {
+			expected: j, actuallyGot: i, expectedFailReason: reason_Same,
+		},
+		"expect value is func": {
+			expected: func() {}, actuallyGot: "", expectedFailReason: reason_ExpectIsFunc,
+		},
+		"got value is func": {
+			expected: "", actuallyGot: func() {}, expectedFailReason: reason_GotIsFunc,
+		},
+	} {
+		t.Run(tn, func(t *testing.T) {
+			stubConfirm(t, func() {
+				Got(tt.actuallyGot).Expect(tt.expected).NotSame(t)
+			}, tt.expectedFailReason)
+		})
+	}
 }
 
 func TestNotSamePointer(t *testing.T) {
