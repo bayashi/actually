@@ -44,19 +44,23 @@ func TestLen(t *testing.T) {
 }
 
 func TestLen_Fail(t *testing.T) {
-	expectRes := fmt.Sprintf(reason_ShouldHaveItems, 5, 4)
-	stubConfirm(t, func() {
-		Got("aiko").Expect(5).Len(t)
-	}, expectRes)
-
-	expectRes = fmt.Sprintf(reason_ExpectvalueNotInt, "string")
-	stubConfirm(t, func() {
-		Got("LLR").Expect("3").Len(t)
-	}, expectRes)
-
-	stubConfirm(t, func() {
-		Got(nil).Expect(0).Len(t)
-	}, reason_CouldNotBeAppliedLen)
+	for tn, tt := range map[testName]testCase{
+		"wrong length": {
+			expected: 5, actuallyGot: "aiko", expectedFailReason: fmt.Sprintf(reason_ShouldHaveItems, 5, 4),
+		},
+		"expect value is not int": {
+			expected: "3", actuallyGot: "LLR", expectedFailReason: fmt.Sprintf(reason_ExpectvalueNotInt, "string"),
+		},
+		"could not be applied Len": {
+			expected: 0, actuallyGot: nil, expectedFailReason: reason_CouldNotBeAppliedLen,
+		},
+	} {
+		t.Run(tn, func(t *testing.T) {
+			stubConfirm(t, func() {
+				Got(tt.actuallyGot).Expect(tt.expected).Len(t)
+			}, tt.expectedFailReason)
+		})
+	}
 
 	// other fail cases
 	// actually.Got(1234).Expect(5).Len(t)
