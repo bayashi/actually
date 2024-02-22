@@ -8,7 +8,7 @@ import (
 	w "github.com/bayashi/witness"
 )
 
-func reportForSame(a *TestingA) *w.Witness {
+func reportForSame(a *testingA) *w.Witness {
 	r := w.Expect(a.expect).Got(a.got).Name(a.name)
 	if a.showRawData {
 		r = r.ShowRaw()
@@ -17,7 +17,7 @@ func reportForSame(a *TestingA) *w.Witness {
 	return r
 }
 
-func reportForSameWithDiff(a *TestingA) *w.Witness {
+func reportForSameWithDiff(a *testingA) *w.Witness {
 	return reportForSame(a).ShowDiff()
 }
 
@@ -77,7 +77,7 @@ func objectsAreSame(expectv any, gotv any) bool {
 	return bytes.Equal(exp, act)
 }
 
-func invalidCallForSame(a *TestingA) {
+func invalidCallForSame(a *testingA) {
 	if !a.setExpect {
 		panic("You called kind of Same() method, but you forgot to call Expect().")
 	}

@@ -19,7 +19,7 @@ import (
 */
 // Got(any) can accept any type of value, but GotError(error) can accept ONLY a type of error.
 // It's more strict when you use GotError(error) to test a type of error.
-func (a *TestingA) NoError(t *testing.T, testNames ...string) *TestingA {
+func (a *testingA) NoError(t *testing.T, testNames ...string) *testingA {
 	invalidCall(a)
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -41,18 +41,18 @@ func (a *TestingA) NoError(t *testing.T, testNames ...string) *TestingA {
 	return a
 }
 
-func (a *TestingA) isTypeOfError() bool {
+func (a *testingA) isTypeOfError() bool {
 	_, ok := a.got.(error)
 
 	return ok
 }
 
-// GotError sets the error value you actually got. GotError creates `*TestingA` and returns it.
-func GotError(g error) *TestingA {
+// GotError sets the error value you actually got. GotError creates `*testingA` and returns it.
+func GotError(g error) *testingA {
 	return Got(g)
 }
 
-// GotError on *TestingA sets the error value you actually got.
-func (a *TestingA) GotError(g error) *TestingA {
+// GotError on *testingA sets the error value you actually got.
+func (a *testingA) GotError(g error) *testingA {
 	return a.Got(g)
 }

@@ -15,7 +15,7 @@ import (
 	// Fail
 	actually.Got("foo").Expect("foo").NotSame(t)
 */
-func (a *TestingA) NotSame(t *testing.T, testNames ...string) *TestingA {
+func (a *testingA) NotSame(t *testing.T, testNames ...string) *testingA {
 	invalidCallForSame(a)
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -41,7 +41,7 @@ func (a *TestingA) NotSame(t *testing.T, testNames ...string) *TestingA {
 }
 
 // NotSamePointer method verifies that two objets are not same pointer.
-func (a *TestingA) NotSamePointer(t *testing.T, testNames ...string) *TestingA {
+func (a *testingA) NotSamePointer(t *testing.T, testNames ...string) *testingA {
 	invalidCallForSame(a)
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -67,7 +67,7 @@ func (a *TestingA) NotSamePointer(t *testing.T, testNames ...string) *TestingA {
 }
 
 // NotSameNumber method verifies that two objects are not same number.
-func (a *TestingA) NotSameNumber(t *testing.T, testNames ...string) *TestingA {
+func (a *testingA) NotSameNumber(t *testing.T, testNames ...string) *testingA {
 	invalidCallForSame(a)
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -111,7 +111,7 @@ func (a *TestingA) NotSameNumber(t *testing.T, testNames ...string) *TestingA {
 
 // NotSameType method verifies that each pair of values are NOT same type.
 // Not care about actual value of these. Just verify the type.
-func (a *TestingA) NotSameType(t *testing.T, testNames ...string) *TestingA {
+func (a *testingA) NotSameType(t *testing.T, testNames ...string) *testingA {
 	invalidCallForSame(a)
 	a.name = a.naming(testNames...)
 	a.t = t

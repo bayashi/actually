@@ -11,7 +11,7 @@ func TestActual(t *testing.T) {
 		t.Errorf("Actual method was wrong. Actually got %s", a.got)
 	}
 
-	ac := &TestingA{}
+	ac := &testingA{}
 	ac.Actual("G")
 	if ac.got != "G" {
 		t.Errorf("Actual method was wrong. Actually got %s", ac.got)
@@ -24,7 +24,7 @@ func TestWant(t *testing.T) {
 		t.Errorf("Want method was wrong. Actually got %s", a.expect)
 	}
 
-	ac := &TestingA{}
+	ac := &testingA{}
 	ac.Want("E")
 	if ac.expect != "E" {
 		t.Errorf("Want method was wrong. Actually got %s", ac.expect)

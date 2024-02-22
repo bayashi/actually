@@ -18,7 +18,7 @@ func TestGot(t *testing.T) {
 
 func TestActuallyGot(t *testing.T) {
 	i := 12
-	a := &TestingA{}
+	a := &testingA{}
 	a.Got(i).Expect(i)
 
 	if a.got != i {
@@ -46,7 +46,7 @@ func TestExpect(t *testing.T) {
 
 func TestActuallyExpect(t *testing.T) {
 	i := 13
-	a := &TestingA{}
+	a := &testingA{}
 	a.Expect(i).Got(i)
 
 	if a.got != i {

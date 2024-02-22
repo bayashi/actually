@@ -11,7 +11,7 @@ func TestLen(t *testing.T) {
 		l2 [2]int
 	)
 
-	for tn, tt := range map[TestName]TestCase{
+	for tn, tt := range map[testName]testCase{
 		"blank string": {
 			expected: 0, actuallyGot: "",
 		},

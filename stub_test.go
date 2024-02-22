@@ -12,7 +12,7 @@ const (
 
 var (
 	stubFailed  bool
-	stubA       *TestingA
+	stubA       *testingA
 	stubWitness *w.Witness
 	stubRes     string
 )
@@ -24,7 +24,7 @@ func stub() {
 	stubWitness = nil
 	stubRes = ""
 
-	funcFail = func(a *TestingA, w *w.Witness, reason string) {
+	funcFail = func(a *testingA, w *w.Witness, reason string) {
 		stubFailed = true
 		stubA = a
 		stubWitness = w
