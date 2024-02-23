@@ -25,6 +25,7 @@ const (
 	reason_SamePointerAddress    = "Unexpectedly same pointer address"
 	reason_GotIsFunc             = "`Got` value is type of function"
 	reason_ExpectIsFunc          = "`Expect` value is type of function"
+	reason_GotShouldFuncType     = "`Got` value should be type of function"
 	reason_GotIsNotPointer       = "`Got` is NOT type of Pointer"
 	reason_ExpectIsNotPointer    = "`Expect` is NOT type of Pointer"
 	reason_GotIsNilType          = "Type of `Got` is a <nil> value"
@@ -38,6 +39,10 @@ const (
 	reason_ExpectvalueNotInt     = "`Expect` value should be `int` or `int32` type, but it's `%s`"
 	reason_CouldNotBeAppliedLen  = "`Got` value could NOT be applied builtin `len`"
 	reason_ShouldHaveItems       = "`Got` value should have %d item(s), but has %d"
+	reason_ExpectPanic           = "Expected panic, but no panic"
+	reason_PanicButMsgwrongType  = "Did panic, but a message from panic was wrong type"
+	reason_PanicButMsgDifferent  = "Did panic, but a message from panic was unexpectedly different"
+	reason_ExpectNoPanic         = "Expected no panic, but did panic"
 
 	// notice_Method_*
 	notice_Label                        = "Notice"
@@ -45,4 +50,6 @@ const (
 	notice_SamePointer_ShouldPointer    = "It should be a Pointer for SamePointer() method"
 	notice_SameNumber_ShouldNumber      = "It should be a number(int or float) for SameNumber() method"
 	notice_NotSamePointer_ShouldPointer = "It should be a Pointer for NotSamePointer() method"
+
+	gotFunc_Label = "Got func"
 )
