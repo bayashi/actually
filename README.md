@@ -70,6 +70,12 @@ NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chai
 * NotSamePointer
 * NotSameType
 
+### [Assertion for panic](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-panic)
+
+* Panic
+* PanicMessage
+* NoPanic
+
 ### [Assertion for string value by regexp](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-string-value-by-regexp)
 
 * Match
