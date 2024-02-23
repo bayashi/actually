@@ -43,6 +43,6 @@ func stubConfirm(t *testing.T, f func(), res string) {
 		t.Error(notCalledFail)
 	}
 	if stubRes != res {
-		t.Errorf("expected `%s`, but actually got `%s`", res, stubRes)
+		Fail(t, "fail messages are wrong", stubRes, res)
 	}
 }
