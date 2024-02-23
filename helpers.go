@@ -122,6 +122,7 @@ func Diff(a any, b any) string {
 	}
 */
 func Fail(t *testing.T, reason string, got any, expect ...any) {
+	t.Helper()
 	witness.Fail(t, reason, got, expect...)
 }
 
@@ -132,5 +133,6 @@ func Fail(t *testing.T, reason string, got any, expect ...any) {
 	}
 */
 func FailNow(t *testing.T, reason string, got any, expect ...any) {
+	t.Helper()
 	witness.FailNow(t, reason, got, expect...)
 }
