@@ -18,8 +18,8 @@ func (a *testingA) True(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !a.isBool() {
-		w := w.Got(a.got).Message(notice_Label, "It should be boolean")
-		return a.fail(w, reason_WrongType)
+		wi := w.Got(a.got).Message(notice_Label, "It should be boolean")
+		return a.fail(wi, reason_WrongType)
 	}
 
 	if a.got != true {
@@ -40,8 +40,8 @@ func (a *testingA) False(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !a.isBool() {
-		w := w.Got(a.got).Message(notice_Label, "It should be boolean")
-		return a.fail(w, reason_WrongType)
+		wi := w.Got(a.got).Message(notice_Label, "It should be boolean")
+		return a.fail(wi, reason_WrongType)
 	}
 
 	if a.got != false {

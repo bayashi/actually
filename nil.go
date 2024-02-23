@@ -18,8 +18,8 @@ func (a *testingA) Nil(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !a.isNil() {
-		w := w.Got(a.got)
-		return a.fail(w, reason_ExpectNilButNotNil)
+		wi := w.Got(a.got)
+		return a.fail(wi, reason_ExpectNilButNotNil)
 	}
 
 	return a
@@ -36,8 +36,8 @@ func (a *testingA) NotNil(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if a.isNil() {
-		w := w.Got(a.got)
-		return a.fail(w, reason_ExpectIsNotNil)
+		wi := w.Got(a.got)
+		return a.fail(wi, reason_ExpectIsNotNil)
 	}
 
 	return a
