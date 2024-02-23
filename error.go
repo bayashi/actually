@@ -27,15 +27,15 @@ func (a *testingA) NoError(t *testing.T, testNames ...string) *testingA {
 
 	if a.got != nil {
 		var reason string
-		w := w.Got(a.got)
+		wi := w.Got(a.got)
 		if !a.isTypeOfError() {
 			reason = reason_WrongType
-			w.Message(notice_Label, "It should be type of error")
+			wi.Message(notice_Label, "It should be type of error")
 		} else {
 			reason = reason_UnexpectedlyError
-			w.Message(notice_Label, "No error")
+			wi.Message(notice_Label, "No error")
 		}
-		return a.fail(w, reason)
+		return a.fail(wi, reason)
 	}
 
 	return a

@@ -17,13 +17,13 @@ func (a *testingA) Panic(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !isFuncType(a.got) {
-		w := w.Got(a.got)
-		return a.fail(w, reason_GotShouldFuncType)
+		wi := w.Got(a.got)
+		return a.fail(wi, reason_GotShouldFuncType)
 	}
 
 	if didPanic, _ := didPanic(a.got.(func())); !didPanic {
-		w := w.Got(a.got)
-		return a.fail(w, reason_ExpectPanic)
+		wi := w.Got(a.got)
+		return a.fail(wi, reason_ExpectPanic)
 	}
 
 	return a
@@ -41,25 +41,25 @@ func (a *testingA) PanicMessage(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !isFuncType(a.got) {
-		w := w.Got(a.got)
-		return a.fail(w, reason_GotShouldFuncType)
+		wi := w.Got(a.got)
+		return a.fail(wi, reason_GotShouldFuncType)
 	}
 
 	didPanic, panicMessage := didPanic(a.got.(func()))
 
 	if !didPanic {
-		w := w.Got(a.got)
-		return a.fail(w, reason_ExpectPanic)
+		wi := w.Got(a.got)
+		return a.fail(wi, reason_ExpectPanic)
 	}
 
 	if !objectsAreSameType(a.expect, panicMessage) {
-		w := w.Got(panicMessage).Message(gotFunc_Label, w.Dump(a.got)).Expect(a.expect)
-		return a.fail(w, reason_PanicButMsgwrongType)
+		wi := w.Got(panicMessage).Message(gotFunc_Label, w.Dump(a.got)).Expect(a.expect)
+		return a.fail(wi, reason_PanicButMsgwrongType)
 	}
 
 	if !objectsAreSame(a.expect, panicMessage) {
-		w := w.Got(panicMessage).Message(gotFunc_Label, w.Dump(a.got)).Expect(a.expect)
-		return a.fail(w, reason_PanicButMsgDifferent)
+		wi := w.Got(panicMessage).Message(gotFunc_Label, w.Dump(a.got)).Expect(a.expect)
+		return a.fail(wi, reason_PanicButMsgDifferent)
 	}
 
 	return a
@@ -76,13 +76,13 @@ func (a *testingA) NoPanic(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !isFuncType(a.got) {
-		w := w.Got(a.got)
-		return a.fail(w, reason_GotShouldFuncType)
+		wi := w.Got(a.got)
+		return a.fail(wi, reason_GotShouldFuncType)
 	}
 
 	if didPanic, panicMessage := didPanic(a.got.(func())); didPanic {
-		w := w.Got(panicMessage).Message(gotFunc_Label, w.Dump(a.got))
-		return a.fail(w, reason_ExpectNoPanic)
+		wi := w.Got(panicMessage).Message(gotFunc_Label, w.Dump(a.got))
+		return a.fail(wi, reason_ExpectNoPanic)
 	}
 
 	return a
