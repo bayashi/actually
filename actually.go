@@ -15,6 +15,7 @@ type testingA struct {
 	failNow     *bool
 	showRawData bool
 	name        string
+	failed      bool
 }
 
 // Got sets the value you actually got. Got() creates *testingA and returns it.

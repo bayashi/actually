@@ -45,3 +45,14 @@ func TestDump(t *testing.T) {
 
 	Got(Dump(got)).Expect(expect).X().Same(t)
 }
+
+func TestFi(t *testing.T) {
+	isFailed := Got(nil).Nil(t).Fi()
+	Got(isFailed).False(t) // Passed, so it should be `false`
+
+	stubConfirm(t, func() {
+		if fi := Got(isFailed).True(t).Fi(); !fi {
+			t.Fatal("If the test got fail, fi must return `true`. Actually, got `false`, somehow")
+		}
+	}, message_ExpectTrue)
+}
