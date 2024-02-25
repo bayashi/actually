@@ -185,10 +185,16 @@ same_test.go:64:
 `actually` has a `Diff` method to see differences between 2 objects for debugging.
 
 ```go
-Println(actually.Diff(objA, objB))
+actually.Diff(objA, objB)
 ```
 
 If objects are not string, even if these are objects, you can see the differences of dumped data.
+
+There is `Dump` method also.
+
+```go
+actually.Dump(objA)
+```
 
 [See more details in a Wiki](https://github.com/bayashi/actually/wiki).
 

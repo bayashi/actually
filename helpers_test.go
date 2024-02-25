@@ -34,3 +34,14 @@ func TestDiff(t *testing.T) {
 `
 	Got(got).Expect(expect).X().Same(t)
 }
+
+func TestDump(t *testing.T) {
+	got := map[string]int{
+		"foo": 256,
+	}
+	expect := "(map[string]int) (len=1) {\n" +
+			  " (string) (len=3) \"foo\": (int) 256\n" +
+			  "}\n"
+
+	Got(Dump(got)).Expect(expect).X().Same(t)
+}
