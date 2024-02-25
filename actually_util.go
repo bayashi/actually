@@ -37,6 +37,7 @@ var funcFail = func(a *testingA, w *w.Witness, reason string) {
 
 func (a *testingA) doFail(w *w.Witness, reason string) {
 	a.t.Helper()
+	a.failed = true
 	funcFail(a, w, reason)
 }
 

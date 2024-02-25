@@ -110,6 +110,21 @@ func (a *testingA) Name(n string) *testingA {
 	return a
 }
 
+// Fi doesn NOT return `*testingA`, returns whether a test failed instead.
+// If even there is only one test fails in a one chain to test, then it will be `true` anyway.
+/*
+	func Test(t *testing.T) {
+		love := true
+		// Fi returns `true` if either `NotNil(t)`, `True(t)` or 'Same(t)' failed
+		if res := a.Got(love).NotNil(t).True(t).Expect(true).Same(t).Fi(); !res {
+			// your own some action on fail
+		}
+	}
+*/
+func (a *testingA) Fi() bool {
+	return a.failed
+}
+
 // Diff is a helper function to get a diff string of 2 objects for debugging
 func Diff(a any, b any) string {
 	return witness.Diff(a, b)
