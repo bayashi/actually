@@ -53,12 +53,12 @@ func (a *testingA) PanicMessage(t *testing.T, testNames ...string) *testingA {
 	}
 
 	if !objectsAreSameType(a.expect, panicMessage) {
-		wi := w.Got(panicMessage).Message(gotFunc_Label, w.Dump(a.got)).Expect(a.expect)
+		wi := w.Got(panicMessage).Message(gotFunc_Label, Dump(a.got)).Expect(a.expect)
 		return a.fail(wi, reason_PanicButMsgwrongType)
 	}
 
 	if !objectsAreSame(a.expect, panicMessage) {
-		wi := w.Got(panicMessage).Message(gotFunc_Label, w.Dump(a.got)).Expect(a.expect)
+		wi := w.Got(panicMessage).Message(gotFunc_Label, Dump(a.got)).Expect(a.expect)
 		return a.fail(wi, reason_PanicButMsgDifferent)
 	}
 
@@ -81,7 +81,7 @@ func (a *testingA) NoPanic(t *testing.T, testNames ...string) *testingA {
 	}
 
 	if didPanic, panicMessage := didPanic(a.got.(func())); didPanic {
-		wi := w.Got(panicMessage).Message(gotFunc_Label, w.Dump(a.got))
+		wi := w.Got(panicMessage).Message(gotFunc_Label, Dump(a.got))
 		return a.fail(wi, reason_ExpectNoPanic)
 	}
 

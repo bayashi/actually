@@ -115,6 +115,11 @@ func Diff(a any, b any) string {
 	return witness.Diff(a, b)
 }
 
+// Dump is a helper function to get a dumped string of an object for debugging
+func Dump(a any) string {
+	return witness.Dump(a)
+}
+
 // Fail is to show decorated fail report. (Actual shortcut to witness.Fail)
 /*
 	if g != e {
