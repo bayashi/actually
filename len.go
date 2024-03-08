@@ -3,8 +3,6 @@ package actually
 import (
 	"reflect"
 	"testing"
-
-	w "github.com/bayashi/witness"
 )
 
 // Len asserts that the specified object has specific length.
@@ -15,7 +13,7 @@ func (a *testingA) Len(t *testing.T, testNames ...string) *testingA {
 	a.t = t
 	a.t.Helper()
 
-	wi := w.Got(a.got).Expect(a.expect)
+	wi := a.wi().Got(a.got).Expect(a.expect)
 
 	if k, ok := isValidExpect(a.expect); !ok {
 		return a.failf(wi, reason_ExpectvalueNotInt, k)

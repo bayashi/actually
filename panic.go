@@ -2,8 +2,6 @@ package actually
 
 import (
 	"testing"
-
-	w "github.com/bayashi/witness"
 )
 
 // Panic asserts that a test function you got panics
@@ -17,12 +15,12 @@ func (a *testingA) Panic(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !isFuncType(a.got) {
-		wi := w.Got(a.got)
+		wi := a.wi().Got(a.got)
 		return a.fail(wi, reason_GotShouldFuncType)
 	}
 
 	if didPanic, _ := didPanic(a.got.(func())); !didPanic {
-		wi := w.Got(a.got)
+		wi := a.wi().Got(a.got)
 		return a.fail(wi, reason_ExpectPanic)
 	}
 
@@ -41,24 +39,24 @@ func (a *testingA) PanicMessage(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !isFuncType(a.got) {
-		wi := w.Got(a.got)
+		wi := a.wi().Got(a.got)
 		return a.fail(wi, reason_GotShouldFuncType)
 	}
 
 	didPanic, panicMessage := didPanic(a.got.(func()))
 
 	if !didPanic {
-		wi := w.Got(a.got)
+		wi := a.wi().Got(a.got)
 		return a.fail(wi, reason_ExpectPanic)
 	}
 
 	if !objectsAreSameType(a.expect, panicMessage) {
-		wi := w.Got(panicMessage).Message(gotFunc_Label, Dump(a.got)).Expect(a.expect)
+		wi := a.wi().Got(panicMessage).Message(gotFunc_Label, Dump(a.got)).Expect(a.expect)
 		return a.fail(wi, reason_PanicButMsgwrongType)
 	}
 
 	if !objectsAreSame(a.expect, panicMessage) {
-		wi := w.Got(panicMessage).Message(gotFunc_Label, Dump(a.got)).Expect(a.expect)
+		wi := a.wi().Got(panicMessage).Message(gotFunc_Label, Dump(a.got)).Expect(a.expect)
 		return a.fail(wi, reason_PanicButMsgDifferent)
 	}
 
@@ -76,12 +74,12 @@ func (a *testingA) NoPanic(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !isFuncType(a.got) {
-		wi := w.Got(a.got)
+		wi := a.wi().Got(a.got)
 		return a.fail(wi, reason_GotShouldFuncType)
 	}
 
 	if didPanic, panicMessage := didPanic(a.got.(func())); didPanic {
-		wi := w.Got(panicMessage).Message(gotFunc_Label, Dump(a.got))
+		wi := a.wi().Got(panicMessage).Message(gotFunc_Label, Dump(a.got))
 		return a.fail(wi, reason_ExpectNoPanic)
 	}
 

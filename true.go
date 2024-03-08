@@ -3,8 +3,6 @@ package actually
 import (
 	"reflect"
 	"testing"
-
-	w "github.com/bayashi/witness"
 )
 
 // True method asserts that a test data you got is true value of boolean type.
@@ -18,12 +16,12 @@ func (a *testingA) True(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !a.isBool() {
-		wi := w.Got(a.got).Message(notice_Label, "It should be boolean")
+		wi := a.wi().Got(a.got).Message(notice_Label, "It should be boolean")
 		return a.fail(wi, reason_WrongType)
 	}
 
 	if a.got != true {
-		return a.fail(w.Got(a.got), message_ExpectTrue)
+		return a.fail(a.wi().Got(a.got), message_ExpectTrue)
 	}
 
 	return a
@@ -40,12 +38,12 @@ func (a *testingA) False(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !a.isBool() {
-		wi := w.Got(a.got).Message(notice_Label, "It should be boolean")
+		wi := a.wi().Got(a.got).Message(notice_Label, "It should be boolean")
 		return a.fail(wi, reason_WrongType)
 	}
 
 	if a.got != false {
-		return a.fail(w.Got(a.got), message_ExpectFalse)
+		return a.fail(a.wi().Got(a.got), message_ExpectFalse)
 	}
 
 	return a

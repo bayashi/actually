@@ -1,6 +1,8 @@
 package actually
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -55,4 +57,16 @@ func TestFi(t *testing.T) {
 			t.Fatal("If the test got fail, fi must return `true`. Actually, got `false`, somehow")
 		}
 	}, message_ExpectTrue)
+}
+
+func TestDebug(t *testing.T) {
+	a := Got(1).Debug("label", 123)
+	a.t = t
+
+	stub()
+	a.fail(a.wi(), "reason")
+
+	if !strings.Contains(fmt.Sprintf("%#v", stubWitness), `{"label":(`) {
+		t.Error("not include debug info")
+	}
 }

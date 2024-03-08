@@ -60,3 +60,17 @@ func invalidCall(a *testingA) {
 		panic(panicReason_NotCalledGot)
 	}
 }
+
+func (a *testingA) wi() *w.Witness {
+	wi := w.New()
+
+	if len(a.debugInfo) > 0 {
+		for _, di := range a.debugInfo {
+			for lable, info := range di {
+				wi.Debug(lable, info)
+			}
+		}
+	}
+
+	return wi
+}
