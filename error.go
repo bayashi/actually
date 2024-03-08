@@ -2,8 +2,6 @@ package actually
 
 import (
 	"testing"
-
-	w "github.com/bayashi/witness"
 )
 
 // NoError(t) method asserts that an error you got is NOt kind of error.
@@ -27,7 +25,7 @@ func (a *testingA) NoError(t *testing.T, testNames ...string) *testingA {
 
 	if a.got != nil {
 		var reason string
-		wi := w.Got(a.got)
+		wi := a.wi().Got(a.got)
 		if !a.isTypeOfError() {
 			reason = reason_WrongType
 			wi.Message(notice_Label, "It should be type of error")

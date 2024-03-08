@@ -3,8 +3,6 @@ package actually
 import (
 	"reflect"
 	"testing"
-
-	w "github.com/bayashi/witness"
 )
 
 // Nil asserts that a test data you got is <nil>
@@ -18,7 +16,7 @@ func (a *testingA) Nil(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if !a.isNil() {
-		wi := w.Got(a.got)
+		wi := a.wi().Got(a.got)
 		return a.fail(wi, reason_ExpectNilButNotNil)
 	}
 
@@ -36,7 +34,7 @@ func (a *testingA) NotNil(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if a.isNil() {
-		wi := w.Got(a.got)
+		wi := a.wi().Got(a.got)
 		return a.fail(wi, reason_ExpectIsNotNil)
 	}
 

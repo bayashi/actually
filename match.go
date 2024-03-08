@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"regexp"
 	"testing"
-
-	w "github.com/bayashi/witness"
 )
 
 // Match method asserts that test data you got match expected value as regexp.
@@ -27,7 +25,7 @@ func (a *testingA) Match(t *testing.T, testNames ...string) *testingA {
 
 	target := fmt.Sprint(a.got)
 	if !r.MatchString(target) {
-		wi := w.Message(message_label_Regexp, r.String()).Message(message_label_Target, target)
+		wi := a.wi().Message(message_label_Regexp, r.String()).Message(message_label_Target, target)
 		return a.fail(wi, reason_NotMatch)
 	}
 
@@ -53,7 +51,7 @@ func (a *testingA) NotMatch(t *testing.T, testNames ...string) *testingA {
 
 	target := fmt.Sprint(a.got)
 	if r.MatchString(target) {
-		wi := w.Message(message_label_Regexp, r.String()).Message(message_label_Target, target)
+		wi := a.wi().Message(message_label_Regexp, r.String()).Message(message_label_Target, target)
 		return a.fail(wi, reason_UnexpectedlyMatch)
 	}
 

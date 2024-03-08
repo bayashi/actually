@@ -135,6 +135,12 @@ func Dump(a any) string {
 	return witness.Dump(a)
 }
 
+// Debug is a helper function to show debug info on fail
+func (a *testingA) Debug(label string, info any) *testingA {
+	a.debugInfo = append(a.debugInfo, map[string]any{label: info})
+	return a
+}
+
 // Fail is to show decorated fail report. (Actual shortcut to witness.Fail)
 /*
 	if g != e {

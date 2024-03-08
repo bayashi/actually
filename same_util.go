@@ -8,7 +8,7 @@ import (
 )
 
 func reportForSame(a *testingA) *w.Witness {
-	r := w.Expect(a.expect).Got(a.got).Name(a.name)
+	r := a.wi().Expect(a.expect).Got(a.got).Name(a.name)
 	if a.showRawData {
 		r = r.ShowRaw()
 	}
