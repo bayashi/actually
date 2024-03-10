@@ -53,33 +53,19 @@ NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chai
 
 ### [Assertion for 1 object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-1-object)
 
-* True
-* False
-* Nil
-* NotNil
-* NoError
+* True, False, Nil, NotNil, NoError
 
 ### [Assertion for 2 objects](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-2-objects)
 
-* Same
-* SameNumber
-* SamePointer
-* SameType
-* NotSame
-* NotSameNumber
-* NotSamePointer
-* NotSameType
+* Same, SameNumber, SamePointer, SameType, NotSame, NotSameNumber, NotSamePointer, NotSameType
 
 ### [Assertion for panic](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-panic)
 
-* Panic
-* PanicMessage
-* NoPanic
+* Panic, PanicMessage, NoPanic
 
 ### [Assertion for string value by regexp](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-string-value-by-regexp)
 
-* Match
-* NotMatch
+* Match, NotMatch
 
 ### [Assertion for length of an object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-length-of-an-object)
 
@@ -95,42 +81,7 @@ Test code often breaks.
 
 We often end up spending valuable time fixing failed tests written by someone who is no longer with us.
 
-`actually` will help you with specific fail report:
-
-```
-nil_test.go:28:
-            Test name:      TestNil
-            Trace:          /path/to/src/github.com/bayashi/actually/nil_test.go:28
-            Fail reason:    Expected <nil>, but it was NOT <nil>
-            Type:           Got:string
-            Actually got:   ""
-```
-
-Another example with diff:
-
-```
-same_test.go:19:
-            Test name:      TestSame
-            Trace:          /path/to/src/github.com/bayashi/actually/same_test.go:19
-            Fail reason:    Not same value
-            Expected:       Type: map[string]int, Dump: map[string]int{"foo":12}
-            Actually got:   Type: map[string]int, Dump: map[string]int{"joo":12}
-            Diff Details:   --- Expected
-                            +++ Actually got
-                            @@ -1,3 +1,3 @@
-                             (map[string]int) (len=1) {
-                            - (string) (len=3) "foo": (int) 12
-                            + (string) (len=3) "joo": (int) 12
-                             }
-```
-
-`actually` has a `X()` method to show raw strings in the fail report. It would be helpful to compare intricate strigns, like below. You don't need to keep commented-out lines to dump test data anymore:
-
-```go
-actually.Got(stringA).Expect(stringB).X().Same(t)
-```
-
-Below report would be lovely.
+`actually` will help you with evident fail report:
 
 ```
 builder_test.go:133:
@@ -169,32 +120,16 @@ builder_test.go:133:
                                   Const: X
 ```
 
-There would be a notice message with a fail reason as a hint to pass:
+`actually` has the `Debug` method to show additional data in fail report.
 
-```
-same_test.go:64:
-            Test name:      TestSamePointer
-            Trace:          /path/to/src/github.com/bayashi/actually/same.go:53
-                                    /path/to/src/github.com/bayashi/actually/same_test.go:64
-            Fail reason:    `Got` is NOT type of Pointer
-            Expected:       Type: *int, Dump: (*int)(0xc00001a528)
-            Actually got:   Type: string, Dump: ""
-            Notice:         It should be a Pointer for SamePointer() method
-```
-
-`actually` has a `Diff` method to see differences between 2 objects for debugging.
+Like below, `src` variable will be dumped nicely with Got value `res` on fail.
 
 ```go
-actually.Diff(objA, objB)
+res := someFunc(src)
+actually.Got(res).Debug(src).True(t)
 ```
 
-If objects are not string, even if these are objects, you can see the differences of dumped data.
-
-There is `Dump` method also.
-
-```go
-actually.Dump(objA)
-```
+There are other helper methods too.
 
 [See more details in a Wiki](https://github.com/bayashi/actually/wiki).
 
