@@ -64,14 +64,19 @@ func (a *testingA) SamePointer(t *testing.T, testNames ...string) *testingA {
 	return a
 }
 
-// SameNumber method verifies that each pair of numbers are same or
+// Deprecated: Use `SameConvertibleNumber` instead. The `SameNumber` method will be removed.
+func (a *testingA) SameNumber(t *testing.T, testNames ...string) *testingA {
+	return a.SameConvertibleNumber(t, testNames...)
+}
+
+// SameConvertibleNumber method verifies that each pair of numbers are same or
 // convertible to the same types and converted objects are equal. (i.e. int* and float*)
 /*
-	Pass: actually.Got(float32(1.0)).Expect(int64(1)).SameNumber(t)
-	Fail: actually.Got("1").Expect(1).SameNumber(t) // string cannot convert to int
-	      actually.Got(nil).Expect(0).SameNumber(t) // <nil> is not acceptable
+	Pass: actually.Got(float32(1.0)).Expect(int64(1)).SameConvertibleNumber(t)
+	Fail: actually.Got("1").Expect(1).SameConvertibleNumber(t) // string cannot convert to int
+	      actually.Got(nil).Expect(0).SameConvertibleNumber(t) // <nil> is not acceptable
 */
-func (a *testingA) SameNumber(t *testing.T, testNames ...string) *testingA {
+func (a *testingA) SameConvertibleNumber(t *testing.T, testNames ...string) *testingA {
 	invalidCallForSame(a)
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -80,20 +85,20 @@ func (a *testingA) SameNumber(t *testing.T, testNames ...string) *testingA {
 	got, expect := a.got, a.expect
 
 	if isTypeNil(got) {
-		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameConvertibleNumber_ShouldNumber)
 		return a.fail(w, reason_GotIsNilType)
 	}
 	if isTypeNil(expect) {
-		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameConvertibleNumber_ShouldNumber)
 		return a.fail(w, reason_ExpectIsNilType)
 	}
 
 	if !isTypeNumber(got) {
-		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameConvertibleNumber_ShouldNumber)
 		return a.fail(w, reason_GotIsNotNumber)
 	}
 	if !isTypeNumber(expect) {
-		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameConvertibleNumber_ShouldNumber)
 		return a.fail(w, reason_ExpectIsNotNumber)
 	}
 

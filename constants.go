@@ -45,11 +45,11 @@ const (
 	reason_ExpectNoPanic         = "Expected no panic, but did panic"
 
 	// notice_Method_*
-	notice_Label                        = "Notice"
-	notice_Same_NotAcceptable           = "It's not acceptable in Same() method"
-	notice_SamePointer_ShouldPointer    = "It should be a Pointer for SamePointer() method"
-	notice_SameNumber_ShouldNumber      = "It should be a number(int or float) for SameNumber() method"
-	notice_NotSamePointer_ShouldPointer = "It should be a Pointer for NotSamePointer() method"
+	notice_Label                              = "Notice"
+	notice_Same_NotAcceptable                 = "It's not acceptable in Same() method"
+	notice_SamePointer_ShouldPointer          = "It should be a Pointer for SamePointer() method"
+	notice_SameConvertibleNumber_ShouldNumber = "It should be a number(int or float) for SameConvertibleNumber() method"
+	notice_NotSamePointer_ShouldPointer       = "It should be a Pointer for NotSamePointer() method"
 
 	gotFunc_Label = "Got func"
 )

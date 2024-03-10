@@ -129,7 +129,7 @@ func TestSamePointer_Fail(t *testing.T) {
 	}, reason_WrongPointerAddress)
 }
 
-func TestSameNumber(t *testing.T) {
+func TestSameConvertibleNumber(t *testing.T) {
 	for tn, tt := range map[testName]testCase{
 		"same number": {
 			expected: 1, actuallyGot: 1,
@@ -145,15 +145,15 @@ func TestSameNumber(t *testing.T) {
 		// },
 	} {
 		t.Run(tn, func(t *testing.T) {
-			Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t, tn)
+			Got(tt.actuallyGot).Expect(tt.expected).SameConvertibleNumber(t, tn)
 		})
 	}
 
 	// test name
-	Got(1).Expect(1).SameNumber(t, "Same Number")
+	Got(1).Expect(1).SameConvertibleNumber(t, "Same Number")
 }
 
-func TestSameNumber_Fail(t *testing.T) {
+func TestSameConvertibleNumber_Fail(t *testing.T) {
 	for tn, tt := range map[testName]testCase{
 		"expected is not number": {
 			expected: "1", actuallyGot: 1, expectedFailReason: reason_ExpectIsNotNumber,
@@ -176,7 +176,7 @@ func TestSameNumber_Fail(t *testing.T) {
 	} {
 		t.Run(tn, func(t *testing.T) {
 			stubConfirm(t, func() {
-				Got(tt.actuallyGot).Expect(tt.expected).SameNumber(t, tn)
+				Got(tt.actuallyGot).Expect(tt.expected).SameConvertibleNumber(t, tn)
 			}, tt.expectedFailReason)
 		})
 	}
@@ -184,7 +184,7 @@ func TestSameNumber_Fail(t *testing.T) {
 
 func TestChain(t *testing.T) {
 	Got(7).NotNil(t).
-		Expect(7).SameNumber(t).Same(t)
+		Expect(7).SameConvertibleNumber(t).Same(t)
 }
 
 func TestSameType(t *testing.T) {

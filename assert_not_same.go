@@ -66,8 +66,13 @@ func (a *testingA) NotSamePointer(t *testing.T, testNames ...string) *testingA {
 	return a
 }
 
-// NotSameNumber method verifies that two objects are not same number.
+// Deprecated: Use `NotSameConvertibleNumber` instead. The `NotSameNumber` method will be removed.
 func (a *testingA) NotSameNumber(t *testing.T, testNames ...string) *testingA {
+	return a.NotSameConvertibleNumber(t, testNames...)
+}
+
+// NotSameConvertibleNumber method verifies that two objects are not same number.
+func (a *testingA) NotSameConvertibleNumber(t *testing.T, testNames ...string) *testingA {
 	invalidCallForSame(a)
 	a.name = a.naming(testNames...)
 	a.t = t
@@ -77,20 +82,20 @@ func (a *testingA) NotSameNumber(t *testing.T, testNames ...string) *testingA {
 	expect := a.expect
 
 	if isTypeNil(got) {
-		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameConvertibleNumber_ShouldNumber)
 		return a.fail(w, reason_GotIsNilType)
 	}
 	if isTypeNil(expect) {
-		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameConvertibleNumber_ShouldNumber)
 		return a.fail(w, reason_ExpectIsNilType)
 	}
 
 	if !isTypeNumber(got) {
-		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameConvertibleNumber_ShouldNumber)
 		return a.fail(w, reason_GotIsNotNumber)
 	}
 	if !isTypeNumber(expect) {
-		w := reportForSame(a).Message(notice_Label, notice_SameNumber_ShouldNumber)
+		w := reportForSame(a).Message(notice_Label, notice_SameConvertibleNumber_ShouldNumber)
 		return a.fail(w, reason_ExpectIsNotNumber)
 	}
 

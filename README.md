@@ -33,7 +33,7 @@ func Test(t *testing.T) {
 
     // Assert 2 objects
     a.Got(love).Expect(true).Same(t)
-    a.Got(int32(1)).Expect(float64(1.0)).SameNumber(t)
+    a.Got(int32(1)).Expect(float64(1.0)).SameConvertibleNumber(t)
 
     heart := &love
     body  := heart
@@ -57,7 +57,7 @@ NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chai
 
 ### [Assertion for 2 objects](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-2-objects)
 
-* Same, SameNumber, SamePointer, SameType, NotSame, NotSameNumber, NotSamePointer, NotSameType
+* Same, SameConvertibleNumber, SamePointer, SameType, NotSame, NotSameConvertibleNumber, NotSamePointer, NotSameType
 
 ### [Assertion for panic](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-panic)
 

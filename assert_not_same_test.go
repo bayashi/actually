@@ -72,16 +72,16 @@ func TestNotSamePointer_Fail(t *testing.T) {
 	}, reason_SamePointerAddress)
 }
 
-func TestNotSameNumber(t *testing.T) {
-	Got(1).Expect(2).NotSameNumber(t, "these should be different number")
-	Got(int8(1)).Expect(int32(2)).NotSameNumber(t)
-	Got(float32(1.1)).Expect(int64(1)).NotSameNumber(t)
+func TestNotSameConvertibleNumber(t *testing.T) {
+	Got(1).Expect(2).NotSameConvertibleNumber(t, "these should be different number")
+	Got(int8(1)).Expect(int32(2)).NotSameConvertibleNumber(t)
+	Got(float32(1.1)).Expect(int64(1)).NotSameConvertibleNumber(t)
 
 	// NOTE: Be aware of a result of test to compare int value with float value
-	Got(1).Expect(float64(1.000000000000001)).NotSameNumber(t)
+	Got(1).Expect(float64(1.000000000000001)).NotSameConvertibleNumber(t)
 }
 
-func TestNotSameNumber_Fail(t *testing.T) {
+func TestNotSameConvertibleNumber_Fail(t *testing.T) {
 	for tn, tt := range map[testName]testCase{
 		"same number": {
 			expected: 1, actuallyGot: 1, expectedFailReason: reason_Same,
@@ -104,7 +104,7 @@ func TestNotSameNumber_Fail(t *testing.T) {
 	} {
 		t.Run(tn, func(t *testing.T) {
 			stubConfirm(t, func() {
-				Got(tt.actuallyGot).Expect(tt.expected).NotSameNumber(t)
+				Got(tt.actuallyGot).Expect(tt.expected).NotSameConvertibleNumber(t)
 			}, tt.expectedFailReason)
 		})
 	}
