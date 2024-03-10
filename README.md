@@ -38,26 +38,26 @@ func getLove() (bool, error) {
 }
 ```
 
-## Assertion Methods
+## Assertions
 
-### [Assertion for 1 object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-1-object)
+### [For 1 object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-1-object)
 
 * True, False, Nil, NotNil, NoError
 
-### [Assertion for 2 objects](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-2-objects)
+### [For 2 objects](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-2-objects)
 
 * Same, SameConvertibleNumber, SamePointer, SameType
 * NotSame, NotSameConvertibleNumber, NotSamePointer, NotSameType
 
-### [Assertion for panic](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-panic)
+### [For panic](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-panic)
 
 * Panic, PanicMessage, NoPanic
 
-### [Assertion for string value by regexp](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-string-value-by-regexp)
+### [For string value by regexp](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-string-value-by-regexp)
 
 * Match, NotMatch
 
-### [Assertion for length of an object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-length-of-an-object)
+### [For length of an object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-length-of-an-object)
 
 * Len
 
