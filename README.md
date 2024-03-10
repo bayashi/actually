@@ -8,16 +8,12 @@ Yet another assertion library, `actually`.
 
 * Builder interface to make test code obvious
 * Consistent method name to reduce things you have to remember
-* Specific fail report to improve your Developer eXperience
-
------
+* Specific fail report to save your time
 
 ## Usage
 
-[Try in playground](https://go.dev/play/p/Ut-hIr3vmYQ)
-
 ```go
-package main
+package main // https://go.dev/play/p/d57qXq3q6dl
 
 import (
     "testing"
@@ -28,13 +24,10 @@ func Test(t *testing.T) {
     love, err := getLove()
 
     // Assert 1 object
-    a.Got(love).True(t)
     a.Got(err).NoError(t)
+    a.Got(love).True(t)
 
     // Assert 2 objects
-    a.Got(love).Expect(true).Same(t)
-    a.Got(int32(1)).Expect(float64(1.0)).SameConvertibleNumber(t)
-
     heart := &love
     body  := heart
     a.Got(heart).Expect(body).SamePointer(t)
@@ -44,10 +37,6 @@ func getLove() (bool, error) {
     return true, nil
 }
 ```
-
-NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chain.
-
------
 
 ## Assertion Methods
 
@@ -76,10 +65,6 @@ NOTE that `Got()` and `Expect()` should NOT be called multiple times in one chai
 -----
 
 ## Fail reports
-
-Test code often breaks.
-
-We often end up spending valuable time fixing failed tests written by someone who is no longer with us.
 
 `actually` will help you with evident fail report:
 
@@ -128,8 +113,6 @@ Like below, `src` variable will be dumped nicely with Got value `res` on fail.
 res := someFunc(src)
 actually.Got(res).Debug(src).True(t)
 ```
-
-There are other helper methods too.
 
 [See more details in a Wiki](https://github.com/bayashi/actually/wiki).
 
