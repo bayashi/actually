@@ -4,7 +4,7 @@
 <a href="https://goreportcard.com/report/github.com/bayashi/actually" title="actually report card" target="_blank"><img src="https://goreportcard.com/badge/github.com/bayashi/actually" alt="actually report card"></a>
 <a href="https://pkg.go.dev/github.com/bayashi/actually" target="_blank"><img src="https://pkg.go.dev/badge/github.com/bayashi/actually.svg" alt="Go Reference"></a>
 
-Yet another assertion library, `actually`.
+Yet another testing library, `actually`.
 
 * Builder interface to make test code obvious
 * Consistent method name to reduce things you have to remember
