@@ -84,3 +84,12 @@ func TestDuplicateCall(t *testing.T) {
 		t.Error("panic wouldn't happen")
 	}
 }
+
+func TestExpectf(t *testing.T) {
+	Expectf("%s def", "abc").Got("abc def").Same(t)
+}
+
+func TestActuallyExpectf(t *testing.T) {
+	a := &testingA{}
+	a.Expectf("%s def", "abc").Got("abc def").Same(t)
+}
