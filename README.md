@@ -106,13 +106,13 @@ builder_test.go:133:
                                   Const: X
 ```
 
-`actually` has the `Debug` method to show additional data in fail report.
+`actually` has the `Debug("label", any_variable)` method to show additional data only in fail report.
 
-Like below, `src` variable will be dumped nicely with Got value `res` on fail.
+Like below, `src` variable will be dumped nicely with Got value `res` only on fail.
 
 ```go
 res := someFunc(src)
-actually.Got(res).Debug(src).True(t)
+actually.Got(res).Debug("src", src).True(t)
 ```
 
 [See more details in a Wiki](https://github.com/bayashi/actually/wiki).
