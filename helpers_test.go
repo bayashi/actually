@@ -66,7 +66,19 @@ func TestDebug(t *testing.T) {
 	stub()
 	a.fail(a.wi(), "reason")
 
-	if !strings.Contains(fmt.Sprintf("%#v", stubWitness), `{"label":(`) {
+	if !strings.Contains(fmt.Sprintf("%#v", stubWitness), `{"label":[]*obj.Object{(*obj.Object)(`) {
 		t.Error("not include debug info")
+	}
+}
+
+func TestDebugMultipleInfo(t *testing.T) {
+	a := Got(1).Debug("label", 123, 456)
+	a.t = t
+
+	stub()
+	a.fail(a.wi(), "reason")
+
+	if !strings.Contains(fmt.Sprintf("%#v", stubWitness), `), (*obj.Object)(`) {
+		t.Error("not include 2nd debug info")
 	}
 }
