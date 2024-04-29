@@ -17,7 +17,7 @@ type testingA struct {
 	showRawData bool
 	name        string
 	failed      bool
-	debugInfo   []map[string]any
+	debugInfo   []map[string][]any
 }
 
 // Got sets the value you actually got. Got() creates *testingA and returns it.

@@ -67,7 +67,7 @@ func (a *testingA) wi() *w.Witness {
 	if len(a.debugInfo) > 0 {
 		for _, di := range a.debugInfo {
 			for lable, info := range di {
-				wi.Debug(lable, info)
+				wi.Debug(lable, info...)
 			}
 		}
 	}
