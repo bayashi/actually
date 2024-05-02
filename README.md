@@ -47,6 +47,7 @@ func getLove() (bool, error) {
 ### [For 2 objects](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-2-objects)
 
 * Same, SameConvertibleNumber, SamePointer, SameType
+* Cmp, CmpAllowUnexported, (CmpOpt)
 * NotSame, NotSameConvertibleNumber, NotSamePointer, NotSameType
 
 ### [For panic](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-panic)
