@@ -4,6 +4,8 @@ package actually
 import (
 	"fmt"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 // testingA is a context of the test
@@ -18,6 +20,7 @@ type testingA struct {
 	name        string
 	failed      bool
 	debugInfo   []map[string][]any
+	cmpOpts     []cmp.Option
 }
 
 // Got sets the value you actually got. Got() creates *testingA and returns it.
