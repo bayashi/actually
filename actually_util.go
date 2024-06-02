@@ -5,6 +5,7 @@ package actually
 import (
 	"fmt"
 	"os"
+	"regexp"
 	"strings"
 
 	w "github.com/bayashi/witness"
@@ -24,14 +25,20 @@ func (a *testingA) failf(w *w.Witness, reasonFormat string, args ...any) *testin
 	return a
 }
 
+var regexpMine = regexp.MustCompile(`github\.com/bayashi/actually(@v[0-9][0-9\.]+[0-9])?/`)
+
+var skipMine = func(filepath string) bool {
+	return regexpMine.FindStringSubmatch(filepath) != nil
+}
+
 var funcFail = func(a *testingA, w *w.Witness, reason string) {
 	a.t.Helper()
 	if a.failNow != nil && !*a.failNow {
-		w.Fail(a.t, reason)
+		w.Fail(a.t, reason, skipMine)
 	} else if (a.failNow != nil && *a.failNow) || len(os.Getenv(envKey_FailNow)) > 0 {
-		w.FailNow(a.t, reason)
+		w.FailNow(a.t, reason, skipMine)
 	} else {
-		w.Fail(a.t, reason)
+		w.Fail(a.t, reason, skipMine)
 	}
 }
 
