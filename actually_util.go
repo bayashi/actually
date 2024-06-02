@@ -25,7 +25,7 @@ func (a *testingA) failf(w *w.Witness, reasonFormat string, args ...any) *testin
 	return a
 }
 
-var regexpMine = regexp.MustCompile(`/actually@v[0-9][0-9\.]+[0-9]/`)
+var regexpMine = regexp.MustCompile(`github\.com/bayashi/actually(@v[0-9][0-9\.]+[0-9])?/`)
 
 var skipMine = func(filepath string) bool {
 	return regexpMine.FindStringSubmatch(filepath) != nil
