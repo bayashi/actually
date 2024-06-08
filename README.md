@@ -117,7 +117,7 @@ res := someFunc(src)
 actually.Got(res).Debug("src", src).True(t)
 ```
 
-[See more details in a Wiki](https://github.com/bayashi/actually/wiki).
+[See more helper functions](https://github.com/bayashi/actually/wiki/Helper-functions).
 
 -----
 
