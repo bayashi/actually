@@ -4,11 +4,12 @@
 <a href="https://goreportcard.com/report/github.com/bayashi/actually" title="actually report card" target="_blank"><img src="https://goreportcard.com/badge/github.com/bayashi/actually" alt="actually report card"></a>
 <a href="https://pkg.go.dev/github.com/bayashi/actually" target="_blank"><img src="https://pkg.go.dev/badge/github.com/bayashi/actually.svg" alt="Go Reference"></a>
 
-Yet another testing library, `actually`.
+A testing library focused on turning failure into success, `actually`.
 
 * Builder interface to make test code obvious
 * Consistent method name to reduce things you have to remember
 * Specific fail report to save your time
+* There are helpers to see details of a failure
 
 ## Usage
 
@@ -109,7 +110,7 @@ builder_test.go:133:
 
 `actually` has the `Debug("label", any_variable)` method to show additional data only in fail report.
 
-Like below, `src` variable will be dumped nicely with Got value `res` only on fail.
+Like below, `src` variable will be dumped nicely only on fail.
 
 ```go
 res := someFunc(src)
