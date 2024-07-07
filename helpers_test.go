@@ -41,9 +41,9 @@ func TestDump(t *testing.T) {
 	got := map[string]int{
 		"foo": 256,
 	}
-	expect := "(map[string]int) (len=1) {\n" +
-		" (string) (len=3) \"foo\": (int) 256\n" +
-		"}\n"
+	expect := "map[string]int:1 {\n" +
+		"   \"foo\": 256,\n" +
+		"}"
 
 	Got(Dump(got)).Expect(expect).X().Same(t)
 }
