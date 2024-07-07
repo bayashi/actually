@@ -6,6 +6,9 @@ import (
 	"testing"
 
 	"github.com/bayashi/witness"
+	"github.com/bayashi/witness/obj"
+
+	"github.com/yassinebenaid/godump"
 )
 
 func failNowPtr(v bool) *bool {
@@ -132,6 +135,10 @@ func Diff(a any, b any) string {
 
 // Dump is a helper function to get a dumped string of an object for debugging
 func Dump(a any) string {
+	obj.DUMPER = func(d any) string {
+		var dumper godump.Dumper
+		return dumper.Sprint(d)
+	}
 	return witness.Dump(a)
 }
 
