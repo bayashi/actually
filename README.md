@@ -47,13 +47,13 @@ func getLove() (bool, error) {
 
 ### [For 2 objects](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-2-objects)
 
-* Same, SameConvertibleNumber, SamePointer, SameType
+* Same, SamePointer, SameType, SameConvertibleNumber
+* NotSame, NotSamePointer, NotSameType, NotSameConvertibleNumber
 * Cmp, CmpAllowUnexported, (CmpOpt)
-* NotSame, NotSameConvertibleNumber, NotSamePointer, NotSameType
 
 ### [For panic](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-panic)
 
-* Panic, PanicMessage, NoPanic
+* Panic, NoPanic, PanicMessage
 
 ### [For string value by regexp](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-string-value-by-regexp)
 
