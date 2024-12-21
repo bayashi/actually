@@ -70,6 +70,7 @@ func invalidCall(a *testingA) {
 
 func (a *testingA) wi() *w.Witness {
 	wi := w.New()
+	wi.Name(a.name)
 
 	if len(a.debugInfo) > 0 {
 		for _, di := range a.debugInfo {
