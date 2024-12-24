@@ -6,7 +6,7 @@ require github.com/pmezard/go-difflib v1.0.0 // indirect
 
 require (
 	github.com/bayashi/witness v0.0.21
-	github.com/yassinebenaid/godump v0.10.0
+	github.com/yassinebenaid/godump v0.11.1
 )
 
 require (
