@@ -133,10 +133,6 @@ MIT License
 
 Dai Okabayashi: https://github.com/bayashi
 
-## See Also
-
-* https://github.com/bayashi/witness
-
 ## Special Thanks
 
 Inspired by:
