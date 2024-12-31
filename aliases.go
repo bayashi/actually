@@ -3,7 +3,7 @@ package actually
 import (
 	"testing"
 
-	"github.com/bayashi/witness"
+	"github.com/bayashi/actually/witness"
 )
 
 // Actual is an alias of Got.

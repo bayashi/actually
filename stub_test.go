@@ -3,7 +3,7 @@ package actually
 import (
 	"testing"
 
-	w "github.com/bayashi/witness"
+	w "github.com/bayashi/actually/witness"
 )
 
 const (

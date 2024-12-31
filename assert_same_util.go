@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"reflect"
 
-	w "github.com/bayashi/witness"
+	w "github.com/bayashi/actually/witness"
 )
 
 func reportForSame(a *testingA) *w.Witness {

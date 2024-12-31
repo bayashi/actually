@@ -5,8 +5,8 @@ package actually
 import (
 	"testing"
 
-	"github.com/bayashi/witness"
-	"github.com/bayashi/witness/obj"
+	"github.com/bayashi/actually/witness"
+	"github.com/bayashi/actually/witness/obj"
 
 	"github.com/yassinebenaid/godump"
 )

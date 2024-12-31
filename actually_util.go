@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"strings"
 
-	w "github.com/bayashi/witness"
+	w "github.com/bayashi/actually/witness"
 )
 
 func (a *testingA) fail(w *w.Witness, reason string) *testingA {
