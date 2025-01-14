@@ -118,7 +118,7 @@ func file_example_proto_init() {
 		return
 	}
 	if !protoimpl.UnsafeEnabled {
-		// lint:ignore SA1019
+		//lint:ignore SA1019
 		file_example_proto_msgTypes[0].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*Foo); i {
 			case 0:
