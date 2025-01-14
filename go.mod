@@ -9,4 +9,5 @@ require github.com/yassinebenaid/godump v0.11.1
 require (
 	github.com/davecgh/go-spew v1.1.1
 	github.com/google/go-cmp v0.6.0
+	google.golang.org/protobuf v1.36.2
 )

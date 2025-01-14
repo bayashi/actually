@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"google.golang.org/protobuf/testing/protocmp"
 )
 
 // Cmp method gets the differences between two objects by go-cmp.Diff.
@@ -21,6 +22,25 @@ func (a *testingA) Cmp(t *testing.T, testNames ...string) *testingA {
 	a.t.Helper()
 
 	if diff := cmp.Diff(a.expect, a.got, a.cmpOpts...); diff != "" {
+		return a.fail(reportForSame(a).Message("Diff details", diff), reason_NotSame)
+	}
+
+	return a
+}
+
+// CmpProto method gets the differences between two Protobuf messages by go-cmp.Diff with protocmp.Transform option.
+/*
+	actually.Got(protoMessage1).Expect(protoMessage2).CmpProto(t)
+*/
+func (a *testingA) CmpProto(t *testing.T, testNames ...string) *testingA {
+	invalidCallForSame(a)
+	a.name = a.naming(testNames...)
+	a.t = t
+	a.t.Helper()
+
+	a = a.CmpOpt(protocmp.IgnoreUnknown())
+
+	if diff := cmp.Diff(a.expect, a.got, protocmp.Transform()); diff != "" {
 		return a.fail(reportForSame(a).Message("Diff details", diff), reason_NotSame)
 	}
 
