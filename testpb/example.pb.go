@@ -15,6 +15,7 @@
 // 	protoc        v3.12.4
 // source: example.proto
 
+//lint:file-ignore
 package pb
 
 import (
