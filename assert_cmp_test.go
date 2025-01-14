@@ -2,6 +2,8 @@ package actually
 
 import (
 	"testing"
+
+	pb "github.com/bayashi/actually/testpb"
 )
 
 func TestCmp(t *testing.T) {
@@ -11,6 +13,16 @@ func TestCmp(t *testing.T) {
 func TestCmp_Fail(t *testing.T) {
 	stubConfirm(t, func() {
 		Got(123).Expect(456).Cmp(t)
+	}, "Not same value")
+}
+
+func TestCmpProto(t *testing.T) {
+	Got(&pb.Foo{Id: 123}).Expect(&pb.Foo{Id: 123}).CmpProto(t)
+}
+
+func TestCmpProto_Fail(t *testing.T) {
+	stubConfirm(t, func() {
+		Got(&pb.Foo{Id: 123}).Expect(&pb.Foo{Id: 456}).CmpProto(t)
 	}, "Not same value")
 }
 
