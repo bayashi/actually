@@ -38,9 +38,9 @@ func (a *testingA) CmpProto(t *testing.T, testNames ...string) *testingA {
 	a.t = t
 	a.t.Helper()
 
-	a = a.CmpOpt(protocmp.IgnoreUnknown())
+	a = a.CmpOpt(protocmp.Transform())
 
-	if diff := cmp.Diff(a.expect, a.got, protocmp.Transform()); diff != "" {
+	if diff := cmp.Diff(a.expect, a.got, a.cmpOpts...); diff != "" {
 		return a.fail(reportForSame(a).Message("Diff details", diff), reason_NotSame)
 	}
 
