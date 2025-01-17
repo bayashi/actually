@@ -48,7 +48,7 @@ func (a *testingA) CmpProto(t *testing.T, testNames ...string) *testingA {
 	return a
 }
 
-// CmpAllowUnexported method gets the differences between two objects by go-cmp.Diff with cmp.AllowUnexported option.
+// CmpAllowUnexported method gets the differences between two structs by go-cmp.Diff with cmp.AllowUnexported option.
 // It accepts unexported methods to compare instead panic. If you would like to ignore unexported methods,
 // then you can use CmpIgnoreUnexported method.
 func (a *testingA) CmpAllowUnexported(t *testing.T, testNames ...string) *testingA {
@@ -75,8 +75,8 @@ func (a *testingA) CmpAllowUnexported(t *testing.T, testNames ...string) *testin
 	return a
 }
 
-// CmpIgnoreUnexported method gets the differences between two objects by go-cmp.Diff with cmpopts.IgnoreUnexported option.
-// It ignores unexported methods to compare structs instead panic. If you would like to compare also unexported methods,
+// CmpIgnoreUnexported method gets the differences between two structs by go-cmp.Diff with cmpopts.IgnoreUnexported option.
+// It ignores unexported methods to compare instead panic. If you would like to compare with also unexported methods,
 // then you can use CmpAllowUnexported method.
 func (a *testingA) CmpIgnoreUnexported(t *testing.T, testNames ...string) *testingA {
 	invalidCallForSame(a)
