@@ -21,7 +21,7 @@ func (a *testingA) Cmp(t *testing.T, testNames ...string) *testingA {
 	a.t = t
 	a.t.Helper()
 
-	if diff := cmp.Diff(a.expect, a.got, a.cmpOpts...); diff != "" {
+	if diff := cmp.Diff(a.expect, a.got, a.cmpOpts.cmpOpts...); diff != "" {
 		return a.fail(reportForSame(a).Message("Diff details", diff), reason_NotSame)
 	}
 
@@ -58,7 +58,7 @@ func (a *testingA) CmpAllowUnexported(t *testing.T, testNames ...string) *testin
 
 	a.CmpOpt(cmp.AllowUnexported(a.got))
 
-	if diff := cmp.Diff(a.expect, a.got, a.cmpOpts...); diff != "" {
+	if diff := cmp.Diff(a.expect, a.got, a.cmpOpts.cmpOpts...); diff != "" {
 		return a.fail(reportForSame(a).Message("Diff details", diff), reason_NotSame)
 	}
 
@@ -74,7 +74,9 @@ func (a *testingA) CmpAllowUnexported(t *testing.T, testNames ...string) *testin
 // * https://pkg.go.dev/github.com/google/go-cmp/cmp#Option
 // * https://pkg.go.dev/github.com/google/go-cmp/cmp/cmpopts
 func (a *testingA) CmpOpt(cmpOpts ...cmp.Option) *testingA {
-	a.cmpOpts = append(a.cmpOpts, cmpOpts...)
+	a.cmpOpts.mutex.Lock()
+	defer a.cmpOpts.mutex.Unlock()
+	a.cmpOpts.cmpOpts = append(a.cmpOpts.cmpOpts, cmpOpts...)
 
 	return a
 }

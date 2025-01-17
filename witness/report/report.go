@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"sync"
 
 	"github.com/bayashi/actually/witness/obj"
 )
@@ -80,9 +81,10 @@ func (f *Failure) DebugInfo(info []map[string][]*obj.Object) *Failure {
 }
 
 func (f *Failure) Put() string {
-	r := &Report{
-		Contents: f.buildContents(),
-	}
+	r := &Report{}
+	r.mutex.Lock()
+	defer r.mutex.Unlock()
+	r.Contents = f.buildContents()
 
 	longestLen := 0
 	for _, c := range r.Contents {
@@ -182,6 +184,7 @@ func (f *Failure) fieldLabel(fieldName string) string {
 type Report struct {
 	Contents       []*Content
 	LabelSeparator *string
+	mutex          sync.RWMutex
 }
 
 func (r *Report) separator() string {

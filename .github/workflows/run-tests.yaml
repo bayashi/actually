@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         os:  ["ubuntu-latest"]
-        go:  ["1.21", "1.22"]
+        go:  ["1.21", "1.22", "1.23"]
 
     runs-on: ${{ matrix.os }}
 
@@ -43,7 +43,7 @@ jobs:
 
       - name: Test with the Go CLI
         shell: 'script -q -e -c "bash {0}"'
-        run: irir gotest -- go test -v -shuffle=on -timeout=3m -cover ./...
+        run: irir gotest -- go test -v -shuffle=on -race -timeout=3m -cover ./...
 
   test-other:
     strategy:

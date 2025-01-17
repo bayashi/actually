@@ -3,10 +3,21 @@ package actually
 
 import (
 	"fmt"
+	"sync"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 )
+
+type debugInfoMap struct {
+	debugInfo []map[string][]any
+	mutex     sync.RWMutex
+}
+
+type cmpOptList struct {
+	cmpOpts []cmp.Option
+	mutex   sync.RWMutex
+}
 
 // testingA is a context of the test
 type testingA struct {
@@ -19,8 +30,8 @@ type testingA struct {
 	showRawData bool
 	name        string
 	failed      bool
-	debugInfo   []map[string][]any
-	cmpOpts     []cmp.Option
+	debugInfo   debugInfoMap
+	cmpOpts     cmpOptList
 }
 
 // Got sets the value you actually got. Got() creates *testingA and returns it.
