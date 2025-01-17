@@ -43,10 +43,13 @@ const (
 	reason_PanicButMsgwrongType  = "Did panic, but a message from panic was wrong type"
 	reason_PanicButMsgDifferent  = "Did panic, but a message from panic was unexpectedly different"
 	reason_ExpectNoPanic         = "Expected no panic, but did panic"
+	reason_GotShouldStruct       = "`Got` value should be type of struct"
+	reason_ExpectShouldStruct    = "`Expect` value should be type of struct"
 
 	// notice_Method_*
 	notice_Label                              = "Notice"
 	notice_Same_NotAcceptable                 = "It's not acceptable in Same() method"
+	notice_Cmp_ShouldStruct                   = "It should be a Struct for Cmp method"
 	notice_SamePointer_ShouldPointer          = "It should be a Pointer for SamePointer() method"
 	notice_SameConvertibleNumber_ShouldNumber = "It should be a number(int or float) for SameConvertibleNumber() method"
 	notice_NotSamePointer_ShouldPointer       = "It should be a Pointer for NotSamePointer() method"

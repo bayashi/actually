@@ -50,4 +50,12 @@ func TestCmpAllowUnexported_Fail(t *testing.T) {
 	stubConfirm(t, func() {
 		Got(x).Expect(y).CmpAllowUnexported(t)
 	}, "Not same value")
+
+	stubConfirm(t, func() {
+		Got(nil).Expect(y).CmpAllowUnexported(t)
+	}, "`Got` value should be type of struct")
+
+	stubConfirm(t, func() {
+		Got(x).Expect(nil).CmpAllowUnexported(t)
+	}, "`Expect` value should be type of struct")
 }

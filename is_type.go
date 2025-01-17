@@ -9,6 +9,10 @@ func isFuncType(v any) bool {
 	return v != nil && reflect.TypeOf(v).Kind() == reflect.Func
 }
 
+func isStructType(v any) bool {
+	return v != nil && reflect.TypeOf(v).Kind() == reflect.Struct
+}
+
 func isPointerType(v any) bool {
 	return v != nil && reflect.TypeOf(v).Kind() == reflect.Pointer
 }

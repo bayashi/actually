@@ -56,7 +56,16 @@ func (a *testingA) CmpAllowUnexported(t *testing.T, testNames ...string) *testin
 	a.t = t
 	a.t.Helper()
 
-	a.CmpOpt(cmp.AllowUnexported(a.got))
+	if !isStructType(a.got) {
+		w := reportForSame(a).Message(notice_Label, notice_Cmp_ShouldStruct)
+		return a.fail(w, reason_GotShouldStruct)
+	}
+	if !isStructType(a.expect) {
+		w := reportForSame(a).Message(notice_Label, notice_Cmp_ShouldStruct)
+		return a.fail(w, reason_ExpectShouldStruct)
+	}
+
+	a.CmpOpt(cmp.AllowUnexported(a.got, a.expect))
 
 	if diff := cmp.Diff(a.expect, a.got, a.cmpOpts.cmpOpts...); diff != "" {
 		return a.fail(reportForSame(a).Message("Diff details", diff), reason_NotSame)
