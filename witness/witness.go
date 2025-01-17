@@ -3,6 +3,7 @@ package witness
 import (
 	"fmt"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/bayashi/actually/witness/diff"
@@ -11,15 +12,25 @@ import (
 	"github.com/bayashi/actually/witness/trace"
 )
 
+type messagesMap struct {
+	messages []map[string]string
+	mutex    sync.RWMutex
+}
+
+type debugInfoMap struct {
+	debugInfo []map[string][]*obj.Object
+	mutex     sync.RWMutex
+}
+
 // Witness is a context of the fail report
 type Witness struct {
 	got       *obj.Object
 	expect    *obj.Object
 	name      string
-	messages  []map[string]string        // additional info as {"label": "message"}
-	debugInfo []map[string][]*obj.Object // Debug info as {"label": []*obj.Object}
-	showDiff  bool                       // If true, show a diff string for "got" and "expect"
-	showRaw   bool                       // If true, show raw values as string(raw string or dumped string) for "got" and "expect"
+	messages  messagesMap  // additional info as {"label": "message"}
+	debugInfo debugInfoMap // Debug info as {"label": []*obj.Object}
+	showDiff  bool         // If true, show a diff string for "got" and "expect"
+	showRaw   bool         // If true, show raw values as string(raw string or dumped string) for "got" and "expect"
 }
 
 // You can write "witness.New(witness.ShowDiff, witness.NotShowRaw)" instead of raw boolean
@@ -132,15 +143,19 @@ func (w *Witness) Expect(v any) *Witness {
 
 // Set additional messages to show
 func Message(label string, msg string) *Witness {
-	w := &Witness{}
-	w.messages = append(w.messages, map[string]string{label: msg})
+	w := New()
+	w.messages.mutex.Lock()
+	defer w.messages.mutex.Unlock()
+	w.messages.messages = append(w.messages.messages, map[string]string{label: msg})
 
 	return w
 }
 
 // Set additional messages to show
 func (w *Witness) Message(label string, msg string) *Witness {
-	w.messages = append(w.messages, map[string]string{label: msg})
+	w.messages.mutex.Lock()
+	defer w.messages.mutex.Unlock()
+	w.messages.messages = append(w.messages.messages, map[string]string{label: msg})
 
 	return w
 }
@@ -152,11 +167,13 @@ func Debug(label string, info ...any) *Witness {
 
 // Set debug information to show on fail
 func (w *Witness) Debug(label string, info ...any) *Witness {
+	w.debugInfo.mutex.Lock()
+	defer w.debugInfo.mutex.Unlock()
 	infoList := make([]*obj.Object, 0, len(info))
 	for _, i := range info {
 		infoList = append(infoList, obj.NewObject(i))
 	}
-	w.debugInfo = append(w.debugInfo, map[string][]*obj.Object{label: infoList})
+	w.debugInfo.debugInfo = append(w.debugInfo.debugInfo, map[string][]*obj.Object{label: infoList})
 
 	return w
 }
@@ -191,7 +208,7 @@ func (w *Witness) FailNow(t *testing.T, reason string, traceFilterFunc ...func(f
 }
 
 func (w *Witness) buildReport(t *testing.T, reason string, traceFilterFunc ...func(filepath string) bool) *report.Failure {
-	r := baseReprot(reason, traceFilterFunc...).Messages(w.messages).DebugInfo(w.debugInfo)
+	r := baseReprot(reason, traceFilterFunc...).Messages(w.messages.messages).DebugInfo(w.debugInfo.debugInfo)
 
 	if w.name != "" {
 		r.Name(strings.Join([]string{t.Name(), w.name}, "/"))

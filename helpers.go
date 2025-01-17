@@ -144,7 +144,9 @@ func Dump(a any) string {
 
 // Debug is a helper function to show debug info on fail
 func (a *testingA) Debug(label string, info ...any) *testingA {
-	a.debugInfo = append(a.debugInfo, map[string][]any{label: info})
+	a.debugInfo.mutex.Lock()
+	defer a.debugInfo.mutex.Unlock()
+	a.debugInfo.debugInfo = append(a.debugInfo.debugInfo, map[string][]any{label: info})
 	return a
 }
 
