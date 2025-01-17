@@ -49,7 +49,7 @@ func getLove() (bool, error) {
 
 * Same, SamePointer, SameType, SameConvertibleNumber
 * NotSame, NotSamePointer, NotSameType, NotSameConvertibleNumber
-* Cmp, CmpProto, CmpAllowUnexported, (CmpOpt)
+* Cmp, CmpProto, CmpAllowUnexported, CmpIgnoreUnexported, (CmpOpt)
 
 ### [For panic](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-panic)
 
