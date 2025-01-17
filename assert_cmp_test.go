@@ -59,3 +59,41 @@ func TestCmpAllowUnexported_Fail(t *testing.T) {
 		Got(x).Expect(nil).CmpAllowUnexported(t)
 	}, "`Expect` value should be type of struct")
 }
+
+func TestCmpIgnoreUnexported(t *testing.T) {
+	x := struct {
+		id   int
+		Name string
+	}{
+		id:   1,
+		Name: "aiko",
+	}
+	Got(x).Expect(x).CmpIgnoreUnexported(t)
+
+	y := x
+	y.id = 2
+	Got(x).Expect(y).CmpIgnoreUnexported(t)
+}
+
+func TestCmpIgnoreUnexported_Fail(t *testing.T) {
+	x := struct {
+		id   int
+		Name string
+	}{
+		id:   1,
+		Name: "aiko",
+	}
+	y := x
+	y.Name = "eiko"
+	stubConfirm(t, func() {
+		Got(x).Expect(y).CmpIgnoreUnexported(t)
+	}, "Not same value")
+
+	stubConfirm(t, func() {
+		Got(nil).Expect(y).CmpIgnoreUnexported(t)
+	}, "`Got` value should be type of struct")
+
+	stubConfirm(t, func() {
+		Got(x).Expect(nil).CmpIgnoreUnexported(t)
+	}, "`Expect` value should be type of struct")
+}

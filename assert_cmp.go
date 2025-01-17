@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 	"google.golang.org/protobuf/testing/protocmp"
 )
 
@@ -49,7 +50,7 @@ func (a *testingA) CmpProto(t *testing.T, testNames ...string) *testingA {
 
 // CmpAllowUnexported method gets the differences between two objects by go-cmp.Diff with cmp.AllowUnexported option.
 // It accepts unexported methods to compare instead panic. If you would like to ignore unexported methods,
-// then you can use cmpopts.IgnoreUnexported or some cmpopt's options to ignore.
+// then you can use CmpIgnoreUnexported method.
 func (a *testingA) CmpAllowUnexported(t *testing.T, testNames ...string) *testingA {
 	invalidCallForSame(a)
 	a.name = a.naming(testNames...)
@@ -66,6 +67,33 @@ func (a *testingA) CmpAllowUnexported(t *testing.T, testNames ...string) *testin
 	}
 
 	a.CmpOpt(cmp.AllowUnexported(a.got, a.expect))
+
+	if diff := cmp.Diff(a.expect, a.got, a.cmpOpts.cmpOpts...); diff != "" {
+		return a.fail(reportForSame(a).Message("Diff details", diff), reason_NotSame)
+	}
+
+	return a
+}
+
+// CmpIgnoreUnexported method gets the differences between two objects by go-cmp.Diff with cmpopts.IgnoreUnexported option.
+// It ignores unexported methods to compare structs instead panic. If you would like to compare also unexported methods,
+// then you can use CmpAllowUnexported method.
+func (a *testingA) CmpIgnoreUnexported(t *testing.T, testNames ...string) *testingA {
+	invalidCallForSame(a)
+	a.name = a.naming(testNames...)
+	a.t = t
+	a.t.Helper()
+
+	if !isStructType(a.got) {
+		w := reportForSame(a).Message(notice_Label, notice_Cmp_ShouldStruct)
+		return a.fail(w, reason_GotShouldStruct)
+	}
+	if !isStructType(a.expect) {
+		w := reportForSame(a).Message(notice_Label, notice_Cmp_ShouldStruct)
+		return a.fail(w, reason_ExpectShouldStruct)
+	}
+
+	a.CmpOpt(cmpopts.IgnoreUnexported(a.got, a.expect))
 
 	if diff := cmp.Diff(a.expect, a.got, a.cmpOpts.cmpOpts...); diff != "" {
 		return a.fail(reportForSame(a).Message("Diff details", diff), reason_NotSame)
