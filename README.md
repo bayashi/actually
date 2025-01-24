@@ -14,28 +14,52 @@ A testing library focused on turning failure into success, `actually`.
 ## Usage
 
 ```go
-package main // https://go.dev/play/p/d57qXq3q6dl
+package main
 
 import (
-    "testing"
-    a "github.com/bayashi/actually"
+	"testing"
+
+	a "github.com/bayashi/actually"
+	pb "github.com/bayashi/actually/testpb"
 )
 
-func Test(t *testing.T) {
-    love, err := getLove()
+func TestObject(t *testing.T) {
+	love, err := getLove()
 
-    // Assert 1 object
-    a.Got(err).NoError(t)
-    a.Got(love).True(t)
-
-    // Assert 2 objects
-    heart := &love
-    body  := heart
-    a.Got(heart).Expect(body).SamePointer(t)
+	a.Got(err).NoError(t)
+	a.Got(love).True(t)
 }
 
 func getLove() (bool, error) {
-    return true, nil
+	return true, nil
+}
+
+func TestObjects(t *testing.T) {
+	x := map[string]int{
+		"foo": 123,
+	}
+	y := map[string]int{
+		"foo": 123,
+	}
+
+	// `Same` method verifies that two objects are same in value and type.
+	// Function type value is not acceptable. And not verify pointer address.
+	// It will be fail, int(1) and uint(1), because of type.
+	a.Got(x).Expect(y).Same(t)
+
+	// Cmp method gets the differences between two objects by go-cmp.Diff.
+	a.Got(x).Expect(y).Cmp(t)
+}
+
+func TestProtoMessages(t *testing.T) {
+	x := &pb.Foo{Id: 123}
+	y := &pb.Foo{Id: 123}
+
+	// CmpProto method gets the differences between two Protobuf messages
+	// by go-cmp.Diff with protocmp.Transform option.
+	a.Got(x).Expect(y).CmpProto(t)
+
+	a.Got(x).Expect(y).SamePointer(t) // This test will be failed
 }
 ```
 
@@ -71,42 +95,43 @@ func getLove() (bool, error) {
 
 `actually` will help you with evident fail report:
 
+```go
+package foo
+
+import (
+	"testing"
+)
+
+func Test(t *testing.T) {
+	x := "foo\nbar\nbaz"
+	y := "foo\nbar\nbug"
+
+	Got(x).Expect(y).Same(t)
+}
 ```
-builder_test.go:133:
-            Test name:      TestTree
-            Trace:          /path/to/src/github.com/bayashi/goverview/builder_test.go:133
-            Fail reason:    Not same
-            Expected:       Dump: "\n┌ 001/\n├── .gitignore\n├── LICENSE: License MIT\n├── go.mod: go 1.18\n└───+ main.go: main\n      Func: X\n      const: X\n"
-            Actually got:   Dump: "\n┌ 001/\n├── .gitignore\n├── LICENSE: License MIT\n├── go.mod: go 1.19\n└──* main.go: main\n      Func: X\n      Const: X\n"
-            Diff Details:   --- Expected
-                            +++ Actually got
-                            @@ -4,6 +4,6 @@
-                             ├── LICENSE: License MIT
-                            -├── go.mod: go 1.18
-                            -└───+ main.go: main
-                            +├── go.mod: go 1.19
-                            +└──* main.go: main
-                                   Func: X
-                            -      const: X
-                            +      Const: X
-            Raw Expect:     ---
-                            ┌ 001/
-                            ├── .gitignore
-                            ├── LICENSE: License MIT
-                            ├── go.mod: go 1.18
-                            └───+ main.go: main
-                                  Func: X
-                                  const: X
-                            ---
-            Raw Got:        ---
-                            ┌ 001/
-                            ├── .gitignore
-                            ├── LICENSE: License MIT
-                            ├── go.mod: go 1.19
-                            └──* main.go: main
-                                  Func: X
-                                  Const: X
+
+Above code will put fail report like below:
+
 ```
+=== RUN   Test
+    actually_test.go:10:
+                Test name:      Test
+                Trace:          /path/to/foo_test.go:10
+                Fail reason:    Not same value
+                Type:           Expect:string, Got:string
+                Expected:       "foo\nbar\nbug"
+                Actually got:   "foo\nbar\nbaz"
+                Diff details:   --- Expected
+                                +++ Actually got
+                                @@ -2,2 +2,2 @@
+                                 bar
+                                -bug
+                                +baz
+
+--- FAIL: TestT (0.00s)
+```
+
+There are some helpful methods.
 
 `actually` has the `Debug("label", any_variable)` method to show additional data only in fail report.
 
