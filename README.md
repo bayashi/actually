@@ -100,13 +100,15 @@ package foo
 
 import (
 	"testing"
+
+	a "github.com/bayashi/actually"
 )
 
 func Test(t *testing.T) {
 	x := "foo\nbar\nbaz"
 	y := "foo\nbar\nbug"
 
-	Got(x).Expect(y).Same(t)
+	a.Got(x).Expect(y).Same(t)
 }
 ```
 
@@ -114,7 +116,7 @@ Above code will put fail report like below:
 
 ```
 === RUN   Test
-    actually_test.go:10:
+    foo_test.go:10:
                 Test name:      Test
                 Trace:          /path/to/foo_test.go:10
                 Fail reason:    Not same value
@@ -128,7 +130,7 @@ Above code will put fail report like below:
                                 -bug
                                 +baz
 
---- FAIL: TestT (0.00s)
+--- FAIL: Test (0.00s)
 ```
 
 There are some helpful methods.
