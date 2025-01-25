@@ -63,7 +63,7 @@ func TestProtoMessages(t *testing.T) {
 }
 ```
 
-## Assertions
+## Assertion Methods
 
 ### [For 1 object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-1-object)
 
@@ -133,7 +133,11 @@ Above code will put fail report like below:
 --- FAIL: Test (0.00s)
 ```
 
-There are some helpful methods.
+## Helper Methods
+
+There are helper functions: Name, Skip, Fi, X, Diff, Dump, etc...
+
+### Debug
 
 `actually` has the `Debug("label", any_variable)` method to show additional data only in fail report.
 
