@@ -96,7 +96,7 @@ func (f *Failure) Put() string {
 	lines := "\n"
 	for _, c := range r.Contents {
 		lines += fmt.Sprintf(
-			"\t%s%s%s\t%s\n",
+			"%s%s%s\t%s\n",
 			c.Label,
 			r.separator(),
 			c.indentSpaces(longestLen),
