@@ -129,9 +129,6 @@ func (f *Failure) buildContents() []*Content {
 	if f.name != "" {
 		contents = append(contents, &Content{Label: f.fieldLabel("name"), Body: f.name})
 	}
-	if f.trace != "" {
-		contents = append(contents, &Content{Label: f.fieldLabel("trace"), Body: f.trace})
-	}
 	if f.reason != "" {
 		contents = append(contents, &Content{Label: f.fieldLabel("reason"), Body: f.reason})
 	}
@@ -162,6 +159,10 @@ func (f *Failure) buildContents() []*Content {
 		for label, body := range i {
 			contents = append(contents, &Content{Label: label, Body: body})
 		}
+	}
+
+	if f.trace != "" {
+		contents = append(contents, &Content{Label: f.fieldLabel("trace"), Body: f.trace})
 	}
 
 	for _, i := range f.debugInfo {
