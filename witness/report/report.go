@@ -95,11 +95,11 @@ func (f *Failure) Put() string {
 
 	lines := ""
 	for i, c := range r.Contents {
-		if i == 0 {
-			lines += c.Body + "\n"
+		if i == 0 && c.Label == f.fieldLabel("name") {
+			lines += c.Body
 		} else {
 			lines += fmt.Sprintf(
-				"%s%s%s\t%s\n",
+				"\n%s%s%s\t%s",
 				c.Label,
 				r.separator(),
 				c.indentSpaces(longestLen),

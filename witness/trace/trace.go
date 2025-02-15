@@ -2,19 +2,11 @@ package trace
 
 import (
 	"fmt"
-	"regexp"
 	"runtime"
 	"strings"
 	"unicode"
 	"unicode/utf8"
 )
-
-var regexpMine = regexp.MustCompile(`/witness@v[0-9][0-9\.]+[0-9]/(witness\.go|trace)`)
-
-var skipOwnWitnessLibs = func(filepath string) bool {
-	return strings.Contains(filepath, "witness/witness.go") || strings.Contains(filepath, "witness/trace/trace.go") ||
-		regexpMine.FindStringSubmatch(filepath) != nil
-}
 
 // Info method returns a list of caller info
 func Info(traceFilterFunc ...func(filepath string) bool) []string {
@@ -55,7 +47,7 @@ func Info(traceFilterFunc ...func(filepath string) bool) []string {
 		lastCaller = fmt.Sprintf("%s:%d", file, line)
 
 		if len(strings.Split(file, "/")) > 1 && // https://github.com/stretchr/testify/pull/402
-			!skipOwnWitnessLibs(file) && !skipLibs(file, traceFilterFunc...) {
+			!skipLibs(file, traceFilterFunc...) {
 			callers = append(callers, lastCaller)
 		}
 
