@@ -78,8 +78,8 @@ func TestFailGot(t *testing.T) {
 	// Type:           Got:string
 	// Actually got:   "got string"
 
-	if !strings.Contains(res, "Test name:") {
-		t.Errorf("Expected to be contained the string `Test name:`, but not: %q", res)
+	if !strings.HasPrefix(res, "TestFailGot/Gotcha\n") {
+		t.Errorf("Expected to be the prefix string `TestFailGot/Gotcha`, but not: %q", res)
 	}
 	if !strings.Contains(res, "TestFailGot/Gotcha") {
 		t.Errorf("Expected to be contained the string `Test name:`, but not: %q", res)
@@ -119,8 +119,8 @@ func TestFailGotExpect(t *testing.T) {
 	// Expected:       "expect string"
 	// Actually got:   "got string"
 
-	if !strings.Contains(res, "Test name:") {
-		t.Errorf("Expected to be contained the string `Test name:`, but not: %q", res)
+	if !strings.HasPrefix(res, "TestFailGotExpect\n") {
+		t.Errorf("Expected to be the prefix string `TestFailGotExpect`, but not: %q", res)
 	}
 	if !strings.Contains(res, "Trace:") {
 		t.Errorf("Expected to be contained the string `Trace:`, but not: %q", res)
@@ -242,7 +242,7 @@ func TestFailWithDebugInfo(t *testing.T) {
 	// Actually got: 1
 	// Debug label:  (string) (len=10) "debug info"
 
-	if ok, msg := tu.Match(`Debug label:\s*\t\(string\) \(len=10\) "debug info"\n`, res); !ok {
+	if ok, msg := tu.Match(`Debug label:\s*\t\(string\) \(len=10\) "debug info"`, res); !ok {
 		t.Error(msg)
 	}
 }

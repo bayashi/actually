@@ -2,6 +2,8 @@ package witness
 
 import (
 	"fmt"
+	"os"
+	"strconv"
 	"strings"
 	"sync"
 	"testing"
@@ -9,6 +11,7 @@ import (
 	"github.com/bayashi/actually/witness/diff"
 	"github.com/bayashi/actually/witness/obj"
 	"github.com/bayashi/actually/witness/report"
+	"github.com/bayashi/actually/witness/source"
 	"github.com/bayashi/actually/witness/trace"
 )
 
@@ -180,8 +183,39 @@ func (w *Witness) Debug(label string, info ...any) *Witness {
 
 func baseReprot(reason string, traceFilterFunc ...func(filepath string) bool) *report.Failure {
 	return report.NewFailure().
-		Trace(strings.Join(trace.Info(traceFilterFunc...), "\n\t")).
+		Trace(buildTrace(traceFilterFunc...)).
 		Reason(reason)
+}
+
+const sourceIndent = " "
+
+func buildTrace(traceFilterFunc ...func(filepath string) bool) string {
+	traces := trace.Info(traceFilterFunc...)
+	traceContent := ""
+	for _, tr := range traces {
+		traceContent += tr + "\n"
+		flag := os.Getenv("ACTUALLY_TRACE_SOURCE")
+		if flag == "" || flag == "0" || flag == "false" || flag == "FALSE" {
+			continue
+		}
+		ts := strings.Split(tr, ":")
+		// if filepath would be including ":", then source code won't be retrieved for now
+		if len(ts) == 2 {
+			lineNumber, err := strconv.Atoi(ts[1])
+			if err != nil {
+				fmt.Printf("WARN: could not get line number `%s`, err `%s`\n", tr, err.Error())
+				return ""
+			}
+			src, err := source.GetSouce(ts[0], lineNumber)
+			if err != nil {
+				fmt.Printf("WARN: could not get source `%s` ln %d, err `%s`\n", ts[0], lineNumber, err.Error())
+				return ""
+			}
+			traceContent += sourceIndent + strings.Join(src, "\n"+sourceIndent) + "\n"
+		}
+	}
+
+	return traceContent
 }
 
 var funcFail = func(t *testing.T, r *report.Failure) {

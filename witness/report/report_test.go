@@ -10,7 +10,7 @@ func TestReport(t *testing.T) {
 	f := NewFailure()
 	f.Trace("trace").Diff("diff")
 	got := f.Put()
-	expect := "\nTrace:       \ttrace\nDiff details:\tdiff\n"
+	expect := "\nDiff details:\tdiff\nTrace:       \ttrace"
 	if expect != got {
 		t.Errorf("Report is wrong.\n[Expect]\n%#v\n\n[Got]\n%#v\n", expect, got)
 		t.Fail()

@@ -93,15 +93,19 @@ func (f *Failure) Put() string {
 		}
 	}
 
-	lines := "\n"
-	for _, c := range r.Contents {
-		lines += fmt.Sprintf(
-			"%s%s%s\t%s\n",
-			c.Label,
-			r.separator(),
-			c.indentSpaces(longestLen),
-			indentMessage(c.Body, longestLen),
-		)
+	lines := ""
+	for i, c := range r.Contents {
+		if i == 0 && c.Label == f.fieldLabel("name") {
+			lines += c.Body
+		} else {
+			lines += fmt.Sprintf(
+				"\n%s%s%s\t%s",
+				c.Label,
+				r.separator(),
+				c.indentSpaces(longestLen),
+				indentMessage(c.Body, longestLen),
+			)
+		}
 	}
 
 	return lines
@@ -124,9 +128,6 @@ func (f *Failure) buildContents() []*Content {
 
 	if f.name != "" {
 		contents = append(contents, &Content{Label: f.fieldLabel("name"), Body: f.name})
-	}
-	if f.trace != "" {
-		contents = append(contents, &Content{Label: f.fieldLabel("trace"), Body: f.trace})
 	}
 	if f.reason != "" {
 		contents = append(contents, &Content{Label: f.fieldLabel("reason"), Body: f.reason})
@@ -158,6 +159,10 @@ func (f *Failure) buildContents() []*Content {
 		for label, body := range i {
 			contents = append(contents, &Content{Label: label, Body: body})
 		}
+	}
+
+	if f.trace != "" {
+		contents = append(contents, &Content{Label: f.fieldLabel("trace"), Body: f.trace})
 	}
 
 	for _, i := range f.debugInfo {
@@ -208,7 +213,7 @@ func indentMessage(message string, len int) string {
 	outBuf := new(bytes.Buffer)
 	for i, scanner := 0, bufio.NewScanner(strings.NewReader(message)); scanner.Scan(); i++ {
 		if i != 0 {
-			outBuf.WriteString("\n\t" + strings.Repeat(" ", len+1) + "\t")
+			outBuf.WriteString("\n" + strings.Repeat(" ", len+1) + "\t")
 		}
 		outBuf.WriteString(scanner.Text())
 	}

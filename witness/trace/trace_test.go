@@ -8,32 +8,29 @@ import (
 
 func TestInfo(t *testing.T) {
 	trace := Info()
-	if len(trace) != 1 {
-		t.Error("trace length should be 1.")
+	if len(trace) != 2 {
+		t.Errorf("trace length should be 2. but %#v", trace)
 	}
 
-	if ok, msg := tu.Match(`/witness/trace/trace_test\.go:\d+$`, trace[0]); !ok {
+	if ok, msg := tu.Match(`/witness/trace/trace\.go:\d+$`, trace[0]); !ok {
+		t.Error(msg)
+	}
+
+	if ok, msg := tu.Match(`/witness/trace/trace_test\.go:\d+$`, trace[1]); !ok {
 		t.Error(msg)
 	}
 }
 
 func TestInfoWithFilter(t *testing.T) {
 	filterFunc := func(file string) bool {
-		ok, msg := tu.Match(`/witness/trace/trace_test\.go`, file)
+		ok, msg := tu.Match(`/witness/trace/trace`, file)
 		if msg != "" {
-			t.Errorf("expect blank msg, but it's not `%s`", msg)
+			t.Error(msg)
 		}
 		return ok
 	}
 	trace := Info(filterFunc)
 	if len(trace) != 1 {
-		t.Error("trace length should be 1.")
-	}
-}
-
-func TestSkipMyself(t *testing.T) {
-	line := "/home/usr/go/pkg/mod/github.com/bayashi/witness@v0.0.8/trace/trace.go"
-	if !skipOwnWitnessLibs(line) {
-		t.Error("Expect to skip, but not skipped")
+		t.Errorf("trace length should be 1. but %d, %#v", len(trace), trace)
 	}
 }
