@@ -150,6 +150,11 @@ actually.Got(res).Debug("src", src).True(t)
 
 [See more helper functions](https://github.com/bayashi/actually/wiki/Helper-functions).
 
+
+## ACTUALLY_TRACE_SOURCE
+
+If you set true value (i.e. "1", "true" or "TRUE" etc) into ENV:`ACTUALLY_TRACE_SOURCE` on running a test, then you can see a piece of source code for each stack trace in fail report.
+
 -----
 
 ## Installation

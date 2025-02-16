@@ -213,7 +213,7 @@ func indentMessage(message string, len int) string {
 	outBuf := new(bytes.Buffer)
 	for i, scanner := 0, bufio.NewScanner(strings.NewReader(message)); scanner.Scan(); i++ {
 		if i != 0 {
-			outBuf.WriteString("\n\t" + strings.Repeat(" ", len+1) + "\t")
+			outBuf.WriteString("\n" + strings.Repeat(" ", len+1) + "\t")
 		}
 		outBuf.WriteString(scanner.Text())
 	}
