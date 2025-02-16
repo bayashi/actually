@@ -128,11 +128,6 @@ Above code will put fail report like below:
                         -bug
                         +baz
         Trace:          /path/to/foo/foo_test.go:13
-                         10     x := "foo\nbar\nbaz"
-                         11     y := "foo\nbar\nbug"
-                         12
-                         13>    a.Got(x).Expect(y).Same(t)
-                         14  }
 --- FAIL: Test (0.00s)
 ```
 
@@ -157,6 +152,28 @@ actually.Got(res).Debug("src", src).True(t)
 ## ACTUALLY_TRACE_SOURCE
 
 If you set true value (i.e. "1", "true" or "TRUE" etc) into ENV:`ACTUALLY_TRACE_SOURCE` on running a test, then you can see a piece of source code for each stack trace in fail report.
+
+```
+=== RUN   Test
+    foo_test.go:13: Test
+        Fail reason:    Not same value
+        Type:           Expect:string, Got:string
+        Expected:       "foo\nbar\nbug"
+        Actually got:   "foo\nbar\nbaz"
+        Diff details:   --- Expected
+                        +++ Actually got
+                        @@ -2,2 +2,2 @@
+                         bar
+                        -bug
+                        +baz
+        Trace:          /path/to/foo/foo_test.go:13
+                         10     x := "foo\nbar\nbaz"
+                         11     y := "foo\nbar\nbug"
+                         12
+                         13>    a.Got(x).Expect(y).Same(t)
+                         14  }
+--- FAIL: Test (0.00s)
+```
 
 -----
 
