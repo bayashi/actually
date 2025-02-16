@@ -116,20 +116,23 @@ Above code will put fail report like below:
 
 ```
 === RUN   Test
-    foo_test.go:10:
-                Test name:      Test
-                Trace:          /path/to/foo_test.go:10
-                Fail reason:    Not same value
-                Type:           Expect:string, Got:string
-                Expected:       "foo\nbar\nbug"
-                Actually got:   "foo\nbar\nbaz"
-                Diff details:   --- Expected
-                                +++ Actually got
-                                @@ -2,2 +2,2 @@
-                                 bar
-                                -bug
-                                +baz
-
+    foo_test.go:13: Test
+        Fail reason:    Not same value
+        Type:           Expect:string, Got:string
+        Expected:       "foo\nbar\nbug"
+        Actually got:   "foo\nbar\nbaz"
+        Diff details:   --- Expected
+                        +++ Actually got
+                        @@ -2,2 +2,2 @@
+                         bar
+                        -bug
+                        +baz
+        Trace:          /path/to/foo/foo_test.go:13
+                         10     x := "foo\nbar\nbaz"
+                         11     y := "foo\nbar\nbug"
+                         12
+                         13>    a.Got(x).Expect(y).Same(t)
+                         14  }
 --- FAIL: Test (0.00s)
 ```
 
