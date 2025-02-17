@@ -6,10 +6,10 @@
 
 A testing library focused on turning failure into success, `actually`.
 
-* Builder interface to make test code obvious
-* Consistent method name to reduce things you have to remember
-* Specific fail report to save your time
-* There are helpers to see details of a failure
+* It is clear what is being tested by the builder interface
+* Consistent method names to reduce things you have to memorize
+* Explicit test failure results help you save time
+* There are helper methods to see details of a failure
 
 ## Usage
 
