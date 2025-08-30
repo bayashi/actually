@@ -85,7 +85,7 @@ func (o *Object) AsString() string {
 		return o.AsDumpString()
 	default:
 		if o.IsPointerType() {
-			return fmt.Sprintf("%p, %#v", o.value, o.value)
+			return fmt.Sprintf("%p, %#[1]v", o.value)
 		} else {
 			return fmt.Sprintf("%#v", o.value)
 		}
