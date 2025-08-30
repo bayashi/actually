@@ -51,9 +51,9 @@ func Info(traceFilterFunc ...func(filepath string) bool) []string {
 			callers = append(callers, lastCaller)
 		}
 
-		segments := strings.Split(funcName, ".")
-		name := segments[len(segments)-1]
-		if isGolangTestFunc(name) {
+		funcName = funcName[strings.LastIndexByte(funcName, '.')+1:]
+
+		if isGolangTestFunc(funcName) {
 			break
 		}
 	}
