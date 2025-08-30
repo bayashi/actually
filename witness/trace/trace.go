@@ -69,7 +69,6 @@ func Info(traceFilterFunc ...func(filepath string) bool) []string {
 				break
 			}
 
-
 			if !more {
 				break
 			}
