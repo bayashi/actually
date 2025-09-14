@@ -146,6 +146,14 @@ res := someFunc(src)
 actually.Got(res).Debug("src", src).True(t)
 ```
 
+### FailNow
+
+The `FailNow` method turns on a flag to halt the test case immediately When the test fails.
+
+```go
+actually.Got(v).FailNow().True(t)
+```
+
 [See more helper functions](https://github.com/bayashi/actually/wiki/Helper-functions).
 
 
