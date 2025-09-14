@@ -148,7 +148,7 @@ actually.Got(res).Debug("src", src).True(t)
 
 ### FailNow
 
-The `FailNow` method turns on a flag to halt the test case immediately When the test fails.
+The `FailNow` method turns on a flag to halt the test case immediately when the test fails.
 
 ```go
 actually.Got(v).FailNow().True(t)
