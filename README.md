@@ -87,6 +87,15 @@ func TestProtoMessages(t *testing.T) {
 
 * Len
 
+## Helper Methods
+
+* **FailNow**, **FailNowOn**: Halt the test case immediately when the test fails
+* **Diff**: Get diff of 2 objects on anywhere
+* **Dump**: Get dumped string of an object on anywhere
+* **Debug**: Show debug info only on failure
+
+[See more helper functions](https://github.com/bayashi/actually/wiki/Helper-functions).
+
 [Here is a Wiki of full API documentation](https://github.com/bayashi/actually/wiki).
 
 -----
@@ -130,32 +139,6 @@ Above code will put fail report like below:
         Trace:          /path/to/foo/foo_test.go:13
 --- FAIL: Test (0.00s)
 ```
-
-## Helper Methods
-
-There are helper functions: Name, Skip, Fi, X, Diff, Dump, etc...
-
-### Debug
-
-`actually` has the `Debug("label", any_variable)` method to show additional data only in fail report.
-
-Like below, `src` variable will be dumped nicely only on fail.
-
-```go
-res := someFunc(src)
-actually.Got(res).Debug("src", src).True(t)
-```
-
-### FailNow
-
-The `FailNow` method turns on a flag to halt the test case immediately when the test fails.
-
-```go
-actually.Got(v).FailNow().True(t)
-```
-
-[See more helper functions](https://github.com/bayashi/actually/wiki/Helper-functions).
-
 
 ## ACTUALLY_TRACE_SOURCE
 
