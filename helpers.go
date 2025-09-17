@@ -89,10 +89,10 @@ func (a *testingA) X() *testingA {
 // Skip provides shorthand to skip further tests within the same function for `-short` option.
 /*
 	func Test(t *testing.T) {
-		Got(1).NotNil(t) // Run
-		Skip(t)
-		Got(2).NotNil(t) // Skip
-		Got(3).NotNil(t) // Skip Also
+		actually.Got(1).NotNil(t) // Run
+		actually.Skip(t)
+		actually.Got(2).NotNil(t) // Skip
+		actually.Got(3).NotNil(t) // Skip Also
 	}
 */
 func Skip(t *testing.T, skipReasons ...any) {
