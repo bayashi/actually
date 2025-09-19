@@ -38,14 +38,33 @@ func TestDiff(t *testing.T) {
 }
 
 func TestDump(t *testing.T) {
-	got := map[string]int{
+	Got(Dump()).Expect("").X().Same(t)
+
+	v := map[string]int{
 		"foo": 256,
 	}
-	expect := "map[string]int:1 {\n" +
-		"   \"foo\": 256,\n" +
-		"}"
+	{
+		expect := strings.TrimLeft(`
+map[string]int:1 {
+   "foo": 256,
+}
+`, "\n")
+		Got(Dump(v)).Expect(expect).X().Same(t)
+	}
 
-	Got(Dump(got)).Expect(expect).X().Same(t)
+	{
+		expect := strings.TrimLeft(`
+[0]
+map[string]int:1 {
+   "foo": 256,
+}
+[1]
+map[string]int:1 {
+   "foo": 256,
+}
+`, "\n")
+		Got(Dump(v, v)).Expect(expect).X().Same(t)
+	}
 }
 
 func TestFi(t *testing.T) {
