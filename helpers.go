@@ -3,6 +3,7 @@ package actually
 // helper functions
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/bayashi/actually/witness"
@@ -133,13 +134,30 @@ func Diff(a any, b any) string {
 	return witness.Diff(a, b)
 }
 
-// Dump is a helper function to get a dumped string of an object for debugging
-func Dump(a any) string {
-	obj.DUMPER = func(d any) string {
-		var dumper godump.Dumper
-		return dumper.Sprint(d)
+var defaultDumper godump.Dumper
+
+// Dump is a helper function to get a dumped string of objects for debugging
+func Dump(a ...any) string {
+	if len(a) == 0 {
+		return ""
 	}
-	return witness.Dump(a)
+
+	if obj.DUMPER == nil {
+		obj.DUMPER = func(d any) string {
+			return defaultDumper.Sprint(d)
+		}
+	}
+
+	if len(a) == 1 {
+		return witness.Dump(a[0]) + "\n"
+	}
+
+	result := ""
+	for i, v := range a {
+		result += fmt.Sprintf("[%d]\n%s\n", i, witness.Dump(v))
+	}
+
+	return result
 }
 
 // Debug is a helper function to show debug info on fail
