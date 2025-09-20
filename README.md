@@ -91,7 +91,7 @@ func TestProtoMessages(t *testing.T) {
 
 * **FailNow**, **FailNowOn**: Halt the test case immediately when the test fails
 * **Diff**: Get diff of 2 objects on anywhere
-* **Dump**: Get dumped string of an object on anywhere
+* **Dump**: Get dumped string of objects on anywhere
 * **Debug**: Show debug info only on failure
 
 [See more helper functions](https://github.com/bayashi/actually/wiki/Helper-functions).
