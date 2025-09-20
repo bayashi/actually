@@ -17,10 +17,14 @@ func failNowPtr(v bool) *bool {
 }
 
 // `FailNow` turns a flag on to stop further test execution immediately if one test fails.
-// NOTE that FailNow method should be called after `Got` or `Expect`.
 /*
 	actually.Got(something).FailNow().Nil(t) // Fail now for only this test
 */
+func FailNow() *testingA {
+	return &testingA{
+		failNow: failNowPtr(true),
+	}
+}
 func (a *testingA) FailNow() *testingA {
 	a.failNow = failNowPtr(true)
 
@@ -71,9 +75,13 @@ func FailNotNowOn(t *testing.T) {
 // FailNotNow turns a flag off, so that even if the test fails, execution does not stop immediately.
 /*
    It behaves this way by default. If you want the opposite behavior, call `FailNow` method.
-   NOTE that FailNotNow method should be called after `Got` or `Expect`.
 */
 // Deprecated: Anyone uses? This method will be removed in the near future.
+func FailNotNow() *testingA {
+	return &testingA{
+		failNow: failNowPtr(false),
+	}
+}
 func (a *testingA) FailNotNow() *testingA {
 	a.failNow = failNowPtr(false)
 
@@ -179,13 +187,13 @@ func Fail(t *testing.T, reason string, got any, expect ...any) {
 	witness.Fail(t, reason, got, expect...)
 }
 
-// FailNow is to show decorated fail report by t.Fatal. (Actual shortcut to witness.FailNow)
+// Fatal is to show decorated fail report by t.Fatal. (Actual shortcut to witness.FailNow)
 /*
 	if g != e {
 		actually.FailNow(t, "Not same", g, e)
 	}
 */
-func FailNow(t *testing.T, reason string, got any, expect ...any) {
+func Fatal(t *testing.T, reason string, got any, expect ...any) {
 	t.Helper()
 	witness.FailNow(t, reason, got, expect...)
 }
