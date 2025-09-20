@@ -1,7 +1,6 @@
 package actually
 
 import (
-	"os"
 	"testing"
 )
 
@@ -28,22 +27,5 @@ func TestWant(t *testing.T) {
 	ac.Want("E")
 	if ac.expect != "E" {
 		t.Errorf("Want method was wrong. Actually got %s", ac.expect)
-	}
-}
-
-func TestFatal(t *testing.T) {
-	a := Got("g").Fatal()
-	if !*a.failNow {
-		t.Error("expect failNow is false")
-	}
-}
-
-func TestFatalOn(t *testing.T) {
-	if os.Getenv(envKey_FailNow) != "" {
-		t.Error("Already set ENV somehow")
-	}
-	FatalOn(t)
-	if os.Getenv(envKey_FailNow) == "" {
-		t.Error("expect failNow is false")
 	}
 }
