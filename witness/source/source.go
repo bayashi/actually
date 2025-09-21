@@ -13,7 +13,7 @@ const (
 	ContentLineNumberAfter  = 3
 )
 
-func GetSouce(filepath string, lineNumber int) ([]string, error) {
+func GetSource(filepath string, lineNumber int) ([]string, error) {
 	lineNumberStart := lineNumber - ContentLineNumberBefore
 	if lineNumberStart < 1 {
 		lineNumberStart = 1

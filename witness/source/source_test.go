@@ -5,9 +5,9 @@ import (
 )
 
 func TestGetSource(t *testing.T) {
-	got, err := GetSouce("../../testdata/example_source.go", 8)
+	got, err := GetSource("../../testdata/example_source.go", 8)
 	if err != nil {
-		t.Errorf("failed GetSouce %s", err)
+		t.Errorf("failed GetSource %s", err)
 	}
 
 	expect := []string{
