@@ -206,7 +206,7 @@ func buildTrace(traceFilterFunc ...func(filepath string) bool) string {
 				fmt.Printf("WARN: could not get line number `%s`, err `%s`\n", tr, err.Error())
 				return ""
 			}
-			src, err := source.GetSouce(ts[0], lineNumber)
+			src, err := source.GetSource(ts[0], lineNumber)
 			if err != nil {
 				fmt.Printf("WARN: could not get source `%s` ln %d, err `%s`\n", ts[0], lineNumber, err.Error())
 				return ""
