@@ -13,7 +13,7 @@ var aCtx = &aContext{
 }
 
 type aContext struct {
-	mu     sync.RWMutex
+	mu            sync.RWMutex
 	failNowStates map[int64]bool // [goroutineID]bool
 }
 
