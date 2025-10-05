@@ -8,12 +8,7 @@ import (
 
 func TestFail(t *testing.T) {
 	{
-		a := FailNow()
-		if *a.failNow != true {
-			t.Errorf("`FailNow()` was broken. Expected:%#v, but Actual:%#v", true, a.failNow)
-		}
-
-		a = FailNotNow()
+		a := FailNotNow()
 		if *a.failNow != false {
 			t.Errorf("`FailNotNow()` was broken. Expected:%#v, but Actual:%#v", false, a.failNow)
 		}

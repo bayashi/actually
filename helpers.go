@@ -16,19 +16,29 @@ func failNowPtr(v bool) *bool {
 	return &v
 }
 
-// `FailNow` turns a flag on to stop further test execution immediately if one test fails.
+// The method `FailNow` turns a flag on to stop further test execution immediately if one test fails.
 /*
 	actually.Got(something).FailNow().Nil(t) // Fail now for only this test
 */
-func FailNow() *testingA {
-	return &testingA{
-		failNow: failNowPtr(true),
-	}
-}
 func (a *testingA) FailNow() *testingA {
 	a.failNow = failNowPtr(true)
 
 	return a
+}
+
+// The function `FailNow` receives a func that is including tests of `actually`.
+// The included tests inside `FailNow` will stop execution immediately upon failure,
+// even without explicitly calling `FailNow` individually.
+/*
+	actually.FailNow(func() {
+		actually.Got(false).True(t) // stop this failuer
+		actually.Got(true).True(t)  // not executed
+	})
+*/
+func FailNow(fn func()) {
+    aCtx.failNowOn()
+    defer aCtx.failNotNow()
+    fn()
 }
 
 // FailNowOn function turns an ENV flag on to stop further test execution immediately if one test fails.

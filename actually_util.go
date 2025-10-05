@@ -35,7 +35,7 @@ var funcFail = func(a *testingA, w *w.Witness, reason string) {
 	a.t.Helper()
 	if a.failNow != nil && !*a.failNow {
 		w.Fail(a.t, reason, skipMine)
-	} else if (a.failNow != nil && *a.failNow) || len(os.Getenv(envKey_FailNow)) > 0 {
+	} else if (a.failNow != nil && *a.failNow) || aCtx.failNowState() || len(os.Getenv(envKey_FailNow)) > 0 {
 		w.FailNow(a.t, reason, skipMine)
 	} else {
 		w.Fail(a.t, reason, skipMine)
