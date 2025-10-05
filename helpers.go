@@ -41,63 +41,6 @@ func FailNow(fn func()) {
     fn()
 }
 
-// FailNowOn function turns an ENV flag on to stop further test execution immediately if one test fails.
-// This switch is enabled within the test. Not only during function.
-/*
-	func Test(t *testing.T) {
-		actually.FailNowOn(t)
-		actually.Got(something).Nil(t)                    // Fail Now
-		actually.Got(something).Expect(something).Same(t) // Fail Now
-	}
-*/
-// Warning: Do not use FailNowOn along with t.Parallel.
-func FailNowOn(t *testing.T) {
-	t.Setenv(envKey_FailNow, envKey_FailNow)
-}
-
-// FailNotNowOn function turns an ENV flag off to stop further test execution immediately if one test fails.
-// If you want to turn the ENV flag on, then you should call `FailNowOn`.
-/*
-	func Test(t *testing.T) {
-		// turn on to fail right now
-		actually.FailNowOn(t)
-		actually.Got(something).Nil(t)                    // Fail Now
-		actually.Got(something).Expect(something).Same(t) // Fail Now
-
-		// turn off
-		actually.FailNotNowOn(t)
-		actually.Got(something).Nil(t)                    // NOT Fail Now
-		actually.Got(something).Expect(something).Same(t) // NOT Fail Now
-
-		// Fail Now by FailNow() in the chain
-		actually.Got(something).FailNow().Nil(t)          // Fail Now
-
-		// Again, turn on to fail right now
-		actually.FailNowOn(t)
-		actually.Got(something).Nil(t)                    // Fail Now
-	}
-*/
-// This switch is enabled within the test. Not only during function.
-func FailNotNowOn(t *testing.T) {
-	t.Setenv(envKey_FailNow, "")
-}
-
-// FailNotNow turns a flag off, so that even if the test fails, execution does not stop immediately.
-/*
-   It behaves this way by default. If you want the opposite behavior, call `FailNow` method.
-*/
-// Deprecated: Anyone uses? This method will be removed in the near future.
-func FailNotNow() *testingA {
-	return &testingA{
-		failNow: failNowPtr(false),
-	}
-}
-func (a *testingA) FailNotNow() *testingA {
-	a.failNow = failNowPtr(false)
-
-	return a
-}
-
 // X turns on a flag to show test values as raw in a fail report.
 func (a *testingA) X() *testingA {
 	a.showRawData = true
