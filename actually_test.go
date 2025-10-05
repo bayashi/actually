@@ -40,7 +40,7 @@ func TestExpect(t *testing.T) {
 		t.Errorf("`Expect()` was broken. Expected:%#v, but Actual:%#v", i, a.expect)
 	}
 	if a.failNow != nil && *a.failNow != false {
-		t.Errorf("`FailNotNow()` was broken. Expected:%#v, but Actual:%#v", false, a.failNow)
+		t.Errorf("Initial failNow value is wrong. Expected:%#v, but Actual:%#v", false, a.failNow)
 	}
 }
 

@@ -89,7 +89,7 @@ func TestProtoMessages(t *testing.T) {
 
 ## Helper Methods
 
-* **FailNow**, **FailNowOn**: Halt the test case immediately when the test fails
+* **FailNow**: Halt the test case immediately when the test fails
 * **Diff**: Get diff of 2 objects on anywhere
 * **Dump**: Get dumped string of objects on anywhere
 * **Debug**: Show debug info only on failure

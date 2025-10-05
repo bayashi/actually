@@ -7,18 +7,6 @@ import (
 )
 
 func TestFail(t *testing.T) {
-	{
-		a := FailNow()
-		if *a.failNow != true {
-			t.Errorf("`FailNow()` was broken. Expected:%#v, but Actual:%#v", true, a.failNow)
-		}
-
-		a = FailNotNow()
-		if *a.failNow != false {
-			t.Errorf("`FailNotNow()` was broken. Expected:%#v, but Actual:%#v", false, a.failNow)
-		}
-	}
-
 	a := Got(nil)
 	if a.failNow != nil && *a.failNow != false {
 		t.Errorf("Default failNow is false, but Actual:%#v", a.failNow)
@@ -27,11 +15,6 @@ func TestFail(t *testing.T) {
 	a.FailNow()
 	if *a.failNow != true {
 		t.Errorf("`FailNow()` was broken. Expected:%#v, but Actual:%#v", true, a.failNow)
-	}
-
-	a.FailNotNow()
-	if *a.failNow != false {
-		t.Errorf("`FailNotNow()` was broken. Expected:%#v, but Actual:%#v", false, a.failNow)
 	}
 
 	a.t = t
