@@ -36,9 +36,9 @@ func (a *testingA) FailNow() *testingA {
 	})
 */
 func FailNow(fn func()) {
-    aCtx.failNowOn()
-    defer aCtx.failNotNow()
-    fn()
+	aCtx.failNowOn()
+	defer aCtx.failNotNow()
+	fn()
 }
 
 // X turns on a flag to show test values as raw in a fail report.
