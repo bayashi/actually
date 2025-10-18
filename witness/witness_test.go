@@ -31,13 +31,8 @@ func TestNil(t *testing.T) {
 	Got(nil).Expect(nil).Fail(t, "oops")
 
 	// Fail reason:    oops
-	// Type:           Expect:<nil>, Got:<nil>
 	// Expected:       <nil>
 	// Actually got:   <nil>
-
-	if ok, msg := tu.Match(`Type:\s*\tExpect:<nil>, Got:<nil>`, res); !ok {
-		t.Error(msg)
-	}
 
 	if ok, msg := tu.Match(`Expected:\s*\t<nil>`, res); !ok {
 		t.Error(msg)
@@ -115,7 +110,6 @@ func TestFailGotExpect(t *testing.T) {
 	Got(got).Expect(expect).Fail(t, reason)
 
 	// Fail reason:    failure reason
-	// Type:           Expect:string, Got:string
 	// Expected:       "expect string"
 	// Actually got:   "got string"
 
@@ -132,10 +126,6 @@ func TestFailGotExpect(t *testing.T) {
 
 	if !strings.Contains(res, reason) {
 		t.Errorf("Expected to be contained the string `%s`, but not: %q", reason, res)
-	}
-
-	if !strings.Contains(res, "Expect:string, Got:string") {
-		t.Errorf("Expected to be contained types, but not: %q", res)
 	}
 
 	if ok, msg := tu.Match(fmt.Sprintf("Actually got:\\s*\\t%q", got), res); !ok {

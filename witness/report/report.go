@@ -123,6 +123,17 @@ func (f *Failure) buildTypeBody() string {
 	return strings.Join(types, ", ")
 }
 
+func (f *Failure) isDifferentTypes() bool {
+	if f.expect == nil && f.got == nil {
+		return false
+	}
+	if (f.expect == nil && f.got != nil) || (f.expect != nil && f.got == nil) {
+		return true
+	}
+
+	return f.expect.AsType() != f.got.AsType()
+}
+
 func (f *Failure) buildContents() []*Content {
 	var contents []*Content
 
@@ -133,7 +144,7 @@ func (f *Failure) buildContents() []*Content {
 		contents = append(contents, &Content{Label: f.fieldLabel("reason"), Body: f.reason})
 	}
 
-	if (f.expect != nil && f.expect.Touch()) || (f.got != nil && f.got.Touch()) {
+	if f.isDifferentTypes() {
 		contents = append(contents, &Content{Label: "Type", Body: f.buildTypeBody()})
 	}
 
