@@ -60,7 +60,7 @@ func TestSetter(t *testing.T) {
 }
 
 func TestBuildTypeBody(t *testing.T) {
-	tests := map[string]struct {
+	for name, tt := range map[string]struct {
 		expect   *obj.Object
 		got      *obj.Object
 		expected string
@@ -115,9 +115,7 @@ func TestBuildTypeBody(t *testing.T) {
 			got:      obj.NewObject(nil),
 			expected: "Got:<nil>",
 		},
-	}
-
-	for name, tt := range tests {
+	} {
 		t.Run(name, func(t *testing.T) {
 			f := NewFailure()
 			if tt.expect != nil {
@@ -136,7 +134,7 @@ func TestBuildTypeBody(t *testing.T) {
 }
 
 func TestIsDifferentTypes(t *testing.T) {
-	tests := map[string]struct {
+	for name, tt := range map[string]struct {
 		expect   *obj.Object
 		got      *obj.Object
 		expected bool
@@ -201,9 +199,7 @@ func TestIsDifferentTypes(t *testing.T) {
 			got:      obj.NewObject(struct{ Name string }{Name: "test"}),
 			expected: true,
 		},
-	}
-
-	for name, tt := range tests {
+	} {
 		t.Run(name, func(t *testing.T) {
 			f := NewFailure()
 			if tt.expect != nil {
