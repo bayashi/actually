@@ -127,7 +127,6 @@ Above code will put fail report like below:
 === RUN   Test
     foo_test.go:13: Test
         Fail reason:    Not same value
-        Type:           Expect:string, Got:string
         Expected:       "foo\nbar\nbug"
         Actually got:   "foo\nbar\nbaz"
         Diff details:   --- Expected
@@ -148,7 +147,6 @@ If you set true value (i.e. "1", "true" or "TRUE" etc) into ENV:`ACTUALLY_TRACE_
 === RUN   Test
     foo_test.go:13: Test
         Fail reason:    Not same value
-        Type:           Expect:string, Got:string
         Expected:       "foo\nbar\nbug"
         Actually got:   "foo\nbar\nbaz"
         Diff details:   --- Expected
