@@ -12,6 +12,9 @@ on:
 
 jobs:
   build:
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:

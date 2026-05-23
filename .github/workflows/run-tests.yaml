@@ -12,6 +12,9 @@ on:
 
 jobs:
   test-linux:
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
@@ -46,6 +49,9 @@ jobs:
         run: irir gotest -- go test -v -shuffle=on -race -timeout=3m -cover ./...
 
   test-other:
+    permissions:
+      contents: read
+      actions: write
     strategy:
       fail-fast: false
       matrix:
