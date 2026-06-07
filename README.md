@@ -14,6 +14,8 @@ A testing library focused on turning failure into success, `actually`.
 
 ## Usage
 
+Simple case
+
 ```go
 package main
 
@@ -21,7 +23,6 @@ import (
 	"testing"
 
 	a "github.com/bayashi/actually"
-	pb "github.com/bayashi/actually/testpb"
 )
 
 func TestObject(t *testing.T) {
@@ -34,6 +35,18 @@ func TestObject(t *testing.T) {
 func getLove() (bool, error) {
 	return true, nil
 }
+```
+
+Compare objects
+
+```go
+package main
+
+import (
+	"testing"
+
+	a "github.com/bayashi/actually"
+)
 
 func TestObjects(t *testing.T) {
 	x := map[string]int{
@@ -51,6 +64,19 @@ func TestObjects(t *testing.T) {
 	// Cmp method gets the differences between two objects by go-cmp.Diff.
 	a.Got(x).Expect(y).Cmp(t)
 }
+```
+
+Compare protocol buffers
+
+```go
+package main
+
+import (
+	"testing"
+
+	a "github.com/bayashi/actually"
+	pb "github.com/bayashi/actually/testpb"
+)
 
 func TestProtoMessages(t *testing.T) {
 	x := &pb.Foo{Id: 123}
