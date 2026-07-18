@@ -90,6 +90,59 @@ func TestProtoMessages(t *testing.T) {
 }
 ```
 
+Guard block for fail-now
+
+There is also a way to write fail-now as a guard block. A test usually has three steps:
+
+1. prepare
+1. run the action
+1. confirm the result
+
+By wrapping the preparation in a `FailNow` block, every assertion inside it becomes fail-now, so the test stops immediately if the setup goes wrong, and it reads clearly as "this is the preparation".
+
+```go
+package main
+
+import (
+	"testing"
+
+	a "github.com/bayashi/actually"
+)
+
+func TestGreet(t *testing.T) {
+	var user *User
+
+	// prepare
+	a.FailNow(func() {
+		u, err := fetchUser(1)
+
+		// every assertion here fails now,
+        // so the test stops as soon as one fails
+		a.Got(err).NoError(t)
+		a.Got(u).NotNil(t)
+
+		user = u
+	})
+
+	// run the action
+	greeting, err := user.Greet()
+
+	// confirm the result
+	a.Got(err).NoError(t)
+	a.Got(greeting).Expect("Hello, Gopher").Same(t)
+}
+```
+
+Every `actually` assertion executed inside the func passed to `FailNow` behaves as fail-now (stops on the first failure), so you don't need a separate package like require/assert. It shares the wording with Go's own `t.FailNow`, and it is goroutine safe.
+
+Wrapping the preparation in the guard block also keeps its temporary variables scoped to the block. In the example above, `u` and `err` stay inside the guard, while `user` is the only variable exposed to the rest of the test, which is exactly what the following steps need.
+
+You can also mark fail-now per assertion, without the guard block:
+
+```go
+a.Got(v).FailNow().True(t)
+```
+
 ## Assertion Methods
 
 ### [For 1 object](https://github.com/bayashi/actually/wiki/All-assertion-methods#assertion-for-1-object)
