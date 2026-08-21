@@ -1,6 +1,8 @@
 package report
 
 import (
+	"bufio"
+	"strings"
 	"testing"
 
 	"github.com/bayashi/actually/witness/obj"
@@ -214,5 +216,35 @@ func TestIsDifferentTypes(t *testing.T) {
 				t.Errorf("isDifferentTypes() = %v, want %v", result, tt.expected)
 			}
 		})
+	}
+}
+
+func TestIndentMessageTokenTooLong(t *testing.T) {
+	// When a line exceeds bufio.MaxScanTokenSize, Scan fails and indentMessage
+	// should return a "cannot display message:" fallback instead of empty output.
+	long := strings.Repeat("a", bufio.MaxScanTokenSize+1)
+	got := indentMessage(long, 10)
+	if !strings.HasPrefix(got, "cannot display message:") {
+		t.Fatalf("expected cannot display message, got %q", got)
+	}
+}
+
+func TestPutKeepsReasonWithLongGot(t *testing.T) {
+	long := make([]string, 0, 20000)
+	for i := 0; i < 20000; i++ {
+		long = append(long, "hello")
+	}
+	f := NewFailure().
+		Reason("Should have 10 item(s), but has 20000").
+		Got(obj.NewObject(long))
+	out := f.Put()
+	if !strings.Contains(out, "Fail reason:") {
+		t.Fatalf("fail reason missing from report:\n%s", out)
+	}
+	if !strings.Contains(out, "Should have 10 item(s), but has 20000") {
+		t.Fatalf("fail reason body missing from report:\n%s", out)
+	}
+	if !strings.Contains(out, "<... truncated>") {
+		t.Fatalf("got value was not truncated:\n%s", out)
 	}
 }
