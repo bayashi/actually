@@ -10,6 +10,10 @@ import (
 
 var DUMPER func(d any) string
 
+// defaultMaxLen leaves room for Expected and Actually got (and a bit of
+// surrounding text) so each line stays under bufio.MaxScanTokenSize.
+const defaultMaxLen = bufio.MaxScanTokenSize/2 - 100
+
 type Object struct {
 	value  any
 	touch  bool
@@ -22,7 +26,7 @@ func NewObject(v any) *Object {
 	return &Object{
 		touch:  true,
 		value:  v,
-		maxLen: bufio.MaxScanTokenSize,
+		maxLen: defaultMaxLen,
 		kind:   reflect.ValueOf(v).Kind(),
 	}
 }
@@ -31,7 +35,7 @@ func NewObjectWithDumper(v any, dumper func(d any) string) *Object {
 	return &Object{
 		touch:  true,
 		value:  v,
-		maxLen: bufio.MaxScanTokenSize,
+		maxLen: defaultMaxLen,
 		kind:   reflect.ValueOf(v).Kind(),
 		dumper: dumper,
 	}
@@ -65,31 +69,34 @@ func (o *Object) AsString() string {
 		return ""
 	}
 
+	var s string
 	switch o.value.(type) {
 	case string, []byte:
-		return fmt.Sprintf("%q", o.value)
+		s = fmt.Sprintf("%q", o.value)
 	case nil:
-		return "<nil>"
+		s = "<nil>"
 	case bool:
-		return fmt.Sprintf("<%t>", o.value)
+		s = fmt.Sprintf("<%t>", o.value)
 	case *bool:
-		return o.AsDumpString()
+		s = o.AsDumpString()
 	case int, int8, int16, int32, int64, uint, uint8, uint16, uint32, uint64:
-		return fmt.Sprintf("%d", o.value)
+		s = fmt.Sprintf("%d", o.value)
 	case float32, float64, complex64, complex128:
-		return fmt.Sprintf("%g", o.value)
+		s = fmt.Sprintf("%g", o.value)
 	case *int, *int8, *int16, *int32, *int64, *uint, *uint8, *uint16, *uint32, *uint64,
 		*float32, *float64, *complex64, *complex128:
-		return o.AsDumpString()
+		s = o.AsDumpString()
 	case error:
-		return o.AsDumpString()
+		s = o.AsDumpString()
 	default:
 		if o.IsPointerType() {
-			return fmt.Sprintf("%p, %#[1]v", o.value)
+			s = fmt.Sprintf("%p, %#[1]v", o.value)
 		} else {
-			return fmt.Sprintf("%#v", o.value)
+			s = fmt.Sprintf("%#v", o.value)
 		}
 	}
+
+	return truncateString(s, o.maxLen)
 }
 
 func (o *Object) AsFmtString() string {
@@ -160,9 +167,12 @@ func (o *Object) Format(s fmt.State, verb rune) {
 
 // Truncate string as format
 func truncate(v any, format string, maxLen int) string {
-	str := fmt.Sprintf(format, v)
+	return truncateString(fmt.Sprintf(format, v), maxLen)
+}
+
+func truncateString(str string, maxLen int) string {
 	if len(str) > maxLen {
-		str = str[0:maxLen] + "<... truncated>"
+		return str[0:maxLen] + "<... truncated>"
 	}
 
 	return str

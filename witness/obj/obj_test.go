@@ -121,6 +121,24 @@ func TestStructPointerValue(t *testing.T) {
 	}
 }
 
+func TestAsStringTruncate(t *testing.T) {
+	big := make([]string, 0, 20000)
+	for i := 0; i < 20000; i++ {
+		big = append(big, "hello")
+	}
+	o := NewObject(big)
+	got := o.AsString()
+	if len(got) <= defaultMaxLen {
+		t.Fatalf("expected truncated string longer than defaultMaxLen:%d marker path, got len=%d", defaultMaxLen, len(got))
+	}
+	if len(got) != defaultMaxLen+len("<... truncated>") {
+		t.Fatalf("unexpected truncated length: %d, defaultMaxLen:%d", len(got), defaultMaxLen)
+	}
+	if got[len(got)-len("<... truncated>"):] != "<... truncated>" {
+		t.Fatalf("missing truncate marker: %q, defaultMaxLen:%d", got[len(got)-20:], defaultMaxLen)
+	}
+}
+
 func TestDump(t *testing.T) {
 	o := NewObject(123)
 	if o.AsDumpString() != "(int) 123\n" {

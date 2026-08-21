@@ -220,13 +220,17 @@ func (c *Content) indentSpaces(longestLen int) string {
 	return strings.Repeat(" ", longestLen-len(c.Label))
 }
 
-func indentMessage(message string, len int) string {
+func indentMessage(message string, labelLen int) string {
 	outBuf := new(bytes.Buffer)
-	for i, scanner := 0, bufio.NewScanner(strings.NewReader(message)); scanner.Scan(); i++ {
+	scanner := bufio.NewScanner(strings.NewReader(message))
+	for i := 0; scanner.Scan(); i++ {
 		if i != 0 {
-			outBuf.WriteString("\n" + strings.Repeat(" ", len+1) + "\t")
+			outBuf.WriteString("\n" + strings.Repeat(" ", labelLen+1) + "\t")
 		}
 		outBuf.WriteString(scanner.Text())
+	}
+	if err := scanner.Err(); err != nil {
+		return fmt.Sprintf("cannot display message: %s", err)
 	}
 
 	return outBuf.String()
